@@ -1,0 +1,12 @@
+2011/09/11 02:46:09 INFO  - jmeter.util.JMeterUtils: Setting Locale to lt_LT 
+2011/09/11 02:46:09 ERROR - jmeter.util.JMeterUtils: Could not find resources for 'lt_LT' 
+2011/09/11 02:46:09 INFO  - kg.apc.jmeter.PluginsCMDWorker: Loading user properties from: C:\jakarta-jmeter-2.4\bin\user.properties 
+2011/09/11 02:46:09 INFO  - kg.apc.jmeter.PluginsCMDWorker: Loading system properties from: C:\jakarta-jmeter-2.4\bin\system.properties 
+2011/09/11 02:46:10 INFO  - jmeter.save.SaveService: Testplan (JMX) version: 2.2. Testlog (JTL) version: 2.2 
+2011/09/11 02:46:10 INFO  - jmeter.save.SaveService: Using SaveService properties file encoding UTF-8 
+2011/09/11 02:46:10 INFO  - jmeter.save.SaveService: Using SaveService properties file version 959116 
+2011/09/11 02:46:10 INFO  - jmeter.save.SaveService: Using SaveService properties version 2.1 
+2011/09/11 02:46:10 INFO  - jmeter.save.SaveService: All converter versions present and correct 
+2011/09/11 02:46:10 INFO  - jmeter.samplers.SampleResult: Note: Sample TimeStamps are START times 
+2011/09/11 02:46:10 INFO  - jmeter.samplers.SampleResult: sampleresult.default.encoding is set to ISO-8859-1 
+2011/09/11 02:46:10 INFO  - kg.apc.jmeter.vizualizers.AggregateReportGui: Saving CSV to C:\results\New Folder\PRINTBFC-EX_Comp1_users-15_rangeUsers-361-375_server-www.vsakis.lt_startTime-2011_08_03__17.50.21_REPORT_SUMMARIZED.csv 
