@@ -24,28 +24,24 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 public class GenerateCsvReportsWorker extends FrameView {
-           // (start - end)/1000ms/3600 = hours
-       // date    =((currT_Long+7200000)/86400000+25569)+1/24 
-    //TODO: STOP --- Done? Test phase activated.
+    // (start - end)/1000ms/3600 = hours
+    // date    =((currT_Long+7200000)/86400000+25569)+1/24 
     //TODO: which lines(for main comms) in array
     //TODO: one big project: connect all jmeter tools into one
     //TODO: test with RU
     //TODO: Math.Round errors,
-    //TODO: 2 tabs: single, multiple
     //TODO: change e.printStackTrace(); to printString(smth like that)
     //TODO: everything by acctions?
     //TODO: try bars once again
     //TODO: settings.ini
     //TODO: 46 46 46 46 <-- only last value is starting of trimm
     //TODO: prevent empty fields
-    //TODO: in fields add Please select folder
     //TODO: test stop
     //TODO: disable fields when working
     //TODO: MANO jtl aggregated skaiciavimas OR OR OR make this project with png generation(maybe only for main comms?OMG!)
     //^^^^bl, gi jam reik JMETER, tai gal tada savo plugins versija isleist(ir toliau daryt kopinima plugins->JMeter\lib)?
     //TODO: in trimmed report number order is bad 8 9 10 1
-    //TODO: big feature: print all multi reports on one xlsx file
-    
+    //TODO: big feature: print all multi reports on one xlsx file    
     //TODO: array of main comms!
 
     public GenerateCsvReportsWorker(SingleFrameApplication app) {
@@ -772,14 +768,15 @@ public class GenerateCsvReportsWorker extends FrameView {
     public static List<String> extensionsToIgnore;
     public static List<String> extensionsToSearchFor;
     private static ArrayList<File> aListOfJTLFiles = new ArrayList<File>();
-    private static int[] filledArray10 = {0,2,4,5,6,7};
+    private static int[] filledArray10 = {0,1,2,4,5,6,7};
     
     private static String jMeterPath = "C:\\jakarta-jmeter-2.4";
     private static String compilerPath = "\\bin\\cmd\\JMeterPluginsCMD.jar";
     private static final String attachString = "_REPORT";
     private static final String attachString2 = "_SUMMARIZED"; //TODO: listener for checkboxes and changing of resultField_ ?~~
     private static final String attachStringTrimmed = "TRIMMED_"; //TODO: print used timeline(or in csv?)
-//    private static final String trimmedJTLString = "TRIMMED_";
+    private static final String attachStringError = "ERRORS_";
+    private static boolean containsErrors = false;
     private static final String quote = "\"";
     private static final String TStart = "\" ts=\"";
     private static boolean LOCALE_LT;
@@ -878,7 +875,18 @@ public class GenerateCsvReportsWorker extends FrameView {
            bf.close();
            //delete old, rename new one
            Utils.deleteFile(csvFile);
-           Utils.renameFile(csvFileCorr,csvFile);
+           
+           if (containsErrors){
+               
+              csvFile = new File(csvFile.getParentFile().toString()+File.separator+attachStringError+csvFile.getName()); //reuse, atatch Error 
+              Utils.renameFile(csvFileCorr,csvFile);
+              containsErrors = false;
+           }
+           else{
+              Utils.renameFile(csvFileCorr,csvFile); 
+           }
+           
+           
            System.out.println("Adjustion done.");
            
        }
@@ -940,19 +948,19 @@ public class GenerateCsvReportsWorker extends FrameView {
    public static String splitLineByCol(String line, Boolean firstLine){
        String[] splitArray = new String[9];
        splitArray = line.split(sepTO);       
-       line = "";
-       
+       line = "";       
        
        if(!firstLine){
 //           System.out.println("Before multiply:"+splitArray[7]);
            splitArray[7] = multiplyString(splitArray[7]);
 //           System.out.println("After multiply:"+splitArray[7]);
 //           splitArray[7] = roundString(splitArray[7]); //TODO: two numbers after comma
+           if (!splitArray[7].substring(0, 3).matches("0.0") ){
+               containsErrors = true;
+           }
            if (LOCALE_LT) splitArray[7] = splitArray[7].replace(".",comma); // LT
-//           System.out.println("After Locale:"+splitArray[7]);
        }
 
-//       System.out.println("--------------------------------------------------------------------");  
        for(int ite=0;ite<10;ite++){
            if (colsList.isSelectedIndex(ite)) line+=splitArray[ite]+sepTO;
        }
@@ -1259,7 +1267,7 @@ public class GenerateCsvReportsWorker extends FrameView {
             if (savResUsed_multi)
                 resultF_multi.setText(resultSavingFolder_multi.toString());
             else
-                resultF_multi.setText(inputJTL_multi.toString());                        
+                resultF_multi.setText(inputJTL_multi.toString());     //TODO: children folders?~~                   
             genCsvB_multi.setEnabled(true);
         }
         else if (rr == JFileChooser.CANCEL_OPTION);
@@ -1282,7 +1290,7 @@ public class GenerateCsvReportsWorker extends FrameView {
     }   
     
     //TRiMMED
-    @Action //TODO: actually trimming
+    @Action 
     public Task Generate_trimmedAction() {
         return new Generate_trimmedActionTask(getApplication());
     }
