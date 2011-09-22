@@ -43,6 +43,7 @@ public class GenerateCsvReportsWorker extends FrameView {
     //TODO: in trimmed report number order is bad 8 9 10 1
     //TODO: big feature: print all multi reports on one xlsx file    
     //TODO: array of main comms!
+    //TODO: && || instead of & | might cause additional lag
 
     public GenerateCsvReportsWorker(SingleFrameApplication app) {
         super(app);       
