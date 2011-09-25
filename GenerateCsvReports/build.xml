@@ -72,6 +72,7 @@
 
     -->
     	<target name="-post-jar">
-		<copy todir="C:/distApps/Generate CSV Reports" file="${dist.jar}" />
+<!--		<copy todir="C:/distApps/Generate CSV Reports" file="${dist.jar}" />-->
+                <copy todir="C:/distApps/JMeter reporting" file="${dist.jar}" />
 	</target>
 </project>
