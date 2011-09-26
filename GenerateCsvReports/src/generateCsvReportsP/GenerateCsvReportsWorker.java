@@ -80,7 +80,7 @@ public class GenerateCsvReportsWorker extends FrameView {
     }
    
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
@@ -772,17 +772,17 @@ public class GenerateCsvReportsWorker extends FrameView {
 
             setComponent(mainPanel);
             setStatusBar(statusPanel);
-        }// </editor-fold>                        
+        }// </editor-fold>//GEN-END:initComponents
 
-    private void localeSepCmbActionPerformed(java.awt.event.ActionEvent evt) {                                             
+    private void localeSepCmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localeSepCmbActionPerformed
         if(localeSepCmb.getSelectedIndex()==0)
             GenSettingsWorker.CSV_DELIM = ';';
 
         if(localeSepCmb.getSelectedIndex()==1)
             GenSettingsWorker.CSV_DELIM = ',';
-    }                                            
+    }//GEN-LAST:event_localeSepCmbActionPerformed
     
-    // Variables declaration - do not modify                     
+    // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseB_RTOT;
     private javax.swing.JButton browseB_multi;
     private javax.swing.JButton browseB_single;
@@ -847,7 +847,7 @@ public class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JTextField timelineF;
     private javax.swing.JTextField timelineStartF;
     private javax.swing.JTextField trimmedJTLF;
-    // End of variables declaration                   
+    // End of variables declaration//GEN-END:variables
     public static String newLine = System.getProperty("line.separator"); 
     public String errLabelTargetFolder = "Please choose a directory.";
     private final String specifyTargetFile = "Please select a file first...";
