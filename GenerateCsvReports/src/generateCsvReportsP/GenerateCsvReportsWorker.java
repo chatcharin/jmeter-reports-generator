@@ -22,6 +22,8 @@ import java.util.List;
 import java.text.DecimalFormat;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+//import kg.apc.jmeter.PluginsCMDWorker;
+import java.util.Locale;
 
 public class GenerateCsvReportsWorker extends FrameView {
     // (start - end)/1000ms/3600 = hours
@@ -44,6 +46,10 @@ public class GenerateCsvReportsWorker extends FrameView {
     //TODO: big feature: print all multi reports on one xlsx file    
     //TODO: array of main comms!
     //TODO: && || instead of & | might cause additional lag
+    
+    //TODO: fix error checking, because 0.0153 does not get counted
+    //TODO: move worker out of this class
+    //TODO: what if no files were found by processF?
 
     public GenerateCsvReportsWorker(SingleFrameApplication app) {
         super(app);       
@@ -52,14 +58,23 @@ public class GenerateCsvReportsWorker extends FrameView {
         setExtensionsToSearchFor("JTL");
 //        System.out.println(colsList.getModel().getSize());
 //        ArrayList<Boolean> colsArr = new ArrayList<Boolean>();
+//        boolean[] colsArr = new boolean[8];
 //        for(int ite=0;ite<8;ite++){
-//            if (colsList.isSelectedIndex(ite)) colsArr.add(true);
-//            else colsArr.add(false);
+//            if (colsList.isSelectedIndex(ite)) colsArr[ite]=true;
+//            else colsArr[ite]=false;
 //           
 //        }
-////       for (int rr=0; rr<colsArr.size();rr++)
-////           System.err.println(colsArr.get(rr));
-//       
+//       for (int rr=0; rr<colsArr.length;rr++)
+//           System.err.println(colsArr[rr]);
+//       fillStepsArray();
+//                Boolean [] colsArray = new Boolean [8];
+//        for(int ite=0;ite<8;ite++){
+//            if (colsList.isSelectedIndex(ite)) colsArray[ite]=true;
+//            else colsArray[ite]=false;
+//           
+//        }
+//        PluginsCMDWorker.initializeProperties();
+//        PluginsCMDWorker.fillStepsArray(colsArray);
 //        System.exit(0);
         statusMessageLabel.setText("Welcome.");
 //        URL url = ClassLoader.getSystemResource("iceteareplacer/resources/icon.png");
@@ -776,10 +791,10 @@ public class GenerateCsvReportsWorker extends FrameView {
 
     private void localeSepCmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localeSepCmbActionPerformed
         if(localeSepCmb.getSelectedIndex()==0)
-            GenSettingsWorker.CSV_DELIM = ';';
+            GenSettingsWorker.setCSVDelim(';');
 
         if(localeSepCmb.getSelectedIndex()==1)
-            GenSettingsWorker.CSV_DELIM = ',';
+            GenSettingsWorker.setCSVDelim(',');
     }//GEN-LAST:event_localeSepCmbActionPerformed
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -863,7 +878,7 @@ public class GenerateCsvReportsWorker extends FrameView {
     private static File resultSavingFolder_multi;
     private static boolean savResUsed_multi = false;
     private static File inputJTL_RTOT;
-    private static File resultPNG_RTOT;
+//    private static File resultPNG_RTOT;
     private static File resultSavingFolder_RTOT;
     private static boolean savResUsed_RTOT = false; 
     private static File inputJTL_trimmed;
@@ -881,16 +896,15 @@ public class GenerateCsvReportsWorker extends FrameView {
     private static ArrayList<File> aListOfJTLFiles = new ArrayList<File>();
     private static int[] filledArray10 = {0,1,2,4,5,6,7};
 
-    private static final String attachString = "_REPORT";
+    private static final String attachString = "_REPORT"; //TODO: remove 'final'
     private static final String attachString2 = "_SUMMARIZED"; //TODO: listener for checkboxes and changing of resultField_ ?~~
     private static final String attachStringTrimmed = "TRIMMED_"; //TODO: print used timeline(or in csv?)
     private static final String attachStringError = "ERRORS_";
-    private static final String attachReports = "_Aggregated-reports";
+    private final String attachReports = "_Aggregated-reports";
+    private static final String attachRTOT = "_ResponseTimesOverTime";
 
     private static final String quote = "\"";
-    private static final String TStart = "\" ts=\"";
-    private static boolean LOCALE_LT;
-    private static boolean LOCALE_EN;    
+    private static final String TStart = "\" ts=\"";  
     public static final String comma = ",";
     public static final String semicolon = ";";
     public static final String dot = ".";
@@ -1037,7 +1051,7 @@ public class GenerateCsvReportsWorker extends FrameView {
            if (!splitArray[7].substring(0, 3).matches("0.0") ){
 //               containsErrors = true;
            }
-           if (LOCALE_LT) splitArray[7] = splitArray[7].replace(".",comma); // LT
+//           if (LOCALE_LT) splitArray[7] = splitArray[7].replace(".",comma); // LT
        }
 
        for(int ite=0;ite<10;ite++){
@@ -1260,32 +1274,31 @@ public class GenerateCsvReportsWorker extends FrameView {
         @Override protected Object doInBackground() {
             
             processF(inputJTL_multi); //FILL aListOfJTLFiles
+            formCsvParams();
+            
             File jtlF;
             File csvF;
+            File csvF_Err;
+            String fileNameEx;            
+
             for (int bl=0;bl<aListOfJTLFiles.size()&&doCont;bl++){ 
 
                 jtlF = aListOfJTLFiles.get(bl); //reuse var( do not!)
-                statusMessageLabel.setText("Working with: "+aListOfJTLFiles.get(bl).toString());
-                String fileNameEx = jtlF.getName();
-                fileNameEx = fileNameEx.substring(0, fileNameEx.length()-4);
-//                String filePathEx;
-//                if (savResUsed_multi)
-//                    filePathEx = resultSavingFolder_multi.toString();
-//                else
-//                    filePathEx = inputJTL_multi.getParentFile().toString()+attachReports; //set folder
-                
+                statusMessageLabel.setText("Working with: "+jtlF.toString());
+                fileNameEx = jtlF.getName();
+                fileNameEx = fileNameEx.substring(0, fileNameEx.length()-4);               
                 
                 csvF = new File(resultSavingFolder_multi+File.separator+fileNameEx+".csv");
                 
-                Utils.deleteFile(csvF);
+                Utils.deleteFile(csvF); //if exists
                 GenSettingsWorker.init_CSV(jtlF,csvF);
-                
-                if(GenSettingsWorker.checkForErrors())
-                    Utils.renameFile(csvF, new File(csvF.getParentFile()+File.separator+attachStringError+csvF.getName()));
+
+                if(GenSettingsWorker.checkForErrors()){
+                    csvF_Err = new File(csvF.getParentFile()+File.separator+attachStringError+csvF.getName());
+                    Utils.deleteFile(csvF_Err);//if exists
+                    Utils.renameFile(csvF, csvF_Err);
                 }
-
-
-            System.out.println("DONE.");
+                }
             return null;  // return your result
         }
         @Override protected void cancelled() {                      
@@ -1295,7 +1308,7 @@ public class GenerateCsvReportsWorker extends FrameView {
         @Override protected void succeeded(Object result) {
             if (!doCont) statusMessageLabel.setText("Aborted by user.");
             if (doCont)  statusMessageLabel.setText("Done Multiple files.");
-
+                System.out.println("DONE CSV's.");
                 browseB_multi.setEnabled(true);
                 genCsvB_multi.setEnabled(true);
                 saveResB_multi.setEnabled(true);
@@ -1311,30 +1324,25 @@ public class GenerateCsvReportsWorker extends FrameView {
     }
 
     @Action
-    public void Browse_multiAction() {
-        try{
-            
-            int rr = chooseJTL_multi.showOpenDialog(null);
-            if(rr == JFileChooser.APPROVE_OPTION){
-                inputJTL_multi = chooseJTL_multi.getSelectedFile();
+    public void Browse_multiAction() throws Exception {
 
-                inputF_multi.setText(inputJTL_multi.toString());
-                if (savResUsed_multi)
-                    resultF_multi.setText(resultSavingFolder_multi.toString()); //TODO: remove else, leave only if
-                else{
-                    resultSavingFolder_multi = new File(inputJTL_multi.getCanonicalPath()+attachReports);
-                    resultSavingFolder_multi.mkdir();
-                    resultF_multi.setText(resultSavingFolder_multi.toString());
-                }     //TODO: children folders?~~                   
-                genCsvB_multi.setEnabled(true);
-            }
-            else if (rr == JFileChooser.CANCEL_OPTION);
-            else
-                JOptionPane.showMessageDialog(null,errLabelTargetFolder,messTitleLabel,JOptionPane.WARNING_MESSAGE);
-        
-        }catch(Exception er){
-            
+        int rr = chooseJTL_multi.showOpenDialog(null);
+        if(rr == JFileChooser.APPROVE_OPTION){
+            inputJTL_multi = chooseJTL_multi.getSelectedFile();
+
+            inputF_multi.setText(inputJTL_multi.toString());
+            if (savResUsed_multi)
+                resultF_multi.setText(resultSavingFolder_multi.toString()); //TODO: remove else, leave only if
+            else{
+                resultSavingFolder_multi = new File(inputJTL_multi.getCanonicalPath()+attachReports);
+                resultSavingFolder_multi.mkdir();
+                resultF_multi.setText(resultSavingFolder_multi.toString());
+            }     //TODO: children folders?~~                   
+            genCsvB_multi.setEnabled(true);
         }
+        else if (rr == JFileChooser.CANCEL_OPTION);
+        else
+            JOptionPane.showMessageDialog(null,errLabelTargetFolder,messTitleLabel,JOptionPane.WARNING_MESSAGE);
     }
 
     @Action
@@ -1449,31 +1457,26 @@ public class GenerateCsvReportsWorker extends FrameView {
             stopB_RTOT.setEnabled(true);
             statusMessageLabel.setText("Calculating[M]..."); 
         }
-        @Override protected Object doInBackground() {
+        @Override protected Object doInBackground() { //TODO: do as multiCSV's
             
             processF(inputJTL_RTOT); //FILL aListOfJTLFiles
+            formPngParams();
+            
+            File jtlF;
+            File pngF;
+            String fileNameEx;    
             
             for (int bl=0;bl<aListOfJTLFiles.size()&&doCont;bl++){ 
 
-                inputJTL_RTOT = aListOfJTLFiles.get(bl);
-                statusMessageLabel.setText("Working with: "+aListOfJTLFiles.get(bl).toString());
-                String fileNameEx = inputJTL_RTOT.getName();
-                fileNameEx = fileNameEx.substring(0, fileNameEx.length()-4);
-                String filePathEx;
-                if (savResUsed_RTOT)
-                    filePathEx = resultSavingFolder_RTOT.toString();
-                else
-                    filePathEx = inputJTL_RTOT.getParentFile().toString();
+                jtlF = aListOfJTLFiles.get(bl);
+                statusMessageLabel.setText("Working with: "+jtlF.toString());
+                fileNameEx = jtlF.getName();
+                fileNameEx = fileNameEx.substring(0, fileNameEx.length()-4);                
+
+                pngF = new File(resultSavingFolder_RTOT+File.separator+fileNameEx+".png");
                 
-                if (mainCommOnlyC.isSelected()){                    
-                    resultPNG_RTOT = new File(filePathEx+File.separator+fileNameEx+attachString2+".png"); 
-                }
-                else{
-                    resultPNG_RTOT = new File(filePathEx+File.separator+fileNameEx+".png");
-                }
-                
-                Utils.deleteFile(resultPNG_RTOT);
-                GenSettingsWorker.init_PNG(inputJTL_RTOT, resultPNG_RTOT);              
+                Utils.deleteFile(pngF); // if exists
+                GenSettingsWorker.init_PNG(jtlF, pngF);              
             }
             return null;  // return your result
         }
@@ -1484,7 +1487,7 @@ public class GenerateCsvReportsWorker extends FrameView {
         @Override protected void succeeded(Object result) {
             if (!doCont) statusMessageLabel.setText("Aborted by user.");
             if (doCont)  statusMessageLabel.setText("Done Multiple graphs.");
-
+            System.out.println("DONE PNG's");
                 browseB_RTOT.setEnabled(true);
                 genB_RTOT.setEnabled(true);
                 saveResB_RTOT.setEnabled(true);
@@ -1500,16 +1503,20 @@ public class GenerateCsvReportsWorker extends FrameView {
     }
 
     @Action
-    public void Browse_RTOTAction() {
+    public void Browse_RTOTAction() throws Exception {
+
         int rr = chooseJTL_RTOT.showOpenDialog(null);
         if(rr == JFileChooser.APPROVE_OPTION){
             inputJTL_RTOT = chooseJTL_RTOT.getSelectedFile();
-            
+
             inputF_RTOT.setText(inputJTL_RTOT.toString());
             if (savResUsed_RTOT)
+                resultF_RTOT.setText(resultSavingFolder_RTOT.toString());//TODO: remove else, leave only if
+            else{
+                resultSavingFolder_RTOT = new File(inputJTL_RTOT.getCanonicalPath()+attachRTOT);
+                resultSavingFolder_RTOT.mkdir();
                 resultF_RTOT.setText(resultSavingFolder_RTOT.toString());
-            else
-                resultF_RTOT.setText(inputJTL_RTOT.toString());     //TODO: children folders?~~                   
+            }     //TODO: children folders?~~                   
             genB_RTOT.setEnabled(true);
         }
         else if (rr == JFileChooser.CANCEL_OPTION);
@@ -1541,6 +1548,32 @@ public class GenerateCsvReportsWorker extends FrameView {
         }
     }
 
-
-    
+    public static void fillStepsArray(){
+        for(int ite=0;ite<8;ite++){
+            if (colsList.isSelectedIndex(ite)) GenSettingsWorker.colsArray[ite]=true;
+            else GenSettingsWorker.colsArray[ite]=false;           
+        }
+//        GenSettingsWorker.setStepsArray();
+    }
+    private char getSelectedDelim(){
+        if(localeSepCmb.getSelectedIndex()==0)
+            return ';';
+//        if(localeSepCmb.getSelectedIndex()==1)
+        else
+            return ',';
+    }
+    private void formCsvParams(){      
+        GenSettingsWorker.initJMeterProps();
+        GenSettingsWorker.setExportMode(2);
+        GenSettingsWorker.setPluginType(2);
+        GenSettingsWorker.setCSVDelim(getSelectedDelim());
+        fillStepsArray();
+        GenSettingsWorker.setStepsArray();
+    }
+    private void formPngParams(){
+        GenSettingsWorker.initJMeterProps();
+        GenSettingsWorker.setExportMode(1);
+        GenSettingsWorker.setPluginType(1);
+    }
+     
 }
