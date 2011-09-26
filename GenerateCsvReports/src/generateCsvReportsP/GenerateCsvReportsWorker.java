@@ -80,7 +80,7 @@ public class GenerateCsvReportsWorker extends FrameView {
     }
    
     @SuppressWarnings("unchecked")
-    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">                          
     private void initComponents() {
         java.awt.GridBagConstraints gridBagConstraints;
 
@@ -772,17 +772,17 @@ public class GenerateCsvReportsWorker extends FrameView {
 
             setComponent(mainPanel);
             setStatusBar(statusPanel);
-        }// </editor-fold>//GEN-END:initComponents
+        }// </editor-fold>                        
 
-    private void localeSepCmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localeSepCmbActionPerformed
+    private void localeSepCmbActionPerformed(java.awt.event.ActionEvent evt) {                                             
         if(localeSepCmb.getSelectedIndex()==0)
             GenSettingsWorker.CSV_DELIM = ';';
 
         if(localeSepCmb.getSelectedIndex()==1)
             GenSettingsWorker.CSV_DELIM = ',';
-    }//GEN-LAST:event_localeSepCmbActionPerformed
+    }                                            
     
-    // Variables declaration - do not modify//GEN-BEGIN:variables
+    // Variables declaration - do not modify                     
     private javax.swing.JButton browseB_RTOT;
     private javax.swing.JButton browseB_multi;
     private javax.swing.JButton browseB_single;
@@ -847,7 +847,7 @@ public class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JTextField timelineF;
     private javax.swing.JTextField timelineStartF;
     private javax.swing.JTextField trimmedJTLF;
-    // End of variables declaration//GEN-END:variables
+    // End of variables declaration                   
     public static String newLine = System.getProperty("line.separator"); 
     public String errLabelTargetFolder = "Please choose a directory.";
     private final String specifyTargetFile = "Please select a file first...";
@@ -859,7 +859,7 @@ public class GenerateCsvReportsWorker extends FrameView {
     private static File inputJTL_single;    
     private static File resultCSV_single;    
     private static File inputJTL_multi;
-    private static File resultCSV_multi;
+//    private static File resultCSV_multi;
     private static File resultSavingFolder_multi;
     private static boolean savResUsed_multi = false;
     private static File inputJTL_RTOT;
@@ -885,6 +885,7 @@ public class GenerateCsvReportsWorker extends FrameView {
     private static final String attachString2 = "_SUMMARIZED"; //TODO: listener for checkboxes and changing of resultField_ ?~~
     private static final String attachStringTrimmed = "TRIMMED_"; //TODO: print used timeline(or in csv?)
     private static final String attachStringError = "ERRORS_";
+    private static final String attachReports = "_Aggregated-reports";
 
     private static final String quote = "\"";
     private static final String TStart = "\" ts=\"";
@@ -1259,29 +1260,29 @@ public class GenerateCsvReportsWorker extends FrameView {
         @Override protected Object doInBackground() {
             
             processF(inputJTL_multi); //FILL aListOfJTLFiles
-            
+            File jtlF;
+            File csvF;
             for (int bl=0;bl<aListOfJTLFiles.size()&&doCont;bl++){ 
 
-                inputJTL_multi = aListOfJTLFiles.get(bl); //reuse var
+                jtlF = aListOfJTLFiles.get(bl); //reuse var( do not!)
                 statusMessageLabel.setText("Working with: "+aListOfJTLFiles.get(bl).toString());
-                String fileNameEx = inputJTL_multi.getName();
+                String fileNameEx = jtlF.getName();
                 fileNameEx = fileNameEx.substring(0, fileNameEx.length()-4);
-                String filePathEx;
-                if (savResUsed_multi)
-                    filePathEx = resultSavingFolder_multi.toString();
-                else
-                    filePathEx = inputJTL_multi.getParentFile().toString();
+//                String filePathEx;
+//                if (savResUsed_multi)
+//                    filePathEx = resultSavingFolder_multi.toString();
+//                else
+//                    filePathEx = inputJTL_multi.getParentFile().toString()+attachReports; //set folder
                 
-                if (mainCommOnlyC.isSelected())
-                    resultCSV_multi = new File(filePathEx+File.separator+fileNameEx+attachString+attachString2+".csv");                
-                else
-                    resultCSV_multi = new File(filePathEx+File.separator+fileNameEx+attachString+".csv");
                 
-                Utils.deleteFile(resultCSV_multi);
-                GenSettingsWorker.init_CSV(inputJTL_multi,resultCSV_multi);
-            if(GenSettingsWorker.checkForErrors())
-                Utils.renameFile(resultCSV_multi, new File(resultCSV_multi.getParentFile()+File.separator+attachStringError+resultCSV_multi.getName()));
-            }
+                csvF = new File(resultSavingFolder_multi+File.separator+fileNameEx+".csv");
+                
+                Utils.deleteFile(csvF);
+                GenSettingsWorker.init_CSV(jtlF,csvF);
+                
+                if(GenSettingsWorker.checkForErrors())
+                    Utils.renameFile(csvF, new File(csvF.getParentFile()+File.separator+attachStringError+csvF.getName()));
+                }
 
 
             System.out.println("DONE.");
@@ -1311,20 +1312,29 @@ public class GenerateCsvReportsWorker extends FrameView {
 
     @Action
     public void Browse_multiAction() {
-        int rr = chooseJTL_multi.showOpenDialog(null);
-        if(rr == JFileChooser.APPROVE_OPTION){
-            inputJTL_multi = chooseJTL_multi.getSelectedFile();
+        try{
             
-            inputF_multi.setText(inputJTL_multi.toString());
-            if (savResUsed_multi)
-                resultF_multi.setText(resultSavingFolder_multi.toString());
+            int rr = chooseJTL_multi.showOpenDialog(null);
+            if(rr == JFileChooser.APPROVE_OPTION){
+                inputJTL_multi = chooseJTL_multi.getSelectedFile();
+
+                inputF_multi.setText(inputJTL_multi.toString());
+                if (savResUsed_multi)
+                    resultF_multi.setText(resultSavingFolder_multi.toString()); //TODO: remove else, leave only if
+                else{
+                    resultSavingFolder_multi = new File(inputJTL_multi.getCanonicalPath()+attachReports);
+                    resultSavingFolder_multi.mkdir();
+                    resultF_multi.setText(resultSavingFolder_multi.toString());
+                }     //TODO: children folders?~~                   
+                genCsvB_multi.setEnabled(true);
+            }
+            else if (rr == JFileChooser.CANCEL_OPTION);
             else
-                resultF_multi.setText(inputJTL_multi.toString());     //TODO: children folders?~~                   
-            genCsvB_multi.setEnabled(true);
+                JOptionPane.showMessageDialog(null,errLabelTargetFolder,messTitleLabel,JOptionPane.WARNING_MESSAGE);
+        
+        }catch(Exception er){
+            
         }
-        else if (rr == JFileChooser.CANCEL_OPTION);
-        else
-            JOptionPane.showMessageDialog(null,errLabelTargetFolder,messTitleLabel,JOptionPane.WARNING_MESSAGE);
     }
 
     @Action
