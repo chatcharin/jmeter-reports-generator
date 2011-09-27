@@ -20,10 +20,11 @@ import java.math.RoundingMode;
 import java.util.ArrayList; 
 import java.util.List;
 import java.text.DecimalFormat;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
+//import javax.swing.JDialog;
+//import javax.swing.JFrame;
 //import kg.apc.jmeter.PluginsCMDWorker;
-import java.util.Locale;
+
+//import org.apache.jorphan.gui.NumberRenderer;
 
 public class GenerateCsvReportsWorker extends FrameView {
     // (start - end)/1000ms/3600 = hours
@@ -50,6 +51,7 @@ public class GenerateCsvReportsWorker extends FrameView {
     //TODO: fix error checking, because 0.0153 does not get counted
     //TODO: move worker out of this class
     //TODO: what if no files were found by processF?
+    //TODO: put cursor at start after setText
 
     public GenerateCsvReportsWorker(SingleFrameApplication app) {
         super(app);       
@@ -1077,7 +1079,7 @@ public class GenerateCsvReportsWorker extends FrameView {
    public static int getTimeline(File inputJTL){
        
        try{
-           BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(inputJTL),"UTF8")); //TODO: simplify reader for better perf?
+           BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(inputJTL)));
            String line;
            int iStartT;
            int iEndT;
@@ -1108,7 +1110,7 @@ public class GenerateCsvReportsWorker extends FrameView {
 
        }
        catch(Exception erp){
-           erp.printStackTrace();
+//           erp.printStackTrace();
            return 0;
        }       
    }
@@ -1116,7 +1118,7 @@ public class GenerateCsvReportsWorker extends FrameView {
    public static void getSELinesNo(File inputJTL, int globStart, int globEnd){ // AKA get dates for StartEnd
 
        try{
-           BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(inputJTL),"UTF8")); //TODO: simplify reader for better perf?
+           BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(inputJTL)));
            String line;
            int iStartT;
            int iEndT;
@@ -1154,25 +1156,25 @@ public class GenerateCsvReportsWorker extends FrameView {
            System.out.println("Ending point line: "+lastValLine);
        }
        catch(Exception erp){
-           erp.printStackTrace();
+//           erp.printStackTrace();
        }       
    }
 
- public static void formTrimmedJTL(File inputJTL, File resultJTL, int firstValLine, int lastValLine){
+   public static void formTrimmedJTL(File inputJTL, File resultJTL, int firstValLine, int lastValLine){
 
        try{
-           BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(inputJTL),"UTF8"));
-           BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(resultJTL,false),"UTF8")); 
+           BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(inputJTL)));
+           BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(resultJTL,false))); 
            String line;
            int cnt=0;
-           bw.append(HeadLine1+newLine+HeadLine2+newLine); //TODO: if from start?
+           bw.append(HeadLine1+newLine+HeadLine2+newLine);
            while((line = bf.readLine()) !=null){
                cnt++;
                if(cnt>=firstValLine && cnt <= lastValLine){
                    bw.append(line+newLine);
                }               
            }
-           bw.append(FooterLine+newLine);//TODO: if to END?
+           bw.append(FooterLine+newLine);
            bf.close();
            bw.close();
           
@@ -1288,8 +1290,7 @@ public class GenerateCsvReportsWorker extends FrameView {
                 fileNameEx = jtlF.getName();
                 fileNameEx = fileNameEx.substring(0, fileNameEx.length()-4);               
                 
-                csvF = new File(resultSavingFolder_multi+File.separator+fileNameEx+".csv");
-                
+                csvF = new File(resultSavingFolder_multi+File.separator+fileNameEx+".csv");                
                 Utils.deleteFile(csvF); //if exists
                 GenSettingsWorker.init_CSV(jtlF,csvF);
 
@@ -1374,15 +1375,15 @@ public class GenerateCsvReportsWorker extends FrameView {
             stopB_trimmed.setEnabled(true);
             statusMessageLabel.setText("Calculating...");
         }
-        @Override protected Object doInBackground() {
+        @Override protected Object doInBackground() { //TODO: in generated CSV rows are not in order(5,3,7,8,1)
             statusMessageLabel.setText("Working with: "+inputJTL_trimmed);  
+            formCsvParams();
             Utils.deleteFile(resultCSV_trimmed);
             Utils.deleteFile(trimmedJTL);
 
             getSELinesNo(inputJTL_trimmed,Integer.parseInt(timelineStartF.getText()),Integer.parseInt(timelineEndF.getText())); //TODO: fields for ints only
             formTrimmedJTL(inputJTL_trimmed, trimmedJTL, firstValLine, lastValLine);
             GenSettingsWorker.init_CSV(trimmedJTL,resultCSV_trimmed);
-//            adjustCsv(resultCSV_trimmed, new File(resultCSV_trimmed+"2"));
             System.out.println("DONE");
             return null;  // return your result
         }
@@ -1391,7 +1392,7 @@ public class GenerateCsvReportsWorker extends FrameView {
             System.err.println("ABORTED");
         }
         @Override protected void succeeded(Object result) {
-//            super.succeeded(result);
+            
             if (!doCont) statusMessageLabel.setText("Aborted by user.");
             if (doCont)  statusMessageLabel.setText("Done. Results file: "+resultCSV_trimmed);
 
@@ -1412,23 +1413,21 @@ public class GenerateCsvReportsWorker extends FrameView {
             String fileNameWExt = fileName.substring(0, fileName.length()-4);
             String filePathEx = inputJTL_trimmed.getParentFile().toString();
             
-            trimmedJTL = new File(filePathEx+File.separator+attachStringTrimmed+fileName);
-            
-            if (mainCommOnlyC.isSelected())
-                resultCSV_trimmed = new File(filePathEx+File.separator+attachStringTrimmed+fileNameWExt+attachString+attachString2+".csv");            
-            else
-                resultCSV_trimmed = new File(filePathEx+File.separator+attachStringTrimmed+fileNameWExt+attachString+".csv");
+            trimmedJTL = new File(filePathEx+File.separator+attachStringTrimmed+fileName);            
+            resultCSV_trimmed = new File(filePathEx+File.separator+attachStringTrimmed+fileNameWExt+".csv");            
             
             trimmedJTLF.setText(trimmedJTL.toString());
             inputF_trimmed.setText(inputJTL_trimmed.toString()); 
             resultF_trimmed.setText(resultCSV_trimmed.toString());
             timelineF.setText(String.valueOf(getTimeline(inputJTL_trimmed)));
+            timelineStartF.setText("");
+            timelineEndF.setText("");
+            
             genCsvB_trimmed.setEnabled(true);
             timelineStartF.setEnabled(true);
             timelineEndF.setEnabled(true);
             timelineF.setEnabled(true);
-            timelineStartF.setText("");
-            timelineEndF.setText("");
+
         }
         else if (rr == JFileChooser.CANCEL_OPTION);
         else
@@ -1457,7 +1456,7 @@ public class GenerateCsvReportsWorker extends FrameView {
             stopB_RTOT.setEnabled(true);
             statusMessageLabel.setText("Calculating[M]..."); 
         }
-        @Override protected Object doInBackground() { //TODO: do as multiCSV's
+        @Override protected Object doInBackground() { 
             
             processF(inputJTL_RTOT); //FILL aListOfJTLFiles
             formPngParams();
@@ -1555,6 +1554,7 @@ public class GenerateCsvReportsWorker extends FrameView {
         }
 //        GenSettingsWorker.setStepsArray();
     }
+    
     private char getSelectedDelim(){
         if(localeSepCmb.getSelectedIndex()==0)
             return ';';
@@ -1562,6 +1562,7 @@ public class GenerateCsvReportsWorker extends FrameView {
         else
             return ',';
     }
+    
     private void formCsvParams(){      
         GenSettingsWorker.initJMeterProps();
         GenSettingsWorker.setExportMode(2);
@@ -1570,6 +1571,7 @@ public class GenerateCsvReportsWorker extends FrameView {
         fillStepsArray();
         GenSettingsWorker.setStepsArray();
     }
+    
     private void formPngParams(){
         GenSettingsWorker.initJMeterProps();
         GenSettingsWorker.setExportMode(1);
