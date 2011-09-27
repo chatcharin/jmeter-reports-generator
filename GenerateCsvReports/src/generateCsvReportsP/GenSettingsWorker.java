@@ -24,14 +24,13 @@ public class GenSettingsWorker {
     public static Boolean [] colsArray = new Boolean [8];
 
     public static void init_PNG(File in, File out){
-
+        
         PluginsCMDWorker.setInputFile(in.toString());
         PluginsCMDWorker.setOutputPNGFile(out.toString());
         PluginsCMDWorker.doJob();
     }
     
-    public static void init_CSV(File in, File out){
-        
+    public static void init_CSV(File in, File out){        
         PluginsCMDWorker.setInputFile(in.toString());
         PluginsCMDWorker.setOutputCSVFile(out.toString());
         PluginsCMDWorker.doJob();
@@ -62,6 +61,12 @@ public class GenSettingsWorker {
     }
     public static void setCSVDelim(char delim){
         org.apache.jmeter.save.CSVSaveService.setDelim(delim);
+    }
+    public static void setRealTime(boolean chk){
+        if (chk)
+            PluginsCMDWorker.setRealTime(true);
+        else 
+            PluginsCMDWorker.setRealTime(false);
     }
         
     //TODO: check if everything is set. Maybe in doJob()'s class?

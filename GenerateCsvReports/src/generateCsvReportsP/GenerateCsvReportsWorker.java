@@ -20,39 +20,33 @@ import java.math.RoundingMode;
 import java.util.ArrayList; 
 import java.util.List;
 import java.text.DecimalFormat;
-//import javax.swing.JDialog;
-//import javax.swing.JFrame;
-//import kg.apc.jmeter.PluginsCMDWorker;
-
-//import org.apache.jorphan.gui.NumberRenderer;
 
 public final class GenerateCsvReportsWorker extends FrameView {
-    // (start - end)/1000ms/3600 = hours
-    // date    =((currT_Long+7200000)/86400000+25569)+1/24 
+
     //TODO: which lines(for main comms) in array
     //TODO: one big project: connect all jmeter tools into one
-    //TODO: test with RU
+    //TODO: TAB sep in csv's
     //TODO: Math.Round errors,
     //TODO: change e.printStackTrace(); to printString(smth like that)
-    //TODO: everything by acctions?
     //TODO: try bars once again
     //TODO: settings.ini
     //TODO: 46 46 46 46 <-- only last value is starting of trimm
     //TODO: prevent empty fields
     //TODO: test stop
-    //TODO: disable fields when working
-    //TODO: MANO jtl aggregated skaiciavimas OR OR OR make this project with png generation(maybe only for main comms?OMG!)
-    //^^^^bl, gi jam reik JMETER, tai gal tada savo plugins versija isleist(ir toliau daryt kopinima plugins->JMeter\lib)?
+    //TODO: ~~disable fields when working
     //TODO: in trimmed report number order is bad 8 9 10 1
     //TODO: big feature: print all multi reports on one xlsx file    
     //TODO: array of main comms!
     //TODO: && || instead of & | might cause additional lag
     
-    //TODO: fix error checking, because 0.0153 does not get counted
+    //TODO: fix error checking, 0.0153 does not get counted ::: IT DOES! strange...
     //TODO: move worker out of this class
     //TODO: what if no files were found by processF?
-    //TODO: put cursor at start after setText
-    //TODO: relative times
+    //TODO: !!!relative times
+    //TODO: make plugins version with option(checkBox) 'main comms only' [on by default]
+    //TODO: read LT java manuals
+    //TODO: realtime in gui, on|off by default?
+    //TODO: work with other params(just like realtime)
 
     public GenerateCsvReportsWorker(SingleFrameApplication app) {
         super(app);       
@@ -91,6 +85,16 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jLabel4 = new javax.swing.JLabel();
         resultF_multi = new javax.swing.JTextField();
         inputF_multi = new javax.swing.JTextField();
+        jPanelRTOT = new javax.swing.JPanel();
+        buttonsPane_RTOT = new javax.swing.JPanel();
+        stopB_RTOT = new javax.swing.JButton();
+        saveResB_RTOT = new javax.swing.JButton();
+        genB_RTOT = new javax.swing.JButton();
+        browseB_RTOT = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
+        resultF_RTOT = new javax.swing.JTextField();
+        inputF_RTOT = new javax.swing.JTextField();
         jPanelTrimmed = new javax.swing.JPanel();
         buttonsPane_trimmed = new javax.swing.JPanel();
         stopB_trimmed = new javax.swing.JButton();
@@ -108,16 +112,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
         timelineEndF = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         trimmedJTLF = new javax.swing.JTextField();
-        jPanelRTOT = new javax.swing.JPanel();
-        buttonsPane_RTOT = new javax.swing.JPanel();
-        stopB_RTOT = new javax.swing.JButton();
-        saveResB_RTOT = new javax.swing.JButton();
-        genB_RTOT = new javax.swing.JButton();
-        browseB_RTOT = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        resultF_RTOT = new javax.swing.JTextField();
-        inputF_RTOT = new javax.swing.JTextField();
         jPanelOptions = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         colsList = new javax.swing.JList();
@@ -242,6 +236,107 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jPanelMulti.add(inputF_multi, gridBagConstraints);
 
         jTabbedPane1.addTab(resourceMap.getString("jPanelMulti.TabConstraints.tabTitle"), jPanelMulti); // NOI18N
+
+        jPanelRTOT.setName("jPanelRTOT"); // NOI18N
+        jPanelRTOT.setLayout(new java.awt.GridBagLayout());
+
+        buttonsPane_RTOT.setName("buttonsPane_RTOT"); // NOI18N
+        buttonsPane_RTOT.setLayout(new java.awt.GridBagLayout());
+
+        stopB_RTOT.setAction(actionMap.get("Stop_RTOTAction")); // NOI18N
+        stopB_RTOT.setText(resourceMap.getString("stopB_RTOT.text")); // NOI18N
+        stopB_RTOT.setName("stopB_RTOT"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        buttonsPane_RTOT.add(stopB_RTOT, gridBagConstraints);
+
+        saveResB_RTOT.setAction(actionMap.get("SaveRes_RTOTAction")); // NOI18N
+        saveResB_RTOT.setText(resourceMap.getString("saveResB_RTOT.text")); // NOI18N
+        saveResB_RTOT.setName("saveResB_RTOT"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        buttonsPane_RTOT.add(saveResB_RTOT, gridBagConstraints);
+
+        genB_RTOT.setAction(actionMap.get("Generate_RTOT")); // NOI18N
+        genB_RTOT.setText(resourceMap.getString("genB_RTOT.text")); // NOI18N
+        genB_RTOT.setName("genB_RTOT"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 5);
+        buttonsPane_RTOT.add(genB_RTOT, gridBagConstraints);
+
+        browseB_RTOT.setAction(actionMap.get("Browse_RTOTAction")); // NOI18N
+        browseB_RTOT.setText(resourceMap.getString("browseB_RTOT.text")); // NOI18N
+        browseB_RTOT.setName("browseB_RTOT"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        buttonsPane_RTOT.add(browseB_RTOT, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 0);
+        jPanelRTOT.add(buttonsPane_RTOT, gridBagConstraints);
+
+        jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
+        jLabel11.setName("jLabel11"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        jPanelRTOT.add(jLabel11, gridBagConstraints);
+
+        jLabel12.setText(resourceMap.getString("jLabel12.text")); // NOI18N
+        jLabel12.setName("jLabel12"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        jPanelRTOT.add(jLabel12, gridBagConstraints);
+
+        resultF_RTOT.setColumns(20);
+        resultF_RTOT.setEditable(false);
+        resultF_RTOT.setText(specifyTargetFld);
+        resultF_RTOT.setName("resultF_RTOT"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 10);
+        jPanelRTOT.add(resultF_RTOT, gridBagConstraints);
+
+        inputF_RTOT.setColumns(20);
+        inputF_RTOT.setEditable(false);
+        inputF_RTOT.setText(specifyTargetFld);
+        inputF_RTOT.setName("inputF_RTOT"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 10);
+        jPanelRTOT.add(inputF_RTOT, gridBagConstraints);
+
+        jTabbedPane1.addTab(resourceMap.getString("jPanelRTOT.TabConstraints.tabTitle"), jPanelRTOT); // NOI18N
 
         jPanelTrimmed.setName("jPanelTrimmed"); // NOI18N
         jPanelTrimmed.setLayout(new java.awt.GridBagLayout());
@@ -414,107 +509,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jPanelTrimmed.add(trimmedJTLF, gridBagConstraints);
 
         jTabbedPane1.addTab(resourceMap.getString("jPanelTrimmed.TabConstraints.tabTitle"), jPanelTrimmed); // NOI18N
-
-        jPanelRTOT.setName("jPanelRTOT"); // NOI18N
-        jPanelRTOT.setLayout(new java.awt.GridBagLayout());
-
-        buttonsPane_RTOT.setName("buttonsPane_RTOT"); // NOI18N
-        buttonsPane_RTOT.setLayout(new java.awt.GridBagLayout());
-
-        stopB_RTOT.setAction(actionMap.get("Stop_RTOTAction")); // NOI18N
-        stopB_RTOT.setText(resourceMap.getString("stopB_RTOT.text")); // NOI18N
-        stopB_RTOT.setName("stopB_RTOT"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-        buttonsPane_RTOT.add(stopB_RTOT, gridBagConstraints);
-
-        saveResB_RTOT.setAction(actionMap.get("SaveRes_RTOTAction")); // NOI18N
-        saveResB_RTOT.setText(resourceMap.getString("saveResB_RTOT.text")); // NOI18N
-        saveResB_RTOT.setName("saveResB_RTOT"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        buttonsPane_RTOT.add(saveResB_RTOT, gridBagConstraints);
-
-        genB_RTOT.setAction(actionMap.get("Generate_RTOT")); // NOI18N
-        genB_RTOT.setText(resourceMap.getString("genB_RTOT.text")); // NOI18N
-        genB_RTOT.setName("genB_RTOT"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 5);
-        buttonsPane_RTOT.add(genB_RTOT, gridBagConstraints);
-
-        browseB_RTOT.setAction(actionMap.get("Browse_RTOTAction")); // NOI18N
-        browseB_RTOT.setText(resourceMap.getString("browseB_RTOT.text")); // NOI18N
-        browseB_RTOT.setName("browseB_RTOT"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        buttonsPane_RTOT.add(browseB_RTOT, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 0);
-        jPanelRTOT.add(buttonsPane_RTOT, gridBagConstraints);
-
-        jLabel11.setText(resourceMap.getString("jLabel11.text")); // NOI18N
-        jLabel11.setName("jLabel11"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        jPanelRTOT.add(jLabel11, gridBagConstraints);
-
-        jLabel12.setText(resourceMap.getString("jLabel12.text")); // NOI18N
-        jLabel12.setName("jLabel12"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        jPanelRTOT.add(jLabel12, gridBagConstraints);
-
-        resultF_RTOT.setColumns(20);
-        resultF_RTOT.setEditable(false);
-        resultF_RTOT.setText(specifyTargetFld);
-        resultF_RTOT.setName("resultF_RTOT"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 10);
-        jPanelRTOT.add(resultF_RTOT, gridBagConstraints);
-
-        inputF_RTOT.setColumns(20);
-        inputF_RTOT.setEditable(false);
-        inputF_RTOT.setText(specifyTargetFld);
-        inputF_RTOT.setName("inputF_RTOT"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 10);
-        jPanelRTOT.add(inputF_RTOT, gridBagConstraints);
-
-        jTabbedPane1.addTab(resourceMap.getString("jPanelRTOT.TabConstraints.tabTitle"), jPanelRTOT); // NOI18N
 
         jPanelOptions.setName("jPanelOptions"); // NOI18N
         jPanelOptions.setLayout(new java.awt.GridBagLayout());
@@ -992,13 +986,17 @@ public final class GenerateCsvReportsWorker extends FrameView {
             inputJTL_multi = chooseJTL_multi.getSelectedFile();
 
             inputF_multi.setText(inputJTL_multi.toString());
+            
             if (savResUsed_multi)
                 resultF_multi.setText(resultSavingFolder_multi.toString()); //TODO: remove else, leave only if
             else{
                 resultSavingFolder_multi = new File(inputJTL_multi.getCanonicalPath()+attachReports);
                 resultSavingFolder_multi.mkdir();
                 resultF_multi.setText(resultSavingFolder_multi.toString());
-            }     //TODO: children folders?~~                   
+                
+            }     //TODO: children folders?~~
+            inputF_multi.setCaretPosition(0);
+            resultF_multi.setCaretPosition(0);
             genCsvB_multi.setEnabled(true);
         }
         else if (rr == JFileChooser.CANCEL_OPTION);
@@ -1013,6 +1011,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         if(tt == JFileChooser.APPROVE_OPTION){
             resultSavingFolder_multi = chooseSave_multi.getSelectedFile();
             resultF_multi.setText(resultSavingFolder_multi.toString()); 
+            resultF_multi.setCaretPosition(0);
             savResUsed_multi = true;
         }
         else if (tt == JFileChooser.CANCEL_OPTION);
@@ -1035,7 +1034,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
             stopB_trimmed.setEnabled(true);
             statusMessageLabel.setText("Calculating...");
         }
-        @Override protected Object doInBackground() { //TODO: in generated CSV rows are not in order(5,3,7,8,1)
+        @Override protected Object doInBackground() {
             statusMessageLabel.setText("Working with: "+inputJTL_trimmed);  
             formCsvParams();
             Utils.deleteFile(resultCSV_trimmed);
@@ -1083,6 +1082,9 @@ public final class GenerateCsvReportsWorker extends FrameView {
             timelineStartF.setText("");
             timelineEndF.setText("");
             
+            trimmedJTLF.setCaretPosition(0);
+            inputF_trimmed.setCaretPosition(0);    
+            resultF_trimmed.setCaretPosition(0);
             genCsvB_trimmed.setEnabled(true);
             timelineStartF.setEnabled(true);
             timelineEndF.setEnabled(true);
@@ -1104,7 +1106,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
     public Task Generate_RTOT() {
         return new Generate_RTOTTask(getApplication());
     }
-
     private class Generate_RTOTTask extends org.jdesktop.application.Task<Object, Void> {
         Generate_RTOTTask(org.jdesktop.application.Application app) {
             super(app);
@@ -1175,7 +1176,9 @@ public final class GenerateCsvReportsWorker extends FrameView {
                 resultSavingFolder_RTOT = new File(inputJTL_RTOT.getCanonicalPath()+attachRTOT);
                 resultSavingFolder_RTOT.mkdir();
                 resultF_RTOT.setText(resultSavingFolder_RTOT.toString());
-            }     //TODO: children folders?~~                   
+            }     //TODO: children folders?~~
+            resultF_RTOT.setCaretPosition(0);
+            inputF_RTOT.setCaretPosition(0);
             genB_RTOT.setEnabled(true);
         }
         else if (rr == JFileChooser.CANCEL_OPTION);
@@ -1189,8 +1192,9 @@ public final class GenerateCsvReportsWorker extends FrameView {
         int tt = chooseSave_RTOT.showSaveDialog(null);
         if(tt == JFileChooser.APPROVE_OPTION){
             resultSavingFolder_RTOT = chooseSave_RTOT.getSelectedFile();
-            resultF_RTOT.setText(resultSavingFolder_RTOT.toString()); 
+            resultF_RTOT.setText(resultSavingFolder_RTOT.toString());
             savResUsed_RTOT = true;
+            resultF_RTOT.setCaretPosition(0);
         }
         else if (tt == JFileChooser.CANCEL_OPTION);
         else
