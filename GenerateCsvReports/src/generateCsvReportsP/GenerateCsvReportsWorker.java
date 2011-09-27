@@ -26,7 +26,7 @@ import java.text.DecimalFormat;
 
 //import org.apache.jorphan.gui.NumberRenderer;
 
-public class GenerateCsvReportsWorker extends FrameView {
+public final class GenerateCsvReportsWorker extends FrameView {
     // (start - end)/1000ms/3600 = hours
     // date    =((currT_Long+7200000)/86400000+25569)+1/24 
     //TODO: which lines(for main comms) in array
@@ -52,32 +52,14 @@ public class GenerateCsvReportsWorker extends FrameView {
     //TODO: move worker out of this class
     //TODO: what if no files were found by processF?
     //TODO: put cursor at start after setText
+    //TODO: relative times
 
     public GenerateCsvReportsWorker(SingleFrameApplication app) {
         super(app);       
         initComponents();
         setExtensionsToSearchFor("jtl");
         setExtensionsToSearchFor("JTL");
-//        System.out.println(colsList.getModel().getSize());
-//        ArrayList<Boolean> colsArr = new ArrayList<Boolean>();
-//        boolean[] colsArr = new boolean[8];
-//        for(int ite=0;ite<8;ite++){
-//            if (colsList.isSelectedIndex(ite)) colsArr[ite]=true;
-//            else colsArr[ite]=false;
-//           
-//        }
-//       for (int rr=0; rr<colsArr.length;rr++)
-//           System.err.println(colsArr[rr]);
-//       fillStepsArray();
-//                Boolean [] colsArray = new Boolean [8];
-//        for(int ite=0;ite<8;ite++){
-//            if (colsList.isSelectedIndex(ite)) colsArray[ite]=true;
-//            else colsArray[ite]=false;
-//           
-//        }
-//        PluginsCMDWorker.initializeProperties();
-//        PluginsCMDWorker.fillStepsArray(colsArray);
-//        System.exit(0);
+        
         statusMessageLabel.setText("Welcome.");
 //        URL url = ClassLoader.getSystemResource("iceteareplacer/resources/icon.png");
 //        getFrame().setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage(url));
@@ -86,14 +68,10 @@ public class GenerateCsvReportsWorker extends FrameView {
 //        getFrame().setMaximumSize(new Dimension(1410, 1280));
 //        stopB.setVisible(false);
 
-        genCsvB_single.setEnabled(false);
-        stopB_single.setEnabled(false);
         genCsvB_multi.setEnabled(false);
         stopB_multi.setEnabled(false);
         genCsvB_trimmed.setEnabled(false);
         stopB_trimmed.setEnabled(false);
-        colsList.setEnabled(false);
-
     }
    
     @SuppressWarnings("unchecked")
@@ -103,15 +81,6 @@ public class GenerateCsvReportsWorker extends FrameView {
 
         mainPanel = new javax.swing.JPanel();
         jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanelSingle = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        resultF_single = new javax.swing.JTextField();
-        inputF_single = new javax.swing.JTextField();
-        buttonsPane_single = new javax.swing.JPanel();
-        stopB_single = new javax.swing.JButton();
-        genCsvB_single = new javax.swing.JButton();
-        browseB_single = new javax.swing.JButton();
         jPanelMulti = new javax.swing.JPanel();
         buttonsPane_multi = new javax.swing.JPanel();
         stopB_multi = new javax.swing.JButton();
@@ -159,8 +128,6 @@ public class GenerateCsvReportsWorker extends FrameView {
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
         statusMessageLabel = new javax.swing.JLabel();
-        chooseJTL_single = new javax.swing.JFileChooser();
-        chooseJMeter = new javax.swing.JFileChooser();
         chooseJTL_multi = new javax.swing.JFileChooser();
         chooseSave_multi = new javax.swing.JFileChooser();
         chooseJTL_trimmed = new javax.swing.JFileChooser();
@@ -173,105 +140,15 @@ public class GenerateCsvReportsWorker extends FrameView {
 
         jTabbedPane1.setName("jTabbedPane1"); // NOI18N
 
-        jPanelSingle.setName("jPanelSingle"); // NOI18N
-        jPanelSingle.setLayout(new java.awt.GridBagLayout());
-
-        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(generateCsvReportsP.GenerateCsvReportsApp.class).getContext().getResourceMap(GenerateCsvReportsWorker.class);
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        jPanelSingle.add(jLabel1, gridBagConstraints);
-
-        jLabel2.setText(resourceMap.getString("jLabel2.text")); // NOI18N
-        jLabel2.setName("jLabel2"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        jPanelSingle.add(jLabel2, gridBagConstraints);
-
-        resultF_single.setColumns(20);
-        resultF_single.setEditable(false);
-        resultF_single.setText(specifyTargetFile);
-        resultF_single.setName("resultF_single"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 10);
-        jPanelSingle.add(resultF_single, gridBagConstraints);
-
-        inputF_single.setColumns(20);
-        inputF_single.setEditable(false);
-        inputF_single.setText(specifyTargetFile);
-        inputF_single.setName("inputF_single"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 10);
-        jPanelSingle.add(inputF_single, gridBagConstraints);
-
-        buttonsPane_single.setName("buttonsPane_single"); // NOI18N
-        buttonsPane_single.setLayout(new java.awt.GridBagLayout());
-
-        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(generateCsvReportsP.GenerateCsvReportsApp.class).getContext().getActionMap(GenerateCsvReportsWorker.class, this);
-        stopB_single.setAction(actionMap.get("Stop_singleAction")); // NOI18N
-        stopB_single.setText(resourceMap.getString("stopB_single.text")); // NOI18N
-        stopB_single.setName("stopB_single"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
-        buttonsPane_single.add(stopB_single, gridBagConstraints);
-
-        genCsvB_single.setAction(actionMap.get("Generate_singleAction")); // NOI18N
-        genCsvB_single.setText(resourceMap.getString("genCsvB_single.text")); // NOI18N
-        genCsvB_single.setName("genCsvB_single"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 5);
-        buttonsPane_single.add(genCsvB_single, gridBagConstraints);
-
-        browseB_single.setAction(actionMap.get("Browse_singleAction")); // NOI18N
-        browseB_single.setText(resourceMap.getString("browseB_single.text")); // NOI18N
-        browseB_single.setName("browseB_single"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        buttonsPane_single.add(browseB_single, gridBagConstraints);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 0);
-        jPanelSingle.add(buttonsPane_single, gridBagConstraints);
-
-        jTabbedPane1.addTab(resourceMap.getString("jPanelSingle.TabConstraints.tabTitle"), jPanelSingle); // NOI18N
-
         jPanelMulti.setName("jPanelMulti"); // NOI18N
         jPanelMulti.setLayout(new java.awt.GridBagLayout());
 
         buttonsPane_multi.setName("buttonsPane_multi"); // NOI18N
         buttonsPane_multi.setLayout(new java.awt.GridBagLayout());
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(generateCsvReportsP.GenerateCsvReportsApp.class).getContext().getActionMap(GenerateCsvReportsWorker.class, this);
         stopB_multi.setAction(actionMap.get("Stop_multiAction")); // NOI18N
+        org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(generateCsvReportsP.GenerateCsvReportsApp.class).getContext().getResourceMap(GenerateCsvReportsWorker.class);
         stopB_multi.setText(resourceMap.getString("stopB_multi.text")); // NOI18N
         stopB_multi.setName("stopB_multi"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -752,44 +629,32 @@ public class GenerateCsvReportsWorker extends FrameView {
                 .addGap(3, 3, 3))
         );
 
-        chooseJTL_single.setCurrentDirectory(new java.io.File("C:\\results"));
-        chooseJTL_single.setDialogTitle(resourceMap.getString("chooseJTL_single.dialogTitle")); // NOI18N
-        FileFilter filter = new FileNameExtensionFilter("jtl", "JTL");
-        chooseJTL_single.setFileFilter(filter);
-        chooseJTL_single.setName("chooseJTL_single"); // NOI18N
+        chooseJTL_multi.setCurrentDirectory(new java.io.File("C:\\results"));
+        chooseJTL_multi.setDialogTitle(resourceMap.getString("chooseJTL_multi.dialogTitle")); // NOI18N
+        chooseJTL_multi.setFileFilter(filter);
+        chooseJTL_multi.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        chooseJTL_multi.setName("chooseJTL_multi"); // NOI18N
 
-        chooseJMeter.setApproveButtonText(resourceMap.getString("chooseJMeter.approveButtonText")); // NOI18N
-        chooseJMeter.setCurrentDirectory(new java.io.File("C:\\"));
-            chooseJMeter.setDialogTitle(resourceMap.getString("chooseJMeter.dialogTitle")); // NOI18N
-            chooseJMeter.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
-            chooseJMeter.setName("chooseJMeter"); // NOI18N
+        chooseSave_multi.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        chooseSave_multi.setName("chooseSave_multi"); // NOI18N
 
-            chooseJTL_multi.setCurrentDirectory(new java.io.File("C:\\results"));
-            chooseJTL_multi.setDialogTitle(resourceMap.getString("chooseJTL_multi.dialogTitle")); // NOI18N
-            chooseJTL_multi.setFileFilter(filter);
-            chooseJTL_multi.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
-            chooseJTL_multi.setName("chooseJTL_multi"); // NOI18N
+        chooseJTL_trimmed.setCurrentDirectory(new java.io.File("C:\\results"));
+        chooseJTL_trimmed.setDialogTitle(resourceMap.getString("chooseJTL_trimmed.dialogTitle")); // NOI18N
+        chooseJTL_trimmed.setFileFilter(filter);
+        chooseJTL_trimmed.setName("chooseJTL_trimmed"); // NOI18N
 
-            chooseSave_multi.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
-            chooseSave_multi.setName("chooseSave_multi"); // NOI18N
+        chooseJTL_RTOT.setCurrentDirectory(new java.io.File("C:\\results"));
+        chooseJTL_RTOT.setDialogTitle(resourceMap.getString("chooseJTL_RTOT.dialogTitle")); // NOI18N
+        chooseJTL_RTOT.setFileFilter(filter);
+        chooseJTL_RTOT.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        chooseJTL_RTOT.setName("chooseJTL_RTOT"); // NOI18N
 
-            chooseJTL_trimmed.setCurrentDirectory(new java.io.File("C:\\results"));
-            chooseJTL_trimmed.setDialogTitle(resourceMap.getString("chooseJTL_trimmed.dialogTitle")); // NOI18N
-            chooseJTL_trimmed.setFileFilter(filter);
-            chooseJTL_trimmed.setName("chooseJTL_trimmed"); // NOI18N
+        chooseSave_RTOT.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
+        chooseSave_RTOT.setName("chooseSave_RTOT"); // NOI18N
 
-            chooseJTL_RTOT.setCurrentDirectory(new java.io.File("C:\\results"));
-            chooseJTL_RTOT.setDialogTitle(resourceMap.getString("chooseJTL_RTOT.dialogTitle")); // NOI18N
-            chooseJTL_RTOT.setFileFilter(filter);
-            chooseJTL_RTOT.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
-            chooseJTL_RTOT.setName("chooseJTL_RTOT"); // NOI18N
-
-            chooseSave_RTOT.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
-            chooseSave_RTOT.setName("chooseSave_RTOT"); // NOI18N
-
-            setComponent(mainPanel);
-            setStatusBar(statusPanel);
-        }// </editor-fold>//GEN-END:initComponents
+        setComponent(mainPanel);
+        setStatusBar(statusPanel);
+    }// </editor-fold>//GEN-END:initComponents
 
     private void localeSepCmbActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_localeSepCmbActionPerformed
         if(localeSepCmb.getSelectedIndex()==0)
@@ -802,33 +667,25 @@ public class GenerateCsvReportsWorker extends FrameView {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseB_RTOT;
     private javax.swing.JButton browseB_multi;
-    private javax.swing.JButton browseB_single;
     private javax.swing.JButton browseB_trimmed;
     private javax.swing.JPanel buttonsPane_RTOT;
     private javax.swing.JPanel buttonsPane_multi;
-    private javax.swing.JPanel buttonsPane_single;
     private javax.swing.JPanel buttonsPane_trimmed;
-    private javax.swing.JFileChooser chooseJMeter;
     private javax.swing.JFileChooser chooseJTL_RTOT;
     private javax.swing.JFileChooser chooseJTL_multi;
-    private javax.swing.JFileChooser chooseJTL_single;
     private javax.swing.JFileChooser chooseJTL_trimmed;
     private javax.swing.JFileChooser chooseSave_RTOT;
     private javax.swing.JFileChooser chooseSave_multi;
     private static javax.swing.JList colsList;
     private javax.swing.JButton genB_RTOT;
     private javax.swing.JButton genCsvB_multi;
-    private javax.swing.JButton genCsvB_single;
     private javax.swing.JButton genCsvB_trimmed;
     private javax.swing.JTextField inputF_RTOT;
     private javax.swing.JTextField inputF_multi;
-    private javax.swing.JTextField inputF_single;
     private javax.swing.JTextField inputF_trimmed;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -841,7 +698,6 @@ public class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JPanel jPanelMulti;
     private javax.swing.JPanel jPanelOptions;
     private javax.swing.JPanel jPanelRTOT;
-    private javax.swing.JPanel jPanelSingle;
     private javax.swing.JPanel jPanelTrimmed;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
@@ -850,7 +706,6 @@ public class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JPanel mainPanel;
     private javax.swing.JTextField resultF_RTOT;
     private javax.swing.JTextField resultF_multi;
-    private javax.swing.JTextField resultF_single;
     private javax.swing.JTextField resultF_trimmed;
     private javax.swing.JButton saveResB_RTOT;
     private javax.swing.JButton saveResB_multi;
@@ -858,139 +713,48 @@ public class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JPanel statusPanel;
     private javax.swing.JButton stopB_RTOT;
     private javax.swing.JButton stopB_multi;
-    private javax.swing.JButton stopB_single;
     private javax.swing.JButton stopB_trimmed;
     private javax.swing.JTextField timelineEndF;
     private javax.swing.JTextField timelineF;
     private javax.swing.JTextField timelineStartF;
     private javax.swing.JTextField trimmedJTLF;
     // End of variables declaration//GEN-END:variables
-    public static String newLine = System.getProperty("line.separator"); 
-    public String errLabelTargetFolder = "Please choose a directory.";
+
+    private File inputJTL_multi;
+    private File resultSavingFolder_multi;
+    private Boolean savResUsed_multi = false;
+    private File inputJTL_RTOT;
+    private File resultSavingFolder_RTOT;
+    private Boolean savResUsed_RTOT = false; 
+    private File inputJTL_trimmed;
+    private File trimmedJTL;
+    private File resultCSV_trimmed;
+    private int firstValLine;
+    private int lastValLine;  
+    
+    public List<String> extensionsToIgnore;
+    public List<String> extensionsToSearchFor;    
+    private ArrayList<File> aListOfJTLFiles = new ArrayList<File>();    
+    private boolean doCont = true;
+    
+    private final int[] filledArray10 = {0,1,2,4,5,6,7};
+    private final FileFilter filter = new FileNameExtensionFilter("jtl", "JTL");
+    private final String newLine = System.getProperty("line.separator"); 
+    private final String errLabelTargetFolder = "Please choose a directory.";
     private final String specifyTargetFile = "Please select a file first...";
     private final String specifyTargetFld = "Please select a Folder first...";
-    public String messTitleLabel = "Message";
-  
-    private static boolean doCont = true;    
-   
-    private static File inputJTL_single;    
-    private static File resultCSV_single;    
-    private static File inputJTL_multi;
-//    private static File resultCSV_multi;
-    private static File resultSavingFolder_multi;
-    private static boolean savResUsed_multi = false;
-    private static File inputJTL_RTOT;
-//    private static File resultPNG_RTOT;
-    private static File resultSavingFolder_RTOT;
-    private static boolean savResUsed_RTOT = false; 
-    private static File inputJTL_trimmed;
-    private static File trimmedJTL;
-    private static File resultCSV_trimmed;
-    private static int firstValLine;
-    private static int lastValLine;
-    private static ArrayList<Integer> aListLines = new ArrayList<Integer>();
-    private static final String HeadLine1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
-    private static final String HeadLine2 = "<testResults version=\"1.2\">";
-    private static final String FooterLine = "</testResults>";
-    
-    public static List<String> extensionsToIgnore;
-    public static List<String> extensionsToSearchFor;
-    private static ArrayList<File> aListOfJTLFiles = new ArrayList<File>();
-    private static int[] filledArray10 = {0,1,2,4,5,6,7};
-
-    private static final String attachString = "_REPORT"; //TODO: remove 'final'
-    private static final String attachString2 = "_SUMMARIZED"; //TODO: listener for checkboxes and changing of resultField_ ?~~
-    private static final String attachStringTrimmed = "TRIMMED_"; //TODO: print used timeline(or in csv?)
-    private static final String attachStringError = "ERRORS_";
+    private final String messTitleLabel = "Message"; 
+    private final String HeadLine1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+    private final String HeadLine2 = "<testResults version=\"1.2\">";
+    private final String FooterLine = "</testResults>";
+    private final String attachStringTrimmed = "TRIMMED_"; //TODO: print used timeline(or in csv?)
+    private final String attachStringError = "ERRORS_";
     private final String attachReports = "_Aggregated-reports";
-    private static final String attachRTOT = "_ResponseTimesOverTime";
-
-    private static final String quote = "\"";
-    private static final String TStart = "\" ts=\"";  
-    public static final String comma = ",";
-    public static final String semicolon = ";";
-    public static final String dot = ".";
-    public static String sepTO;
-    public static String percTO;
-      public static void adjustCsv(File csvFile, File csvFileCorr){
-//       try{
-//           
-//           Utils.deleteFile(csvFileCorr);
-//           BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(csvFileCorr,true),"UTF8"));           
-//           BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(csvFile),"UTF8"));
-//           String line;
-//           int lineCount=0;          
-//           
-//          String firstLineTo = "Command"+sepTO+"Samples"+sepTO+"Average"+sepTO+"Median"+sepTO+"90% line"+sepTO+"Minimum"+sepTO+"Maximum"+sepTO+"Errors%"+sepTO+"Throughput"+sepTO+"KB/sec";
-//           //TODO: append first line here
-//          while (( line = bf.readLine()) != null && doCont){
-//              
-//               lineCount++;               
-//               if (LOCALE_LT) line = line.replaceAll(comma, semicolon);              
-//               
-//               if (mainCommOnlyC.isSelected()){
-//                   
-//                   if(lineCount==1){
-//                       line = splitLineByCol(firstLineTo, true);
-//                       bw.append(line+newLine);
-//                   }
-//                   
-//                   if (
-//                           line.substring(1,2).matches(" ")
-////                           ||line.substring(0,5).matches("TOTAL")
-////                           ||line.contains("Pacing")
-//                           ||line.substring(2,3).matches("-")
-//                           ||line.substring(2,3).matches(" ")
-////                           ||line.substring(0,7).matches("Timeout")
-//                           ||line.contains("ViewFirstPage")
-////                           ||line.substring(0,6).matches("Wakeup")
-//                           ||line.substring(0,8).matches("WaitTime")
-////                           ||line.substring(0,5).matches("Dummy")
-//                           ){
-//                       //TODO: fill with other, maybe scan JTL's first to catch HAHAOHWOW
-//                        line = splitLineByCol(line, false);
-//                        bw.append(line+newLine);
-//                   }
-//                   
-//               }
-//               else{
-//                   
-//                   if(lineCount==1){
-//                       line = splitLineByCol(firstLineTo, true);
-//                       bw.append(line+newLine);
-//                   }
-//                   else{
-//                       line = splitLineByCol(line, false);
-//                       bw.append(line+newLine);
-//                       
-//                   }
-//               }                 
-//           }
-//           bw.close();
-//           bf.close();
-//           //delete old, rename new one
-//           Utils.deleteFile(csvFile);
-//           
-//           if (containsErrors){
-//               
-//              csvFile = new File(csvFile.getParentFile().toString()+File.separator+attachStringError+csvFile.getName()); //reuse, atatch Error 
-//              Utils.renameFile(csvFileCorr,csvFile);
-//              containsErrors = false;
-//           }
-//           else{
-//              Utils.renameFile(csvFileCorr,csvFile); 
-//           }
-//           
-//           
-//           System.out.println("Adjustion done.");
-//           
-//       }
-//       catch(Exception e){
-//         e.printStackTrace();  
-//       }
-   }
-    
-   public static void processF(File aFile) {
+    private final String attachRTOT = "_ResponseTimesOverTime";
+    private final String quote = "\"";
+    private final String TStart = "\" ts=\"";  
+       
+    private void processF(File aFile) {
 
         if (doCont){ //Listen for "Stop"
 
@@ -1026,57 +790,27 @@ public class GenerateCsvReportsWorker extends FrameView {
         }
     }
 
-   public static void setExtensionsToIgnore(String ext) {
+    public void setExtensionsToIgnore(String ext) {
             if(extensionsToIgnore==null)
                     extensionsToIgnore = new ArrayList<String>();
 
             extensionsToIgnore.add(ext);
     }
 
-   public static void setExtensionsToSearchFor(String ext) {
+    public void setExtensionsToSearchFor(String ext) {
             if(extensionsToSearchFor==null)
                     extensionsToSearchFor = new ArrayList<String>();
 
             extensionsToSearchFor.add(ext);
     }
-   
-   public static String splitLineByCol(String line, Boolean firstLine){
-       String[] splitArray = new String[9];
-       splitArray = line.split(sepTO);       
-       line = "";       
        
-       if(!firstLine){
-//           System.out.println("Before multiply:"+splitArray[7]);
-           splitArray[7] = multiplyString(splitArray[7]);
-//           System.out.println("After multiply:"+splitArray[7]);
-//           splitArray[7] = roundString(splitArray[7]); //TODO: two numbers after comma
-           if (!splitArray[7].substring(0, 3).matches("0.0") ){
-//               containsErrors = true;
-           }
-//           if (LOCALE_LT) splitArray[7] = splitArray[7].replace(".",comma); // LT
-       }
-
-       for(int ite=0;ite<10;ite++){
-           if (colsList.isSelectedIndex(ite)) line+=splitArray[ite]+sepTO;
-           
-       }
-
-       return line;
-       
-   }
-       
-   private static String roundString(String value){
+    private String roundString(String value){
        
        DecimalFormat twoDForm = new DecimalFormat("#.##");                   
        return String.valueOf(Double.valueOf(twoDForm.format(Double.parseDouble(value))));
-   }
+   }   
    
-   private static String multiplyString(String value){
-       value = String.valueOf(Double.valueOf(value)*100);
-       return value;
-   }
-   
-   public static int getTimeline(File inputJTL){
+    private int getTimeline(File inputJTL){
        
        try{
            BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(inputJTL)));
@@ -1115,10 +849,11 @@ public class GenerateCsvReportsWorker extends FrameView {
        }       
    }
    
-   public static void getSELinesNo(File inputJTL, int globStart, int globEnd){ // AKA get dates for StartEnd
+    private void getSELinesNo(File inputJTL, int globStart, int globEnd){ // AKA get dates for StartEnd
 
        try{
            BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(inputJTL)));
+           ArrayList<Integer> aListLines = new ArrayList<Integer>();
            String line;
            int iStartT;
            int iEndT;
@@ -1160,7 +895,7 @@ public class GenerateCsvReportsWorker extends FrameView {
        }       
    }
 
-   public static void formTrimmedJTL(File inputJTL, File resultJTL, int firstValLine, int lastValLine){
+    private void formTrimmedJTL(File inputJTL, File resultJTL, int firstValLine, int lastValLine){
 
        try{
            BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(inputJTL)));
@@ -1183,82 +918,7 @@ public class GenerateCsvReportsWorker extends FrameView {
 //           erp.printStackTrace();
        }       
    } 
-////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //SiNGlE
-    @Action
-//    @Action(block = Task.BlockingScope.ACTION)
-    public Task Generate_singleAction() {
-        return new Generate_singleActionTask(getApplication());
-    }
-    private class Generate_singleActionTask extends org.jdesktop.application.Task<Object, Void> {
-        Generate_singleActionTask(org.jdesktop.application.Application app) {
-            super(app);
-            statusMessageLabel.setText("");      
-            System.err.println("Executing single report mode.");
-            browseB_single.setEnabled(false);
-            genCsvB_single.setEnabled(false);
-            stopB_single.setEnabled(true);
-//           ArrayList<Boolean> colsArr = new ArrayList<Boolean>();
-//            for(int ite=0;ite<8;ite++){
-//                if (colsList.isSelectedIndex(ite)) GenSettingsWorker.colsArr.add(true);
-//                else GenSettingsWorker.colsArr.add(false);
-//
-//            }
-            statusMessageLabel.setText("Calculating...");
-        }
-        @Override protected Object doInBackground() {
-            statusMessageLabel.setText("Working with: "+inputJTL_single);  
-            Utils.deleteFile(resultCSV_single);
-            GenSettingsWorker.init_CSV(inputJTL_single,resultCSV_single);
-            if(GenSettingsWorker.checkForErrors())
-                Utils.renameFile(resultCSV_single, new File(resultCSV_single.getParentFile()+File.separator+attachStringError+resultCSV_single.getName()));
-            System.out.println("DONE");
-            return null;  // return your result
-        }
-        @Override protected void cancelled() {                      
-            doCont = false;
-            System.err.println("ABORTED");
-        }
-        @Override protected void succeeded(Object result) {
-//            super.succeeded(result);
-            if (!doCont) statusMessageLabel.setText("Aborted by user.");
-            if (doCont)  statusMessageLabel.setText("Done.");
-
-                browseB_single.setEnabled(true);
-                genCsvB_single.setEnabled(true);
-                stopB_single.setEnabled(false);
-                doCont = true;
-        }
-    }
-
-    @Action
-    public void Stop_singleAction() {
-        Generate_singleAction().cancel(true);
-    }
-
-    @Action
-    public void Browse_singleAction() {
-        int rr = chooseJTL_single.showOpenDialog(null); //TODO: filter for jtl
-        if(rr == JFileChooser.APPROVE_OPTION){
-            inputJTL_single = chooseJTL_single.getSelectedFile();                       
-            String fileNameEx = inputJTL_single.getName();
-            fileNameEx = fileNameEx.substring(0, fileNameEx.length()-4);
-            String filePathEx = inputJTL_single.getParentFile().toString();
-            if (mainCommOnlyC.isSelected())
-                resultCSV_single = new File(filePathEx+File.separator+fileNameEx+attachString+attachString2+".csv");            
-            else
-                resultCSV_single = new File(filePathEx+File.separator+fileNameEx+attachString+".csv");
-            
-            inputF_single.setText(inputJTL_single.toString()); 
-            resultF_single.setText(resultCSV_single.toString());
-            genCsvB_single.setEnabled(true);
-        }
-        else if (rr == JFileChooser.CANCEL_OPTION);
-        else
-            JOptionPane.showMessageDialog(null,errLabelTargetFolder,messTitleLabel,JOptionPane.WARNING_MESSAGE);
-    }
-    
-    //MuLTI
+////////////////////////////////////////////////////////////////////////////////////////////////////////   
     @Action
     public Task Generate_multiAction() {
         return new Generate_multiActionTask(getApplication());
@@ -1536,7 +1196,8 @@ public class GenerateCsvReportsWorker extends FrameView {
         else
             JOptionPane.showMessageDialog(null,errLabelTargetFolder,messTitleLabel,JOptionPane.WARNING_MESSAGE);
     }
-
+    /////////////////////////////////////////////////////////////////////////////
+    
     @Action
     public void mainCommsChk() {
         if(mainCommOnlyC.isSelected()){
