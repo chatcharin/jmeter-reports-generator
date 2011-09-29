@@ -1,8 +1,6 @@
-
 package generateCsvReportsP;
 
 import kg.apc.jmeter.PluginsCMDWorker;
-import java.io.File;
 /**
  *
  * @author Jovaras * 
@@ -21,39 +19,39 @@ import java.io.File;
  */
 //OUTSIDE WORLD COMMUNICATOR
 public class GenSettingsWorker {
-    public static Boolean [] colsArray = new Boolean [8];
-
-    public static void init_PNG(File in, File out){
-        
-        PluginsCMDWorker.setInputFile(in.toString());
-        PluginsCMDWorker.setOutputPNGFile(out.toString());
+//    public static Boolean [] colsArray = new Boolean [8];
+    
+//    public static void testing(){
+//        PluginsCMDWorker.
+//    }
+    public static void init_PNG(String in, String out){
+        PluginsCMDWorker.setInputFile(in);
+        PluginsCMDWorker.setOutputPNGFile(out);
         PluginsCMDWorker.doJob();
     }
     
-    public static void init_CSV(File in, File out){        
-        PluginsCMDWorker.setInputFile(in.toString());
-        PluginsCMDWorker.setOutputCSVFile(out.toString());
+    public static void init_CSV(String in, String out){        
+        PluginsCMDWorker.setInputFile(in);
+        PluginsCMDWorker.setOutputCSVFile(out);
         PluginsCMDWorker.doJob();
     }
     public static Boolean checkForErrors(){
         if (org.apache.jmeter.save.CSVSaveService.CONTAINS_ERRORS) return true;
         else return false;
     }    
-    public static void setMainComms(){
-        PluginsCMDWorker.setMainCommsOnly(Boolean.TRUE);
+    public static void setShowMainStepsOnly(boolean chk){
+        if (chk) PluginsCMDWorker.setMainCommsOnly(true);
+        else PluginsCMDWorker.setMainCommsOnly(false);
     }
-    public static void setAllComms(){
-        PluginsCMDWorker.setMainCommsOnly(Boolean.FALSE);
-    }
-    public static void setStepsArray(){
-        org.apache.jmeter.save.CSVSaveService.colsArr = colsArray;
+    public static void setColsArray(Boolean [] arr){
+        org.apache.jmeter.save.CSVSaveService.colsArr = arr;
     }
     public static void initJMeterProps(){
         PluginsCMDWorker.initializeProperties();
     }
     public static void setExportMode(int mode){
-        if (mode == 1) PluginsCMDWorker.addExportMode(1);// PNG
-        else PluginsCMDWorker.addExportMode(2);//CSV
+        if (mode == 1) PluginsCMDWorker.setExportMode(1);// PNG
+        else PluginsCMDWorker.setExportMode(2);//CSV
     }
     public static void setPluginType(int type){
         if (type == 1) PluginsCMDWorker.setPluginType("ResponseTimesOverTime");
@@ -63,10 +61,18 @@ public class GenSettingsWorker {
         org.apache.jmeter.save.CSVSaveService.setDelim(delim);
     }
     public static void setRealTime(boolean chk){
-        if (chk)
-            PluginsCMDWorker.setRealTime(true);
-        else 
-            PluginsCMDWorker.setRealTime(false);
+        if (chk) PluginsCMDWorker.setRealTime(true);
+        else PluginsCMDWorker.setRealTime(false);
+    }
+    public static void setGraphSize(int x, int y){
+        PluginsCMDWorker.setGraphWidth(x);
+        PluginsCMDWorker.setGraphHeight(y);
+    }
+    public static void setLimitRows(boolean chk){
+        if (chk) PluginsCMDWorker.setRowsLimit(200);
+    }
+    public static void setForceY(int val){
+        PluginsCMDWorker.setForceY(val);
     }
         
     //TODO: check if everything is set. Maybe in doJob()'s class?
