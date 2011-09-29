@@ -17,6 +17,7 @@ import java.io.InputStreamReader;
 import java.io.FileInputStream;
 import java.util.ArrayList; 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 public final class GenerateCsvReportsWorker extends FrameView {
 
@@ -30,15 +31,11 @@ public final class GenerateCsvReportsWorker extends FrameView {
     //TODO: 46 46 46 46 <-- only last value is starting of trimm
     //TODO: in trimmed report number order is bad 8 9 10 1    
     //TODO: TAB sep in csv's
-    //TODO: !!!!!!@HOME 1.0 errors to 100%
-    //!!!!! 64,73% as 0.6472663139329806
     //TODO: move worker out of this class
     //TODO: @2012 make plugins version with option(checkBox) 'main comms only' [on by default]
     //TODO: read LT java manuals
     //TODO: ~^1 find out why it's taking so long before starting png generation(getFFVal?) aka do prints b@
     //TODO: jtl's visible even if setting a folder~
-    //TODO: print on graphs what options( what is on, what is off) are used(real timeline, row limit, forceY)
-    //TODO: catch exceptions if file is corrupted and inform user
     //TODO: join JMeter plugins with this.project
 
     public GenerateCsvReportsWorker(SingleFrameApplication app) {
@@ -51,10 +48,10 @@ public final class GenerateCsvReportsWorker extends FrameView {
         graphYFF.setValue(600);
         statusMessageLabel.setText("Welcome.");
 
-        java.net.URL url = ClassLoader.getSystemResource("org/jdesktop/application/resources/icons/paste.png");
-        getFrame().setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage(url)) ;
+        java.net.URL url = ClassLoader.getSystemResource("generateCsvReportsP/resources/report-go-icon.png");
+        getFrame().setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage(url));
         //x,y
-        getFrame().setMinimumSize(new Dimension(475, 455));
+        getFrame().setMinimumSize(new Dimension(500, 455));
 //        getFrame().setMaximumSize(new Dimension(1410, 1280));
         
         genCsvB_multi.setEnabled(false);
@@ -153,7 +150,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(generateCsvReportsP.GenerateCsvReportsApp.class).getContext().getActionMap(GenerateCsvReportsWorker.class, this);
         stopB_multi.setAction(actionMap.get("Stop_multiAction")); // NOI18N
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(generateCsvReportsP.GenerateCsvReportsApp.class).getContext().getResourceMap(GenerateCsvReportsWorker.class);
-        stopB_multi.setText(resourceMap.getString("stopB_multi.text")); // NOI18N
+        stopB_multi.setText(resourceMap.getString("stopB.text")); // NOI18N
         stopB_multi.setName("stopB_multi"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -164,7 +161,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         buttonsPane_multi.add(stopB_multi, gridBagConstraints);
 
         saveResB_multi.setAction(actionMap.get("SaveRes_multiAction")); // NOI18N
-        saveResB_multi.setText(resourceMap.getString("saveResB_multi.text")); // NOI18N
+        saveResB_multi.setText(resourceMap.getString("saveResultsIn.text")); // NOI18N
         saveResB_multi.setName("saveResB_multi"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -186,7 +183,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         buttonsPane_multi.add(genCsvB_multi, gridBagConstraints);
 
         browseB_multi.setAction(actionMap.get("Browse_multiAction")); // NOI18N
-        browseB_multi.setText(resourceMap.getString("browseB_multi.text")); // NOI18N
+        browseB_multi.setText(resourceMap.getString("selectFolder.text")); // NOI18N
         browseB_multi.setName("browseB_multi"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -223,7 +220,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         resultF_multi.setColumns(20);
         resultF_multi.setEditable(false);
-        resultF_multi.setText(specifyTargetFld);
+        resultF_multi.setText(resourceMap.getString("selectFolderField.text")); // NOI18N
         resultF_multi.setName("resultF_multi"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -235,7 +232,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         inputF_multi.setColumns(20);
         inputF_multi.setEditable(false);
-        inputF_multi.setText(specifyTargetFld);
+        inputF_multi.setText(resourceMap.getString("selectFolderField.text")); // NOI18N
         inputF_multi.setName("inputF_multi"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -254,7 +251,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         buttonsPane_RTOT.setLayout(new java.awt.GridBagLayout());
 
         stopB_RTOT.setAction(actionMap.get("Stop_RTOTAction")); // NOI18N
-        stopB_RTOT.setText(resourceMap.getString("stopB_RTOT.text")); // NOI18N
+        stopB_RTOT.setText(resourceMap.getString("stopB.text")); // NOI18N
         stopB_RTOT.setName("stopB_RTOT"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 3;
@@ -265,7 +262,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         buttonsPane_RTOT.add(stopB_RTOT, gridBagConstraints);
 
         saveResB_RTOT.setAction(actionMap.get("SaveRes_RTOTAction")); // NOI18N
-        saveResB_RTOT.setText(resourceMap.getString("saveResB_RTOT.text")); // NOI18N
+        saveResB_RTOT.setText(resourceMap.getString("saveResultsIn.text")); // NOI18N
         saveResB_RTOT.setName("saveResB_RTOT"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 2;
@@ -287,7 +284,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         buttonsPane_RTOT.add(genB_RTOT, gridBagConstraints);
 
         browseB_RTOT.setAction(actionMap.get("Browse_RTOTAction")); // NOI18N
-        browseB_RTOT.setText(resourceMap.getString("browseB_RTOT.text")); // NOI18N
+        browseB_RTOT.setText(resourceMap.getString("selectFolder.text")); // NOI18N
         browseB_RTOT.setName("browseB_RTOT"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -324,7 +321,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         resultF_RTOT.setColumns(20);
         resultF_RTOT.setEditable(false);
-        resultF_RTOT.setText(specifyTargetFld);
+        resultF_RTOT.setText(resourceMap.getString("selectFolderField.text")); // NOI18N
         resultF_RTOT.setName("resultF_RTOT"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -336,7 +333,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         inputF_RTOT.setColumns(20);
         inputF_RTOT.setEditable(false);
-        inputF_RTOT.setText(specifyTargetFld);
+        inputF_RTOT.setText(resourceMap.getString("selectFolderField.text")); // NOI18N
         inputF_RTOT.setName("inputF_RTOT"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -404,7 +401,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         resultF_trimmed.setColumns(20);
         resultF_trimmed.setEditable(false);
-        resultF_trimmed.setText(specifyTargetFile);
+        resultF_trimmed.setText(resourceMap.getString("selectFileField.text")); // NOI18N
         resultF_trimmed.setName("resultF_trimmed"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -417,7 +414,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         inputF_trimmed.setColumns(20);
         inputF_trimmed.setEditable(false);
-        inputF_trimmed.setText(specifyTargetFile);
+        inputF_trimmed.setText(resourceMap.getString("selectFileField.text")); // NOI18N
         inputF_trimmed.setName("inputF_trimmed"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -477,7 +474,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         trimmedJTLF.setColumns(20);
         trimmedJTLF.setEditable(false);
-        trimmedJTLF.setText(specifyTargetFile);
+        trimmedJTLF.setText(resourceMap.getString("selectFileField.text")); // NOI18N
         trimmedJTLF.setName("trimmedJTLF"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -655,7 +652,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 0, 5);
         jPanelSettings.add(graphsPane, gridBagConstraints);
 
-        csvPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), resourceMap.getString("csvPane.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Tahoma", 1, 11))); // NOI18N
+        csvPane.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createEtchedBorder(javax.swing.border.EtchedBorder.RAISED), resourceMap.getString("csvPane.border.title"), javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, resourceMap.getFont("csvPane.border.titleFont"))); // NOI18N
         csvPane.setName("csvPane"); // NOI18N
         csvPane.setLayout(new java.awt.GridBagLayout());
 
@@ -773,11 +770,11 @@ public final class GenerateCsvReportsWorker extends FrameView {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 462, Short.MAX_VALUE)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addContainerGap(452, Short.MAX_VALUE))
+                .addContainerGap(486, Short.MAX_VALUE))
         );
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -788,26 +785,30 @@ public final class GenerateCsvReportsWorker extends FrameView {
                 .addGap(3, 3, 3))
         );
 
+        chooseJTL_multi.setApproveButtonText(resourceMap.getString("chooseJTL.approveButtonText")); // NOI18N
         chooseJTL_multi.setCurrentDirectory(new java.io.File("C:\\results"));
-        chooseJTL_multi.setDialogTitle(resourceMap.getString("chooseJTL_multi.dialogTitle")); // NOI18N
-        chooseJTL_multi.setFileFilter(filter);
+        chooseJTL_multi.setDialogTitle(resourceMap.getString("chooseFolder.dialogTitle")); // NOI18N
         chooseJTL_multi.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         chooseJTL_multi.setName("chooseJTL_multi"); // NOI18N
 
+        chooseSave_multi.setApproveButtonText(resourceMap.getString("chooseJTL.approveButtonText")); // NOI18N
+        chooseSave_multi.setDialogTitle(resourceMap.getString("chooseFolder.dialogTitle")); // NOI18N
         chooseSave_multi.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         chooseSave_multi.setName("chooseSave_multi"); // NOI18N
 
         chooseJTL_trimmed.setCurrentDirectory(new java.io.File("C:\\results"));
-        chooseJTL_trimmed.setDialogTitle(resourceMap.getString("chooseJTL_trimmed.dialogTitle")); // NOI18N
+        chooseJTL_trimmed.setDialogTitle(resourceMap.getString("chooseFile.dialogTitle")); // NOI18N
         chooseJTL_trimmed.setFileFilter(filter);
         chooseJTL_trimmed.setName("chooseJTL_trimmed"); // NOI18N
 
+        chooseJTL_RTOT.setApproveButtonText(resourceMap.getString("chooseJTL.approveButtonText")); // NOI18N
         chooseJTL_RTOT.setCurrentDirectory(new java.io.File("C:\\results"));
-        chooseJTL_RTOT.setDialogTitle(resourceMap.getString("chooseJTL_RTOT.dialogTitle")); // NOI18N
-        chooseJTL_RTOT.setFileFilter(filter);
+        chooseJTL_RTOT.setDialogTitle(resourceMap.getString("chooseFolder.dialogTitle")); // NOI18N
         chooseJTL_RTOT.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         chooseJTL_RTOT.setName("chooseJTL_RTOT"); // NOI18N
 
+        chooseSave_RTOT.setApproveButtonText(resourceMap.getString("chooseJTL.approveButtonText")); // NOI18N
+        chooseSave_RTOT.setDialogTitle(resourceMap.getString("chooseFolder.dialogTitle")); // NOI18N
         chooseSave_RTOT.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         chooseSave_RTOT.setName("chooseSave_RTOT"); // NOI18N
 
@@ -905,7 +906,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private final int[] filledArray10 = {0,1,2,4,5,6,7};
     private final FileFilter filter = new FileNameExtensionFilter("jtl", "JTL");
     private final String newLine = System.getProperty("line.separator"); 
-    private final String specifyTargetFile = "Please select a file first...";
+//    private final String specifyTargetFile = "Please select a file first...";
     private final String specifyTargetFld = "Please select a Folder first...";
     private final String HeadLine1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
     private final String HeadLine2 = "<testResults version=\"1.2\">";
@@ -916,7 +917,8 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private final String attachRTOT = "_ResponseTimesOverTime";
     private final String quote = "\"";
     private final String TStart = "\" ts=\"";  
-       
+    
+    // <editor-fold defaultstate="collapsed" desc="processF">
     private void processF(File aFile) {
 
         if (doCont){ //Listen for "Stop"
@@ -966,7 +968,303 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
             extensionsToSearchFor.add(ext);
     }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Multi">
+    @Action
+    public Task Generate_multiAction() {
+        return new Generate_multiActionTask(getApplication());
+    }
+    private class Generate_multiActionTask extends org.jdesktop.application.Task<Object, Void> {
+        Generate_multiActionTask(org.jdesktop.application.Application app) {
+            super(app);
+            System.out.println("Executing multiple reports mode.");
+            browseB_multi.setEnabled(false);
+            genCsvB_multi.setEnabled(false);
+            saveResB_multi.setEnabled(false);
+            stopB_multi.setEnabled(true);
+            statusMessageLabel.setText("Searching for files...");
+        }
+        @Override protected Object doInBackground() {
+            
+            processF(inputJTL_multi); //FILL aListOfJTLFiles
+            if (aListOfJTLFiles.isEmpty()) return 0;
+            if (!resultSavingFolder_multi.exists()) resultSavingFolder_multi.mkdir();
+            formCsvParams();
+            
+            File jtlF;
+            File csvF;
+            File csvF_Err;
+            String fileNameEx;
 
+            for (int bl=0;bl<aListOfJTLFiles.size()&doCont;bl++){ 
+
+                jtlF = aListOfJTLFiles.get(bl);
+                statusMessageLabel.setText("Working with: "+jtlF.toString());
+                fileNameEx = jtlF.getName();
+                fileNameEx = fileNameEx.substring(0, fileNameEx.length()-4);
+                csvF = new File(resultSavingFolder_multi+File.separator+fileNameEx+".csv");                
+                GenSettingsWorker.init_CSV(jtlF.toString(),csvF.toString());
+
+                if(GenSettingsWorker.checkForErrors()){
+                    csvF_Err = new File(csvF.getParentFile()+File.separator+attachStringError+csvF.getName());
+                    Utils.deleteFile(csvF_Err);//delete (needed to rename)
+                    Utils.renameFile(csvF, csvF_Err);
+                }
+                }
+            if (!doCont) return 1;
+            else return 2;
+        }
+        @Override protected void cancelled() {                      
+            doCont = false;
+        }
+        @Override protected void succeeded(Object result) {
+
+            String message;
+            switch (((Integer)result).intValue()){
+                case 0: message = "Selected folder did not contain any JTL files. Aborted."; break;
+                case 1: message = "Aborted by user."; break;
+                case 2: message = "Done. Operation took "+this.getExecutionDuration(TimeUnit.SECONDS)+" seconds."; break;
+                default: message = "Error."; break;    
+            }
+            statusMessageLabel.setText(message);
+            
+            System.out.println("DONE.");    
+            browseB_multi.setEnabled(true);
+            genCsvB_multi.setEnabled(true);
+            saveResB_multi.setEnabled(true);
+            stopB_multi.setEnabled(false);
+            aListOfJTLFiles.clear();
+            doCont = true;
+        }
+    }
+
+    @Action
+    public void Stop_multiAction() {
+        Generate_multiAction().cancel(true);
+    }
+
+    @Action
+    public void Browse_multiAction() throws Exception {
+
+        int rr = chooseJTL_multi.showOpenDialog(null);
+        if(rr == JFileChooser.APPROVE_OPTION){
+            inputJTL_multi = chooseJTL_multi.getSelectedFile();
+
+            inputF_multi.setText(inputJTL_multi.toString());
+            
+            if (!savResUsed_multi){
+                resultSavingFolder_multi = new File(inputJTL_multi.getCanonicalPath()+attachReports);
+                resultF_multi.setText(resultSavingFolder_multi.toString());                
+            }
+            inputF_multi.setCaretPosition(0);
+            resultF_multi.setCaretPosition(0);
+            genCsvB_multi.setEnabled(true);
+        }
+        else if(rr == JFileChooser.CANCEL_OPTION);
+
+    }
+
+    @Action
+    public void SaveRes_multiAction() {
+        chooseSave_multi.setCurrentDirectory(chooseJTL_multi.getCurrentDirectory());
+        int tt = chooseSave_multi.showSaveDialog(null);
+        if(tt == JFileChooser.APPROVE_OPTION){
+            resultSavingFolder_multi = chooseSave_multi.getSelectedFile();
+            resultF_multi.setText(resultSavingFolder_multi.toString()); 
+            resultF_multi.setCaretPosition(0);
+            savResUsed_multi = true;
+        }
+        else if (tt == JFileChooser.CANCEL_OPTION);
+    }   
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Trimmed">
+    @Action 
+    public Task Generate_trimmedAction() {
+        return new Generate_trimmedActionTask(getApplication());
+    }
+    private class Generate_trimmedActionTask extends org.jdesktop.application.Task<Object, Void> {
+        Generate_trimmedActionTask(org.jdesktop.application.Application app) {
+            super(app);
+            statusMessageLabel.setText("");      
+            browseB_trimmed.setEnabled(false);
+            genCsvB_trimmed.setEnabled(false);
+            statusMessageLabel.setText("Calculating...");
+        }
+        @Override protected Object doInBackground() {
+            
+            if (timelineStartFF.getValue() == null | timelineEndFF.getValue() == null) return 0;
+            Integer startP = ((Number)timelineStartFF.getValue()).intValue();
+            Integer endP = ((Number)timelineEndFF.getValue()).intValue();  
+            if (startP > endP) return 1;
+            statusMessageLabel.setText("Preparing environment...");  
+            formCsvParams();
+            
+            statusMessageLabel.setText("Reading JTL...");
+            getSELinesNo(inputJTL_trimmed,startP,endP);
+            statusMessageLabel.setText("Forming new JTL...");
+            formTrimmedJTL(inputJTL_trimmed, trimmedJTL, firstValLine, lastValLine);
+            statusMessageLabel.setText("Generating CSV report..");
+            GenSettingsWorker.init_CSV(trimmedJTL.toString(),resultCSV_trimmed.toString());
+            return 2; 
+        }
+        @Override protected void cancelled() {                      
+            doCont = false;
+        }
+        @Override protected void succeeded(Object result) {
+            
+            String message;
+            switch (((Integer)result).intValue()){
+                case 0: message = "Please define starting and ending point."; break;
+                case 1: message = "Starting point cannot be bigger than ending point."; break;
+                case 2: message = "Done. Operation took "+this.getExecutionDuration(TimeUnit.SECONDS)+" seconds."; break;
+                default: message = "Error."; break;    
+            }
+            statusMessageLabel.setText(message);
+            
+            System.out.println("DONE.");
+            browseB_trimmed.setEnabled(true);
+            genCsvB_trimmed.setEnabled(true);
+            doCont = true;
+        }
+    }
+
+    @Action
+    public void Browse_trimmedAction() {
+        int rr = chooseJTL_trimmed.showOpenDialog(null);
+        if(rr == JFileChooser.APPROVE_OPTION){
+            
+            inputJTL_trimmed = chooseJTL_trimmed.getSelectedFile();                       
+            String fileName = inputJTL_trimmed.getName();
+            String fileNameWExt = fileName.substring(0, fileName.length()-4);
+            String filePathEx = inputJTL_trimmed.getParentFile().toString();
+            
+            trimmedJTL = new File(filePathEx+File.separator+attachStringTrimmed+fileName);            
+            resultCSV_trimmed = new File(filePathEx+File.separator+attachStringTrimmed+fileNameWExt+".csv");            
+            
+            trimmedJTLF.setText(trimmedJTL.toString());
+            inputF_trimmed.setText(inputJTL_trimmed.toString()); 
+            resultF_trimmed.setText(resultCSV_trimmed.toString());
+            statusMessageLabel.setText("Reading JTL's timeline...");
+            timelineF.setText(String.valueOf(getTimeline(inputJTL_trimmed)));
+            timelineStartFF.setText("");
+            timelineEndFF.setText("");
+            
+            trimmedJTLF.setCaretPosition(0);
+            inputF_trimmed.setCaretPosition(0);    
+            resultF_trimmed.setCaretPosition(0);
+            genCsvB_trimmed.setEnabled(true);
+            timelineStartFF.setEnabled(true);
+            timelineEndFF.setEnabled(true);
+            timelineF.setEnabled(true);
+            statusMessageLabel.setText("Please define both starting and ending points before starting.");
+
+        }
+        else if (rr == JFileChooser.CANCEL_OPTION);
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="RTOT">
+    @Action
+    public Task Generate_RTOT() {
+        return new Generate_RTOTTask(getApplication());
+    }
+    private class Generate_RTOTTask extends org.jdesktop.application.Task<Object, Void> {
+        Generate_RTOTTask(org.jdesktop.application.Application app) {
+            super(app);
+            System.out.println("Executing Response Times Over Time graphs mode.");
+
+            browseB_RTOT.setEnabled(false);
+            genB_RTOT.setEnabled(false);
+            saveResB_RTOT.setEnabled(false);
+            stopB_RTOT.setEnabled(true);
+            statusMessageLabel.setText("Searching for files..."); 
+        }
+        @Override protected Object doInBackground() { 
+            
+            processF(inputJTL_RTOT); //FILL aListOfJTLFiles
+            if (aListOfJTLFiles.isEmpty()) return 0;                
+            if (!resultSavingFolder_RTOT.exists()) resultSavingFolder_RTOT.mkdir();            
+            formPngParams();
+            
+            File jtlF;
+            File pngF;
+            String fileNameEx;    
+            
+            for (int bl=0;bl<aListOfJTLFiles.size()&doCont;bl++){ 
+
+                jtlF = aListOfJTLFiles.get(bl);
+                statusMessageLabel.setText("Working with: "+jtlF.toString());
+                fileNameEx = jtlF.getName();
+                fileNameEx = fileNameEx.substring(0, fileNameEx.length()-4);
+                pngF = new File(resultSavingFolder_RTOT+File.separator+fileNameEx+".png");
+                
+                GenSettingsWorker.init_PNG(jtlF.toString(), pngF.toString());              
+            }
+            if (!doCont) return 1;
+            else return 2;
+        }
+        @Override protected void cancelled() {                      
+            doCont = false;
+        }
+        @Override protected void succeeded(Object result) {
+            String message;
+            switch (((Integer)result).intValue()){
+                case 0: message = "Selected folder did not contain any JTL files. Aborted."; break;
+                case 1: message = "Aborted by user."; break;
+                case 2: message = "Done. Operation took "+this.getExecutionDuration(TimeUnit.SECONDS)+" seconds."; break;
+                default: message = "Error."; break;    
+            }
+            statusMessageLabel.setText(message);
+            System.out.println("DONE.");    
+            browseB_RTOT.setEnabled(true);
+            genB_RTOT.setEnabled(true);
+            saveResB_RTOT.setEnabled(true);
+            stopB_RTOT.setEnabled(false);
+            aListOfJTLFiles.clear();
+            doCont = true;
+        }
+    }
+    
+    @Action
+    public void Stop_RTOTAction() {
+        Generate_RTOT().cancel(true);
+    }
+
+    @Action
+    public void Browse_RTOTAction() throws Exception {
+
+        int rr = chooseJTL_RTOT.showOpenDialog(null);
+        if(rr == JFileChooser.APPROVE_OPTION){
+            inputJTL_RTOT = chooseJTL_RTOT.getSelectedFile();
+
+            inputF_RTOT.setText(inputJTL_RTOT.toString());
+            if (!savResUsed_RTOT){
+                resultSavingFolder_RTOT = new File(inputJTL_RTOT.getCanonicalPath()+attachRTOT);
+                resultF_RTOT.setText(resultSavingFolder_RTOT.toString());
+            }
+            resultF_RTOT.setCaretPosition(0);
+            inputF_RTOT.setCaretPosition(0);
+            genB_RTOT.setEnabled(true);
+        }
+        else if (rr == JFileChooser.CANCEL_OPTION);
+    }
+
+    @Action
+    public void SaveRes_RTOTAction() {
+        chooseSave_RTOT.setCurrentDirectory(chooseJTL_RTOT.getCurrentDirectory());
+        int tt = chooseSave_RTOT.showSaveDialog(null);
+        if(tt == JFileChooser.APPROVE_OPTION){
+            resultSavingFolder_RTOT = chooseSave_RTOT.getSelectedFile();
+            resultF_RTOT.setText(resultSavingFolder_RTOT.toString());
+            savResUsed_RTOT = true;
+            resultF_RTOT.setCaretPosition(0);
+        }
+        else if (tt == JFileChooser.CANCEL_OPTION);
+    }
+    // </editor-fold>
+    
     private int getTimeline(File inputJTL){
        
        try{
@@ -1075,307 +1373,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
 //           erp.printStackTrace();
        }       
    } 
-////////////////////////////////////////////////////////////////////////////////////////////////////////   
-    @Action
-    public Task Generate_multiAction() {
-        return new Generate_multiActionTask(getApplication());
-    }
-    private class Generate_multiActionTask extends org.jdesktop.application.Task<Object, Void> {
-        Generate_multiActionTask(org.jdesktop.application.Application app) {
-            super(app);
-            System.out.println("Executing multiple reports mode.");
-            browseB_multi.setEnabled(false);
-            genCsvB_multi.setEnabled(false);
-            saveResB_multi.setEnabled(false);
-            stopB_multi.setEnabled(true);
-            statusMessageLabel.setText("Searching for files...");
-        }
-        @Override protected Object doInBackground() {
-            
-            processF(inputJTL_multi); //FILL aListOfJTLFiles
-            if (aListOfJTLFiles.isEmpty())
-                return 0;
-            
-            formCsvParams();            
-            File jtlF;
-            File csvF;
-            File csvF_Err;
-            String fileNameEx;            
-            for (int bl=0;bl<aListOfJTLFiles.size()&doCont;bl++){ 
-
-                jtlF = aListOfJTLFiles.get(bl);
-                statusMessageLabel.setText("Working with: "+jtlF.toString());
-                fileNameEx = jtlF.getName();
-                fileNameEx = fileNameEx.substring(0, fileNameEx.length()-4);               
-                
-                csvF = new File(resultSavingFolder_multi+File.separator+fileNameEx+".csv");                
-                Utils.deleteFile(csvF); //if exists
-                GenSettingsWorker.init_CSV(jtlF.toString(),csvF.toString());
-
-                if(GenSettingsWorker.checkForErrors()){
-                    csvF_Err = new File(csvF.getParentFile()+File.separator+attachStringError+csvF.getName());
-                    Utils.deleteFile(csvF_Err);//if exists
-                    Utils.renameFile(csvF, csvF_Err);
-                }
-                }
-            if (!doCont) return 1;
-            else return 2;
-        }
-        @Override protected void cancelled() {                      
-            doCont = false;
-        }
-        @Override protected void succeeded(Object result) {
-
-            String message;
-            switch (((Integer)result).intValue()){
-                case 0: message = "Selected folder did not contain any JTL files. Aborted."; break;
-                case 1: message = "Aborted by user."; break;
-                case 2: message = "Done."; break;
-                default: message = "Error."; break;    
-            }
-            statusMessageLabel.setText(message);
-            
-            System.out.println("DONE.");    
-            browseB_multi.setEnabled(true);
-            genCsvB_multi.setEnabled(true);
-            saveResB_multi.setEnabled(true);
-            stopB_multi.setEnabled(false);
-            aListOfJTLFiles.clear();
-            doCont = true;
-        }
-    }
-
-    @Action
-    public void Stop_multiAction() {
-        Generate_multiAction().cancel(true);
-    }
-
-    @Action
-    public void Browse_multiAction() throws Exception {
-
-        int rr = chooseJTL_multi.showOpenDialog(null);
-        if(rr == JFileChooser.APPROVE_OPTION){
-            inputJTL_multi = chooseJTL_multi.getSelectedFile();
-
-            inputF_multi.setText(inputJTL_multi.toString());
-            
-            if (!savResUsed_multi){
-                resultSavingFolder_multi = new File(inputJTL_multi.getCanonicalPath()+attachReports);
-                resultSavingFolder_multi.mkdir();
-                resultF_multi.setText(resultSavingFolder_multi.toString());
-                
-            }
-            inputF_multi.setCaretPosition(0);
-            resultF_multi.setCaretPosition(0);
-            genCsvB_multi.setEnabled(true);
-        }
-        else if(rr == JFileChooser.CANCEL_OPTION);
-
-    }
-
-    @Action
-    public void SaveRes_multiAction() {
-        chooseSave_multi.setCurrentDirectory(chooseJTL_multi.getCurrentDirectory());
-        int tt = chooseSave_multi.showSaveDialog(null);
-        if(tt == JFileChooser.APPROVE_OPTION){
-            resultSavingFolder_multi = chooseSave_multi.getSelectedFile();
-            resultF_multi.setText(resultSavingFolder_multi.toString()); 
-            resultF_multi.setCaretPosition(0);
-            savResUsed_multi = true;
-        }
-        else if (tt == JFileChooser.CANCEL_OPTION);
-    }   
-    
-    //TRiMMED
-    @Action 
-    public Task Generate_trimmedAction() {
-        return new Generate_trimmedActionTask(getApplication());
-    }
-    private class Generate_trimmedActionTask extends org.jdesktop.application.Task<Object, Void> {
-        Generate_trimmedActionTask(org.jdesktop.application.Application app) {
-            super(app);
-            statusMessageLabel.setText("");      
-            browseB_trimmed.setEnabled(false);
-            genCsvB_trimmed.setEnabled(false);
-            statusMessageLabel.setText("Calculating...");
-        }
-        @Override protected Object doInBackground() {
-            
-            if (timelineStartFF.getValue() == null | timelineEndFF.getValue() == null) return 0;
-            Integer startP = ((Number)timelineStartFF.getValue()).intValue();
-            Integer endP = ((Number)timelineEndFF.getValue()).intValue();  
-            if (startP > endP) return 1;
-            statusMessageLabel.setText("Preparing environment...");  
-            formCsvParams();
-            Utils.deleteFile(resultCSV_trimmed);
-            Utils.deleteFile(trimmedJTL);
-            
-            statusMessageLabel.setText("Reading JTL...");
-            getSELinesNo(inputJTL_trimmed,startP,endP);
-            statusMessageLabel.setText("Forming new JTL...");
-            formTrimmedJTL(inputJTL_trimmed, trimmedJTL, firstValLine, lastValLine);
-            statusMessageLabel.setText("Generating CSV report..");
-            GenSettingsWorker.init_CSV(trimmedJTL.toString(),resultCSV_trimmed.toString());
-            return 2; 
-        }
-        @Override protected void cancelled() {                      
-            doCont = false;
-        }
-        @Override protected void succeeded(Object result) {
-            
-            String message;
-            switch (((Integer)result).intValue()){
-                case 0: message = "Please define starting and ending point."; break;
-                case 1: message = "Starting point cannot be bigger than ending point."; break;
-                case 2: message = "Done."; break;
-                default: message = "Error."; break;    
-            }
-            statusMessageLabel.setText(message);
-            
-            System.out.println("DONE.");
-            browseB_trimmed.setEnabled(true);
-            genCsvB_trimmed.setEnabled(true);
-            doCont = true;
-        }
-    }
-
-    @Action
-    public void Browse_trimmedAction() {
-        int rr = chooseJTL_trimmed.showOpenDialog(null);
-        if(rr == JFileChooser.APPROVE_OPTION){
-            
-            inputJTL_trimmed = chooseJTL_trimmed.getSelectedFile();                       
-            String fileName = inputJTL_trimmed.getName();
-            String fileNameWExt = fileName.substring(0, fileName.length()-4);
-            String filePathEx = inputJTL_trimmed.getParentFile().toString();
-            
-            trimmedJTL = new File(filePathEx+File.separator+attachStringTrimmed+fileName);            
-            resultCSV_trimmed = new File(filePathEx+File.separator+attachStringTrimmed+fileNameWExt+".csv");            
-            
-            trimmedJTLF.setText(trimmedJTL.toString());
-            inputF_trimmed.setText(inputJTL_trimmed.toString()); 
-            resultF_trimmed.setText(resultCSV_trimmed.toString());
-            statusMessageLabel.setText("Reading JTL's timeline...");
-            timelineF.setText(String.valueOf(getTimeline(inputJTL_trimmed)));
-            timelineStartFF.setText("");
-            timelineEndFF.setText("");
-            
-            trimmedJTLF.setCaretPosition(0);
-            inputF_trimmed.setCaretPosition(0);    
-            resultF_trimmed.setCaretPosition(0);
-            genCsvB_trimmed.setEnabled(true);
-            timelineStartFF.setEnabled(true);
-            timelineEndFF.setEnabled(true);
-            timelineF.setEnabled(true);
-            statusMessageLabel.setText("Please define both starting and ending points before starting.");
-
-        }
-        else if (rr == JFileChooser.CANCEL_OPTION);
-    }
-    
-    //Response times over time
-    @Action
-    public Task Generate_RTOT() {
-        return new Generate_RTOTTask(getApplication());
-    }
-    private class Generate_RTOTTask extends org.jdesktop.application.Task<Object, Void> {
-        Generate_RTOTTask(org.jdesktop.application.Application app) {
-            super(app);
-            System.out.println("Executing Response Times Over Time graphs mode.");
-
-            browseB_RTOT.setEnabled(false);
-            genB_RTOT.setEnabled(false);
-            saveResB_RTOT.setEnabled(false);
-            stopB_RTOT.setEnabled(true);
-            statusMessageLabel.setText("Searching for files..."); 
-        }
-        @Override protected Object doInBackground() { 
-            
-            processF(inputJTL_RTOT); //FILL aListOfJTLFiles
-            if (aListOfJTLFiles.isEmpty())
-                return 0;
-            formPngParams();
-            
-            File jtlF;
-            File pngF;
-            String fileNameEx;    
-            
-            for (int bl=0;bl<aListOfJTLFiles.size()&doCont;bl++){ 
-
-                jtlF = aListOfJTLFiles.get(bl);
-                statusMessageLabel.setText("Working with: "+jtlF.toString());
-                fileNameEx = jtlF.getName();
-                fileNameEx = fileNameEx.substring(0, fileNameEx.length()-4);                
-
-                pngF = new File(resultSavingFolder_RTOT+File.separator+fileNameEx+".png");
-                
-                Utils.deleteFile(pngF); // if exists
-                GenSettingsWorker.init_PNG(jtlF.toString(), pngF.toString());              
-            }
-            if (!doCont) return 1;
-            else return 2;
-        }
-        @Override protected void cancelled() {                      
-            doCont = false;
-        }
-        @Override protected void succeeded(Object result) {
-            String message;
-            switch (((Integer)result).intValue()){
-                case 0: message = "Selected folder did not contain any JTL files. Aborted."; break;
-                case 1: message = "Aborted by user."; break;
-                case 2: message = "Done."; break;
-                default: message = "Error."; break;    
-            }
-            statusMessageLabel.setText(message);
-            
-            System.out.println("DONE.");    
-            browseB_RTOT.setEnabled(true);
-            genB_RTOT.setEnabled(true);
-            saveResB_RTOT.setEnabled(true);
-            stopB_RTOT.setEnabled(false);
-            aListOfJTLFiles.clear();
-            doCont = true;
-        }
-    }
-    
-    @Action
-    public void Stop_RTOTAction() {
-        Generate_RTOT().cancel(true);
-    }
-
-    @Action
-    public void Browse_RTOTAction() throws Exception {
-
-        int rr = chooseJTL_RTOT.showOpenDialog(null);
-        if(rr == JFileChooser.APPROVE_OPTION){
-            inputJTL_RTOT = chooseJTL_RTOT.getSelectedFile();
-
-            inputF_RTOT.setText(inputJTL_RTOT.toString());
-            if (!savResUsed_RTOT){
-                resultSavingFolder_RTOT = new File(inputJTL_RTOT.getCanonicalPath()+attachRTOT);
-                resultSavingFolder_RTOT.mkdir();
-                resultF_RTOT.setText(resultSavingFolder_RTOT.toString());
-            }
-            resultF_RTOT.setCaretPosition(0);
-            inputF_RTOT.setCaretPosition(0);
-            genB_RTOT.setEnabled(true);
-        }
-        else if (rr == JFileChooser.CANCEL_OPTION);
-    }
-
-    @Action
-    public void SaveRes_RTOTAction() {
-        chooseSave_RTOT.setCurrentDirectory(chooseJTL_RTOT.getCurrentDirectory());
-        int tt = chooseSave_RTOT.showSaveDialog(null);
-        if(tt == JFileChooser.APPROVE_OPTION){
-            resultSavingFolder_RTOT = chooseSave_RTOT.getSelectedFile();
-            resultF_RTOT.setText(resultSavingFolder_RTOT.toString());
-            savResUsed_RTOT = true;
-            resultF_RTOT.setCaretPosition(0);
-        }
-        else if (tt == JFileChooser.CANCEL_OPTION);
-    }
-    /////////////////////////////////////////////////////////////////////////////
     
     @Action
     public void mainCommsChk() {
