@@ -23,20 +23,17 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
     //TODO: one big project: connect all jmeter tools into one
     //TODO: big feature: print all multi reports on one xlsx file
-    //TODO: change e.printStackTrace(); to printString(smth like that)
-    //TODO: try bars once again
-    //TODO: ~~disable fields when working
-    
-    //TODO: settings.ini
+    //TODO: ~~try bars once again    
+    //TODO: ~settings.ini
     //TODO: 46 46 46 46 <-- only last value is starting of trimm
     //TODO: in trimmed report number order is bad 8 9 10 1    
     //TODO: TAB sep in csv's
     //TODO: move worker out of this class
     //TODO: @2012 make plugins version with option(checkBox) 'main comms only' [on by default]
     //TODO: read LT java manuals
-    //TODO: ~^1 find out why it's taking so long before starting png generation(getFFVal?) aka do prints b@
     //TODO: jtl's visible even if setting a folder~
     //TODO: join JMeter plugins with this.project
+    //TODO: AggregateReportGui :: in there form model, then inside JMeter core chechking lines is not needed therefore more perf gained
 
     public GenerateCsvReportsWorker(SingleFrameApplication app) {
         super(app);
@@ -906,8 +903,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private final int[] filledArray10 = {0,1,2,4,5,6,7};
     private final FileFilter filter = new FileNameExtensionFilter("jtl", "JTL");
     private final String newLine = System.getProperty("line.separator"); 
-//    private final String specifyTargetFile = "Please select a file first...";
-    private final String specifyTargetFld = "Please select a Folder first...";
     private final String HeadLine1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
     private final String HeadLine2 = "<testResults version=\"1.2\">";
     private final String FooterLine = "</testResults>";
