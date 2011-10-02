@@ -32,10 +32,8 @@ public final class GenerateCsvReportsWorker extends FrameView {
     //TODO: @2012 make plugins version with option(checkBox) 'main comms only' [on by default]
     //TODO: read LT java manuals
     //TODO: jtl's visible even if setting a folder~
-    //TODO: join JMeter plugins with this.project
     //TODO: AggregateReportGui :: in there form model, then inside JMeter core chechking lines is not needed therefore more perf gained
     //TODO: connect plugins with this, gensettignsworker having role of pluginsCMDWorker
-    //TODO: if mainStepsOnly, the Y is not adjusted to the max of these only steps(it's the size of pacing and shit inside)
 
     public GenerateCsvReportsWorker(SingleFrameApplication app) {
         super(app);
