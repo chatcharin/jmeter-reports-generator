@@ -34,6 +34,8 @@ public final class GenerateCsvReportsWorker extends FrameView {
     //TODO: jtl's visible even if setting a folder~
     //TODO: join JMeter plugins with this.project
     //TODO: AggregateReportGui :: in there form model, then inside JMeter core chechking lines is not needed therefore more perf gained
+    //TODO: connect plugins with this, gensettignsworker having role of pluginsCMDWorker
+    //TODO: if mainStepsOnly, the Y is not adjusted to the max of these only steps(it's the size of pacing and shit inside)
 
     public GenerateCsvReportsWorker(SingleFrameApplication app) {
         super(app);
@@ -712,7 +714,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jPanel5.setName("jPanel5"); // NOI18N
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
-        mainCommOnlyC.setAction(actionMap.get("mainCommsChk")); // NOI18N
         mainCommOnlyC.setSelected(true);
         mainCommOnlyC.setText(resourceMap.getString("mainCommOnlyC.text")); // NOI18N
         mainCommOnlyC.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
@@ -1367,15 +1368,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
        catch(Exception erp){
 //           erp.printStackTrace();
        }       
-   } 
-    
-    @Action
-    public void mainCommsChk() {
-        if(mainCommOnlyC.isSelected())
-            GenSettingsWorker.setShowMainStepsOnly(true);
-        else
-            GenSettingsWorker.setShowMainStepsOnly(false);
-    }
+   }
 
     private void fillStepsArray(){
         Boolean [] colsArray = new Boolean [8];
@@ -1396,6 +1389,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
     
     private void formCsvParams(){      
         GenSettingsWorker.initJMeterProps();
+        GenSettingsWorker.setShowMainStepsOnly(mainCommOnlyC.isSelected());
         GenSettingsWorker.setExportMode(2);
         GenSettingsWorker.setPluginType(2);
         GenSettingsWorker.setCSVDelim(getSelectedDelim());
@@ -1405,6 +1399,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
     
     private void formPngParams(){
         GenSettingsWorker.initJMeterProps();
+        GenSettingsWorker.setShowMainStepsOnly(mainCommOnlyC.isSelected());
         GenSettingsWorker.setRealTime(realTimelineChk.isSelected());
         GenSettingsWorker.setLimitRows(limitRowsChk.isSelected());
         if (forceYFF.getValue()!=null) GenSettingsWorker.setForceY(((Number)forceYFF.getValue()).intValue());
