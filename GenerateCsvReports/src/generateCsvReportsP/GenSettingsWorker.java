@@ -19,11 +19,7 @@ import kg.apc.jmeter.PluginsCMDWorker;
  */
 //OUTSIDE WORLD COMMUNICATOR
 public class GenSettingsWorker {
-//    public static Boolean [] colsArray = new Boolean [8];
-    
-//    public static void testing(){
-//        PluginsCMDWorker.
-//    }
+
     public static void init_PNG(String in, String out){
         PluginsCMDWorker.setInputFile(in);
         PluginsCMDWorker.setOutputPNGFile(out);
@@ -70,10 +66,9 @@ public class GenSettingsWorker {
     }
     public static void setLimitRows(boolean chk){
         if (chk) PluginsCMDWorker.setRowsLimit(200);
+        else PluginsCMDWorker.setRowsLimit(0);
     }
     public static void setForceY(int val){
         PluginsCMDWorker.setForceY(val);
     }
-        
-    //TODO: check if everything is set. Maybe in doJob()'s class?
 }

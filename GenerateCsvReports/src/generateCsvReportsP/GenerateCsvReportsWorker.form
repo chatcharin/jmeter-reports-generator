@@ -876,9 +876,6 @@
                       <SubComponents>
                         <Component class="javax.swing.JCheckBox" name="mainCommOnlyC">
                           <Properties>
-                            <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                              <action class="generateCsvReportsP.GenerateCsvReportsWorker" id="mainCommsChk" methodName="mainCommsChk"/>
-                            </Property>
                             <Property name="selected" type="boolean" value="true"/>
                             <Property name="text" type="java.lang.String" resourceKey="mainCommOnlyC.text"/>
                             <Property name="horizontalTextPosition" type="int" value="2"/>
