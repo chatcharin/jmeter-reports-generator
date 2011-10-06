@@ -7,6 +7,7 @@ import org.jdesktop.application.Task;
 import javax.swing.JFileChooser;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.filechooser.FileFilter;
+import javax.swing.ToolTipManager;
 import java.awt.Dimension;
 import java.io.File;
 import java.io.BufferedReader;
@@ -28,7 +29,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
     //TODO: 46 46 46 46 <-- only last value is starting of trimm
     //TODO: in trimmed report number order is bad 8 9 10 1    
     //TODO: TAB sep in csv's
-    //TODO: move worker out of this class
     //TODO: @2012 make plugins version with option(checkBox) 'main comms only' [on by default]
     //TODO: read LT java manuals
     //TODO: jtl's visible even if setting a folder~
@@ -123,6 +123,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         commonPane = new javax.swing.JPanel();
         jPanel5 = new javax.swing.JPanel();
         mainCommOnlyC = new javax.swing.JCheckBox();
+        jLabel16 = new javax.swing.JLabel();
         statusPanel = new javax.swing.JPanel();
         javax.swing.JSeparator statusPanelSeparator = new javax.swing.JSeparator();
         statusMessageLabel = new javax.swing.JLabel();
@@ -719,11 +720,28 @@ public final class GenerateCsvReportsWorker extends FrameView {
         mainCommOnlyC.setName("mainCommOnlyC"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.FIRST_LINE_START;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.insets = new java.awt.Insets(5, 15, 0, 15);
         jPanel5.add(mainCommOnlyC, gridBagConstraints);
+
+        jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/generateCsvReportsP/resources/information.png"))); // NOI18N
+        jLabel16.setToolTipText(resourceMap.getString("jLabel16.toolTipText")); // NOI18N
+        jLabel16.setName("jLabel16"); // NOI18N
+        jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                infoLabelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                infoLabelMouseExited(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        jPanel5.add(jLabel16, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -812,6 +830,14 @@ public final class GenerateCsvReportsWorker extends FrameView {
         setComponent(mainPanel);
         setStatusBar(statusPanel);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void infoLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_infoLabelMouseEntered
+        ToolTipManager.sharedInstance().setDismissDelay(60000);
+    }//GEN-LAST:event_infoLabelMouseEntered
+
+    private void infoLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_infoLabelMouseExited
+        ToolTipManager.sharedInstance().setDismissDelay(0);
+    }//GEN-LAST:event_infoLabelMouseExited
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseB_RTOT;
@@ -845,6 +871,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
+    private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
