@@ -573,6 +573,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jPanel6.setName("jPanel6"); // NOI18N
         jPanel6.setLayout(new java.awt.GridBagLayout());
 
+        realTimelineChk.setSelected(true);
         realTimelineChk.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         realTimelineChk.setName("realTimelineChk"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
