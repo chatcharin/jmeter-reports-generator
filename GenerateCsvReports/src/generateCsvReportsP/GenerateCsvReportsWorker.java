@@ -937,7 +937,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private final String attachStringError = "ERRORS_";
     private final String attachReports = "_Aggregated-reports";
     private final String attachRTOT = "_ResponseTimesOverTime";
-    private final String quote = "\"";
+    private final char quote = '"';
     private final String TStart = "\" ts=\"";  
     
     // <editor-fold defaultstate="collapsed" desc="processF">
