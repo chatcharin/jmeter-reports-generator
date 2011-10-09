@@ -34,6 +34,15 @@ public final class GenerateCsvReportsWorker extends FrameView {
     //TODO: jtl's visible even if setting a folder~
     //TODO: AggregateReportGui :: in there form model, then inside JMeter core chechking lines is not needed therefore more perf gained
     //TODO: connect plugins with this, gensettignsworker having role of pluginsCMDWorker
+    //TODO: trimmed just forming jtl, aka do single file generation method, krc rast sprendima nes bbs ir joined_JTLs
+    //TODO: find out kas be private prieraso prieki globalVARS
+    //TODO: global vars in capital letters
+    //TODO: testing
+    //TODO: stopB global for all tabs
+    //TODO: fileChooser dialog sorting by name and showing mode in details
+    //TODO: good way of attaching extension for savingResultFileAs
+    //TODO: selectedFilesArea not enabled(grey backround) & please select files info label
+    //TODO: sorting of join jtls.krc order
 
     public GenerateCsvReportsWorker(SingleFrameApplication app) {
         super(app);
@@ -48,12 +57,14 @@ public final class GenerateCsvReportsWorker extends FrameView {
         java.net.URL url = ClassLoader.getSystemResource("generateCsvReportsP/resources/report-go-icon.png");
         getFrame().setIconImage(java.awt.Toolkit.getDefaultToolkit().getImage(url));
         //x,y
-        getFrame().setMinimumSize(new Dimension(500, 455));
+        getFrame().setMinimumSize(new Dimension(560, 455));
 //        getFrame().setMaximumSize(new Dimension(1410, 1280));
         
         genCsvB_multi.setEnabled(false);
         stopB_multi.setEnabled(false);
         genCsvB_trimmed.setEnabled(false);
+        joinJTLsB.setEnabled(false);
+        stopB_join.setEnabled(false);
         genB_RTOT.setEnabled(false);
         stopB_RTOT.setEnabled(false);
     }
@@ -85,6 +96,17 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jLabel12 = new javax.swing.JLabel();
         resultF_RTOT = new javax.swing.JTextField();
         inputF_RTOT = new javax.swing.JTextField();
+        jPanelJoin = new javax.swing.JPanel();
+        buttonsPane_join = new javax.swing.JPanel();
+        stopB_join = new javax.swing.JButton();
+        saveResB_join = new javax.swing.JButton();
+        joinJTLsB = new javax.swing.JButton();
+        browseB_join = new javax.swing.JButton();
+        jLabel17 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
+        resultField_join = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        selectedFilesArea = new javax.swing.JTextArea();
         jPanelTrimmed = new javax.swing.JPanel();
         buttonsPane_trimmed = new javax.swing.JPanel();
         genCsvB_trimmed = new javax.swing.JButton();
@@ -132,6 +154,8 @@ public final class GenerateCsvReportsWorker extends FrameView {
         chooseJTL_trimmed = new javax.swing.JFileChooser();
         chooseJTL_RTOT = new javax.swing.JFileChooser();
         chooseSave_RTOT = new javax.swing.JFileChooser();
+        chooseJTLs_join = new javax.swing.JFileChooser();
+        chooseSave_join = new javax.swing.JFileChooser();
 
         mainPanel.setFont(mainPanel.getFont());
         mainPanel.setName("mainPanel"); // NOI18N
@@ -218,6 +242,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         resultF_multi.setColumns(20);
         resultF_multi.setEditable(false);
+        resultF_multi.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
         resultF_multi.setText(resourceMap.getString("selectFolderField.text")); // NOI18N
         resultF_multi.setName("resultF_multi"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -230,6 +255,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         inputF_multi.setColumns(20);
         inputF_multi.setEditable(false);
+        inputF_multi.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
         inputF_multi.setText(resourceMap.getString("selectFolderField.text")); // NOI18N
         inputF_multi.setName("inputF_multi"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -319,6 +345,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         resultF_RTOT.setColumns(20);
         resultF_RTOT.setEditable(false);
+        resultF_RTOT.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
         resultF_RTOT.setText(resourceMap.getString("selectFolderField.text")); // NOI18N
         resultF_RTOT.setName("resultF_RTOT"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -331,6 +358,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         inputF_RTOT.setColumns(20);
         inputF_RTOT.setEditable(false);
+        inputF_RTOT.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
         inputF_RTOT.setText(resourceMap.getString("selectFolderField.text")); // NOI18N
         inputF_RTOT.setName("inputF_RTOT"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -342,6 +370,114 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jPanelRTOT.add(inputF_RTOT, gridBagConstraints);
 
         jTabbedPane1.addTab(resourceMap.getString("jPanelRTOT.TabConstraints.tabTitle"), jPanelRTOT); // NOI18N
+
+        jPanelJoin.setName("jPanelJoin"); // NOI18N
+        jPanelJoin.setLayout(new java.awt.GridBagLayout());
+
+        buttonsPane_join.setName("buttonsPane_join"); // NOI18N
+        buttonsPane_join.setLayout(new java.awt.GridBagLayout());
+
+        stopB_join.setAction(actionMap.get("Stop_joinction")); // NOI18N
+        stopB_join.setText(resourceMap.getString("stopB.text")); // NOI18N
+        stopB_join.setName("stopB_join"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
+        buttonsPane_join.add(stopB_join, gridBagConstraints);
+
+        saveResB_join.setAction(actionMap.get("SaveRes_joinAction")); // NOI18N
+        saveResB_join.setText(resourceMap.getString("saveResB_join.text")); // NOI18N
+        saveResB_join.setName("saveResB_join"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        buttonsPane_join.add(saveResB_join, gridBagConstraints);
+
+        joinJTLsB.setAction(actionMap.get("Join_JTLsAction")); // NOI18N
+        joinJTLsB.setText(resourceMap.getString("joinJTLsB.text")); // NOI18N
+        joinJTLsB.setName("joinJTLsB"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 0, 5, 5);
+        buttonsPane_join.add(joinJTLsB, gridBagConstraints);
+
+        browseB_join.setAction(actionMap.get("Browse_joinAction")); // NOI18N
+        browseB_join.setText(resourceMap.getString("selectFilesB.text")); // NOI18N
+        browseB_join.setName("browseB_join"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
+        buttonsPane_join.add(browseB_join, gridBagConstraints);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(20, 10, 10, 0);
+        jPanelJoin.add(buttonsPane_join, gridBagConstraints);
+
+        jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
+        jLabel17.setName("jLabel17"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 1;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        jPanelJoin.add(jLabel17, gridBagConstraints);
+
+        jLabel18.setText(resourceMap.getString("jLabel18.text")); // NOI18N
+        jLabel18.setName("jLabel18"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 3;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
+        jPanelJoin.add(jLabel18, gridBagConstraints);
+
+        resultField_join.setColumns(20);
+        resultField_join.setEditable(false);
+        resultField_join.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
+        resultField_join.setText(resourceMap.getString("pleaseUseSaveB.Fieldtext")); // NOI18N
+        resultField_join.setName("resultField_join"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 4;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 10);
+        jPanelJoin.add(resultField_join, gridBagConstraints);
+
+        jScrollPane2.setName("jScrollPane2"); // NOI18N
+
+        selectedFilesArea.setColumns(20);
+        selectedFilesArea.setEditable(false);
+        selectedFilesArea.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
+        selectedFilesArea.setRows(5);
+        selectedFilesArea.setName("selectedFilesArea"); // NOI18N
+        jScrollPane2.setViewportView(selectedFilesArea);
+
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.weightx = 0.1;
+        gridBagConstraints.weighty = 0.1;
+        gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 10);
+        jPanelJoin.add(jScrollPane2, gridBagConstraints);
+
+        jTabbedPane1.addTab(resourceMap.getString("jPanelJoin.TabConstraints.tabTitle"), jPanelJoin); // NOI18N
 
         jPanelTrimmed.setName("jPanelTrimmed"); // NOI18N
         jPanelTrimmed.setLayout(new java.awt.GridBagLayout());
@@ -399,6 +535,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         resultF_trimmed.setColumns(20);
         resultF_trimmed.setEditable(false);
+        resultF_trimmed.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
         resultF_trimmed.setText(resourceMap.getString("selectFileField.text")); // NOI18N
         resultF_trimmed.setName("resultF_trimmed"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -412,6 +549,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         inputF_trimmed.setColumns(20);
         inputF_trimmed.setEditable(false);
+        inputF_trimmed.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
         inputF_trimmed.setText(resourceMap.getString("selectFileField.text")); // NOI18N
         inputF_trimmed.setName("inputF_trimmed"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -472,6 +610,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         trimmedJTLF.setColumns(20);
         trimmedJTLF.setEditable(false);
+        trimmedJTLF.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
         trimmedJTLF.setText(resourceMap.getString("selectFileField.text")); // NOI18N
         trimmedJTLF.setName("trimmedJTLF"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -785,11 +924,11 @@ public final class GenerateCsvReportsWorker extends FrameView {
         statusPanel.setLayout(statusPanelLayout);
         statusPanelLayout.setHorizontalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 496, Short.MAX_VALUE)
+            .addComponent(statusPanelSeparator, javax.swing.GroupLayout.DEFAULT_SIZE, 634, Short.MAX_VALUE)
             .addGroup(statusPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(statusMessageLabel)
-                .addContainerGap(486, Short.MAX_VALUE))
+                .addContainerGap(624, Short.MAX_VALUE))
         );
         statusPanelLayout.setVerticalGroup(
             statusPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -807,7 +946,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         chooseJTL_multi.setName("chooseJTL_multi"); // NOI18N
 
         chooseSave_multi.setApproveButtonText(resourceMap.getString("chooseJTL.approveButtonText")); // NOI18N
-        chooseSave_multi.setDialogTitle(resourceMap.getString("chooseFolder.dialogTitle")); // NOI18N
+        chooseSave_multi.setDialogTitle(resourceMap.getString("saveFolder.dialogTitle")); // NOI18N
         chooseSave_multi.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         chooseSave_multi.setName("chooseSave_multi"); // NOI18N
 
@@ -823,9 +962,21 @@ public final class GenerateCsvReportsWorker extends FrameView {
         chooseJTL_RTOT.setName("chooseJTL_RTOT"); // NOI18N
 
         chooseSave_RTOT.setApproveButtonText(resourceMap.getString("chooseJTL.approveButtonText")); // NOI18N
-        chooseSave_RTOT.setDialogTitle(resourceMap.getString("chooseFolder.dialogTitle")); // NOI18N
+        chooseSave_RTOT.setDialogTitle(resourceMap.getString("saveFolder.dialogTitle")); // NOI18N
         chooseSave_RTOT.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         chooseSave_RTOT.setName("chooseSave_RTOT"); // NOI18N
+
+        chooseJTLs_join.setCurrentDirectory(new java.io.File("C:\\results"));
+        chooseJTLs_join.setDialogTitle(resourceMap.getString("chooseJTLs_join.dialogTitle")); // NOI18N
+        chooseJTLs_join.setFileFilter(filter);
+        chooseJTLs_join.setMultiSelectionEnabled(true);
+        chooseJTLs_join.setName("chooseJTLs_join"); // NOI18N
+
+        chooseSave_join.setCurrentDirectory(new java.io.File("C:\\results"));
+        chooseSave_join.setDialogTitle(resourceMap.getString("saveResB_join.text")); // NOI18N
+        chooseSave_join.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
+        chooseSave_join.setFileFilter(filter);
+        chooseSave_join.setName("chooseSave_join"); // NOI18N
 
         setComponent(mainPanel);
         setStatusBar(statusPanel);
@@ -841,15 +992,19 @@ public final class GenerateCsvReportsWorker extends FrameView {
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseB_RTOT;
+    private javax.swing.JButton browseB_join;
     private javax.swing.JButton browseB_multi;
     private javax.swing.JButton browseB_trimmed;
     private javax.swing.JPanel buttonsPane_RTOT;
+    private javax.swing.JPanel buttonsPane_join;
     private javax.swing.JPanel buttonsPane_multi;
     private javax.swing.JPanel buttonsPane_trimmed;
     private javax.swing.JFileChooser chooseJTL_RTOT;
     private javax.swing.JFileChooser chooseJTL_multi;
     private javax.swing.JFileChooser chooseJTL_trimmed;
+    private javax.swing.JFileChooser chooseJTLs_join;
     private javax.swing.JFileChooser chooseSave_RTOT;
+    private javax.swing.JFileChooser chooseSave_join;
     private javax.swing.JFileChooser chooseSave_multi;
     private static javax.swing.JList colsList;
     private javax.swing.JPanel commonPane;
@@ -872,6 +1027,8 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
+    private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -884,12 +1041,15 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanelJoin;
     private javax.swing.JPanel jPanelMulti;
     private javax.swing.JPanel jPanelRTOT;
     private javax.swing.JPanel jPanelSettings;
     private javax.swing.JPanel jPanelTrimmed;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JButton joinJTLsB;
     private static javax.swing.JCheckBox limitRowsChk;
     private javax.swing.JComboBox localeSepCmb;
     private static javax.swing.JCheckBox mainCommOnlyC;
@@ -898,11 +1058,15 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JTextField resultF_RTOT;
     private javax.swing.JTextField resultF_multi;
     private javax.swing.JTextField resultF_trimmed;
+    private javax.swing.JTextField resultField_join;
     private javax.swing.JButton saveResB_RTOT;
+    private javax.swing.JButton saveResB_join;
     private javax.swing.JButton saveResB_multi;
+    private javax.swing.JTextArea selectedFilesArea;
     private static javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JButton stopB_RTOT;
+    private javax.swing.JButton stopB_join;
     private javax.swing.JButton stopB_multi;
     private javax.swing.JFormattedTextField timelineEndFF;
     private javax.swing.JTextField timelineF;
@@ -919,6 +1083,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private File inputJTL_trimmed;
     private File trimmedJTL;
     private File resultCSV_trimmed;
+    private String resultJTL_join;
     private int firstValLine;
     private int lastValLine;  
     
@@ -926,7 +1091,8 @@ public final class GenerateCsvReportsWorker extends FrameView {
     public List<String> extensionsToSearchFor;    
     private ArrayList<File> aListOfJTLFiles = new ArrayList<File>();    
     private boolean doCont = true;
-    
+    private File[] selectedFilesArray;
+    private final GenSettingsWorker ow = new GenSettingsWorker();
     private final int[] filledArray10 = {0,1,2,4,5,6,7};
     private final FileFilter filter = new FileNameExtensionFilter("jtl", "JTL");
     private final String newLine = System.getProperty("line.separator"); 
@@ -1026,9 +1192,9 @@ public final class GenerateCsvReportsWorker extends FrameView {
                 fileNameEx = jtlF.getName();
                 fileNameEx = fileNameEx.substring(0, fileNameEx.length()-4);
                 csvF = new File(resultSavingFolder_multi+File.separator+fileNameEx+".csv");                
-                GenSettingsWorker.init_CSV(jtlF.toString(),csvF.toString());
+                ow.init_CSV(jtlF.toString(),csvF.toString());
 
-                if(GenSettingsWorker.checkForErrors()){
+                if(ow.checkForErrors()){
                     csvF_Err = new File(csvF.getParentFile()+File.separator+attachStringError+csvF.getName());
                     Utils.deleteFile(csvF_Err);//delete (needed to rename)
                     Utils.renameFile(csvF, csvF_Err);
@@ -1128,7 +1294,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
             statusMessageLabel.setText("Forming new JTL...");
             formTrimmedJTL(inputJTL_trimmed, trimmedJTL, firstValLine, lastValLine);
             statusMessageLabel.setText("Generating CSV report..");
-            GenSettingsWorker.init_CSV(trimmedJTL.toString(),resultCSV_trimmed.toString());
+            ow.init_CSV(trimmedJTL.toString(),resultCSV_trimmed.toString());
             return 2; 
         }
         @Override protected void cancelled() {                      
@@ -1222,7 +1388,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
                 fileNameEx = fileNameEx.substring(0, fileNameEx.length()-4);
                 pngF = new File(resultSavingFolder_RTOT+File.separator+fileNameEx+".png");
                 
-                GenSettingsWorker.init_PNG(jtlF.toString(), pngF.toString());              
+                ow.init_PNG(jtlF.toString(), pngF.toString());              
             }
             if (!doCont) return 1;
             else return 2;
@@ -1286,6 +1452,144 @@ public final class GenerateCsvReportsWorker extends FrameView {
         else if (tt == JFileChooser.CANCEL_OPTION);
     }
     // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="JOIN">
+    @Action
+    public Task Join_JTLsAction() {
+        return new Join_JTLsActionTask(getApplication());
+    }
+
+    private class Join_JTLsActionTask extends org.jdesktop.application.Task<Object, Void> {
+        Join_JTLsActionTask(org.jdesktop.application.Application app) {
+            super(app);
+            browseB_join.setEnabled(false);
+            joinJTLsB.setEnabled(false);
+            saveResB_join.setEnabled(false);
+            stopB_join.setEnabled(true);
+        }
+        @Override protected Object doInBackground() {
+            try{                
+                doHeader_join();
+                for (int i=0; i<selectedFilesArray.length && doCont; i++){                
+                    statusMessageLabel.setText("Working with: "+selectedFilesArray[i]);
+                    doAppendJTL_join(selectedFilesArray[i]);                
+                }
+                doFooter_join();
+            }
+            catch (Exception hm){return 0;}
+            if (!doCont) return 1;
+            return 2;
+        }
+        @Override protected void cancelled() {                      
+            doCont = false;
+        }
+        @Override protected void succeeded(Object result) {
+            String message;
+            switch (((Integer)result).intValue()){
+                case 0: message = "Error occured."; break;
+                case 1: message = "Aborted by user."; break;
+                case 2: message = "Done. Operation took "+this.getExecutionDuration(TimeUnit.SECONDS)+" seconds."; break;
+                default: message = "Error."; break;    
+            }
+            statusMessageLabel.setText(message);
+            browseB_join.setEnabled(true);
+            joinJTLsB.setEnabled(true);
+            saveResB_join.setEnabled(true);
+            stopB_join.setEnabled(false);
+            doCont = true;
+            System.out.println("DONE.");  
+        }
+    }
+    @Action
+    public void Browse_joinAction() {
+        selectedFilesArea.setText("");
+        int rr = chooseJTLs_join.showOpenDialog(null);
+        if(rr == JFileChooser.APPROVE_OPTION){
+            
+            selectedFilesArray = chooseJTLs_join.getSelectedFiles();
+            for (int k=0;k<selectedFilesArray.length;k++){
+                selectedFilesArea.append(selectedFilesArray[k].getPath()+newLine);
+            }
+            if(chooseSave_join.getSelectedFile()!=null) joinJTLsB.setEnabled(true);
+            statusMessageLabel.setText(selectedFilesArea.getLineCount()-1+" files to be joined.");
+
+        }
+        else if (rr == JFileChooser.CANCEL_OPTION);
+    }
+    
+    @Action
+    public void SaveRes_joinAction() {
+        chooseSave_join.setCurrentDirectory(chooseJTLs_join.getCurrentDirectory());
+        int tt = chooseSave_join.showSaveDialog(null);
+        if(tt == JFileChooser.APPROVE_OPTION){
+            String tmpFS = chooseSave_join.getSelectedFile().toString();
+            
+            if (tmpFS.endsWith("jtl") || tmpFS.endsWith("JTL"))
+                resultJTL_join = tmpFS;
+            else 
+                resultJTL_join = tmpFS + ".jtl";
+            resultField_join.setText(resultJTL_join);
+            resultField_join.setCaretPosition(0);
+            if(chooseJTLs_join.getSelectedFiles().length!=0) joinJTLsB.setEnabled(true);
+        }
+        else if (tt == JFileChooser.CANCEL_OPTION);
+    }
+    @Action
+    public void Stop_joinction() {
+        Join_JTLsAction().cancel(true);
+    }
+    // </editor-fold>
+    
+    private void doHeader_join() throws Exception{
+//        try{
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(resultJTL_join,false),"UTF8"));
+            bw.write(HeadLine1);
+            bw.newLine();
+            bw.write(HeadLine2);
+
+            bw.flush();
+            bw.close();
+//        }
+//        catch(Exception erp){
+//    //      erp.printStackTrace();        
+//        }
+    }
+
+    private void doFooter_join() throws Exception{
+//        try{
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(resultJTL_join,true),"UTF8"));
+            bw.newLine();
+            bw.write(FooterLine);
+            bw.flush();
+            bw.close();
+//        }
+//        catch(Exception erp){
+//    //      erp.printStackTrace();  
+//        }
+    }
+
+    private void doAppendJTL_join(File fileToAppend) throws Exception{
+//        try{             
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(resultJTL_join,true),"UTF8"));  
+            BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(fileToAppend),"UTF8"));
+            String line;
+
+            while (( line = bf.readLine()) != null && doCont)
+                {
+                if (!line.startsWith("<?xml") && !line.startsWith("<test") && !line.startsWith("</test")){     
+
+                    bw.newLine();
+                    bw.append(line); 
+                }
+            }
+            bw.close();
+            bf.close();
+
+//        }
+//        catch (Exception erp){
+//            erp.printStackTrace();
+//        }
+    }
     
     private int getTimeline(File inputJTL){
        
@@ -1402,7 +1706,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
             if (colsList.isSelectedIndex(ite)) colsArray[ite]=true;
             else colsArray[ite]=false;           
         }
-        GenSettingsWorker.setColsArray(colsArray);
+        ow.setColsArray(colsArray);
     }
     
     private char getSelectedDelim(){
@@ -1413,25 +1717,23 @@ public final class GenerateCsvReportsWorker extends FrameView {
             return ',';
     }
     
-    private void formCsvParams(){      
-        GenSettingsWorker.initJMeterProps();
-        GenSettingsWorker.setShowMainStepsOnly(mainCommOnlyC.isSelected());
-        GenSettingsWorker.setExportMode(2);
-        GenSettingsWorker.setPluginType(2);
-        GenSettingsWorker.setCSVDelim(getSelectedDelim());
+    private void formCsvParams(){
+        ow.setShowMainStepsOnly(mainCommOnlyC.isSelected());
+        ow.setExportMode(2);
+        ow.setPluginType(2);
+        ow.setCSVDelim(getSelectedDelim());
         fillStepsArray();
         
     }
     
     private void formPngParams(){
-        GenSettingsWorker.initJMeterProps();
-        GenSettingsWorker.setShowMainStepsOnly(mainCommOnlyC.isSelected());
-        GenSettingsWorker.setRealTime(realTimelineChk.isSelected());
-        GenSettingsWorker.setLimitRows(limitRowsChk.isSelected());
-        if (forceYFF.getValue()!=null) GenSettingsWorker.setForceY(((Number)forceYFF.getValue()).intValue());
-        GenSettingsWorker.setGraphSize(((Number)graphXFF.getValue()).intValue(),((Number)graphYFF.getValue()).intValue());
-        GenSettingsWorker.setExportMode(1);
-        GenSettingsWorker.setPluginType(1);
+        ow.setShowMainStepsOnly(mainCommOnlyC.isSelected());
+        ow.setRealTime(realTimelineChk.isSelected());
+        ow.setLimitRows(limitRowsChk.isSelected());
+        if (forceYFF.getValue()!=null) ow.setForceY(((Number)forceYFF.getValue()).intValue());
+        ow.setGraphSize(((Number)graphXFF.getValue()).intValue(),((Number)graphYFF.getValue()).intValue());
+        ow.setExportMode(1);
+        ow.setPluginType(1);
     }
-     
+
 }
