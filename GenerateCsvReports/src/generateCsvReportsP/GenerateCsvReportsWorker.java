@@ -1,5 +1,6 @@
 package generateCsvReportsP;
 
+import java.awt.Color;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.SingleFrameApplication;
 import org.jdesktop.application.FrameView;
@@ -35,15 +36,15 @@ public final class GenerateCsvReportsWorker extends FrameView {
     //TODO: AggregateReportGui :: in there form model, then inside JMeter core chechking lines is not needed therefore more perf gained
     //TODO: connect plugins with this, gensettignsworker having role of pluginsCMDWorker
     //TODO: trimmed just forming jtl, aka do single file generation method, krc rast sprendima nes bbs ir joined_JTLs
-    //TODO: find out kas be private prieraso prieki globalVARS
+    //TODO: find out kas buna be  private prieraso priekyje on globalVARS
     //TODO: global vars in capital letters
     //TODO: testing
     //TODO: stopB global for all tabs
-    //TODO: fileChooser dialog sorting by name and showing mode in details
-    //TODO: good way of attaching extension for savingResultFileAs
-    //TODO: selectedFilesArea not enabled(grey backround) & please select files info label
-    //TODO: sorting of join jtls.krc order
-
+    //TODO: :(fileChooser dialog sorting by name and showing mode in details
+    //TODO: ~good way of attaching extension for savingResultFileAs
+    //TODO: !sorting of join jtls.krc order
+    //TODO: info labels(especially for join JTLs)
+    //TODO: check as setKrC(bbs>0)
     public GenerateCsvReportsWorker(SingleFrameApplication app) {
         super(app);
         
@@ -102,6 +103,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         saveResB_join = new javax.swing.JButton();
         joinJTLsB = new javax.swing.JButton();
         browseB_join = new javax.swing.JButton();
+        jLabel19 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         resultField_join = new javax.swing.JTextField();
@@ -381,7 +383,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         stopB_join.setText(resourceMap.getString("stopB.text")); // NOI18N
         stopB_join.setName("stopB_join"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
+        gridBagConstraints.gridx = 4;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -392,7 +394,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         saveResB_join.setText(resourceMap.getString("saveResB_join.text")); // NOI18N
         saveResB_join.setName("saveResB_join"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridx = 3;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
@@ -420,6 +422,23 @@ public final class GenerateCsvReportsWorker extends FrameView {
         gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         buttonsPane_join.add(browseB_join, gridBagConstraints);
+
+        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/generateCsvReportsP/resources/information.png"))); // NOI18N
+        jLabel19.setToolTipText(resourceMap.getString("selJTLs.toolTipText")); // NOI18N
+        jLabel19.setName("jLabel19"); // NOI18N
+        jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel19infoLabelMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel19infoLabelMouseExited(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 2;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.BELOW_BASELINE;
+        buttonsPane_join.add(jLabel19, gridBagConstraints);
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -461,10 +480,12 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         jScrollPane2.setName("jScrollPane2"); // NOI18N
 
+        selectedFilesArea.setBackground(resourceMap.getColor("selectedFilesArea.background")); // NOI18N
         selectedFilesArea.setColumns(20);
         selectedFilesArea.setEditable(false);
         selectedFilesArea.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
         selectedFilesArea.setRows(5);
+        selectedFilesArea.setText(resourceMap.getString("selectFilesPlease.Areatext")); // NOI18N
         selectedFilesArea.setName("selectedFilesArea"); // NOI18N
         jScrollPane2.setViewportView(selectedFilesArea);
 
@@ -866,7 +887,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jPanel5.add(mainCommOnlyC, gridBagConstraints);
 
         jLabel16.setIcon(new javax.swing.ImageIcon(getClass().getResource("/generateCsvReportsP/resources/information.png"))); // NOI18N
-        jLabel16.setToolTipText(resourceMap.getString("jLabel16.toolTipText")); // NOI18N
+        jLabel16.setToolTipText(resourceMap.getString("mainStepsC.toolTipText")); // NOI18N
         jLabel16.setName("jLabel16"); // NOI18N
         jLabel16.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
@@ -989,6 +1010,14 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private void infoLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_infoLabelMouseExited
         ToolTipManager.sharedInstance().setDismissDelay(0);
     }//GEN-LAST:event_infoLabelMouseExited
+
+    private void jLabel19infoLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19infoLabelMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel19infoLabelMouseEntered
+
+    private void jLabel19infoLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19infoLabelMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jLabel19infoLabelMouseExited
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseB_RTOT;
@@ -1029,6 +1058,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1505,14 +1535,16 @@ public final class GenerateCsvReportsWorker extends FrameView {
         selectedFilesArea.setText("");
         int rr = chooseJTLs_join.showOpenDialog(null);
         if(rr == JFileChooser.APPROVE_OPTION){
-            
+
             selectedFilesArray = chooseJTLs_join.getSelectedFiles();
             for (int k=0;k<selectedFilesArray.length;k++){
                 selectedFilesArea.append(selectedFilesArray[k].getPath()+newLine);
             }
+            
             if(chooseSave_join.getSelectedFile()!=null) joinJTLsB.setEnabled(true);
             statusMessageLabel.setText(selectedFilesArea.getLineCount()-1+" files to be joined.");
-
+            Color whiteCol = new Color(255,255,255);
+            selectedFilesArea.setBackground(whiteCol);
         }
         else if (rr == JFileChooser.CANCEL_OPTION);
     }
