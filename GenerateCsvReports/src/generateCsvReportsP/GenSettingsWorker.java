@@ -19,56 +19,58 @@ import kg.apc.jmeter.PluginsCMDWorker;
  */
 //OUTSIDE WORLD COMMUNICATOR
 public class GenSettingsWorker {
-
-    public static void init_PNG(String in, String out){
-        PluginsCMDWorker.setInputFile(in);
-        PluginsCMDWorker.setOutputPNGFile(out);
-        PluginsCMDWorker.doJob();
+    
+    PluginsCMDWorker worker = new PluginsCMDWorker();
+    
+    public void init_PNG(String in, String out){
+        worker.setInputFile(in);
+        worker.setOutputPNGFile(out);
+        worker.doJob();
     }
     
-    public static void init_CSV(String in, String out){        
-        PluginsCMDWorker.setInputFile(in);
-        PluginsCMDWorker.setOutputCSVFile(out);
-        PluginsCMDWorker.doJob();
+    public void init_CSV(String in, String out){        
+        worker.setInputFile(in);
+        worker.setOutputCSVFile(out);
+        worker.doJob();
     }
-    public static Boolean checkForErrors(){
+    public Boolean checkForErrors(){
         if (org.apache.jmeter.save.CSVSaveService.CONTAINS_ERRORS) return true;
         else return false;
     }    
-    public static void setShowMainStepsOnly(boolean chk){
-        if (chk) PluginsCMDWorker.setMainCommsOnly(true);
-        else PluginsCMDWorker.setMainCommsOnly(false);
+    public void setShowMainStepsOnly(boolean chk){
+        kg.apc.jmeter.graphs.GraphPanel.MAIN_COMMS_ONLY = chk;
+        org.apache.jmeter.save.CSVSaveService.MAIN_COMMS_ONLY = chk; 
     }
-    public static void setColsArray(Boolean [] arr){
+    public void setColsArray(Boolean [] arr){
         org.apache.jmeter.save.CSVSaveService.colsArr = arr;
     }
-    public static void initJMeterProps(){
-        PluginsCMDWorker.initializeProperties();
+    public void initJMeterProps(){
+//        worker.initializeProperties();
     }
-    public static void setExportMode(int mode){
-        if (mode == 1) PluginsCMDWorker.setExportMode(1);// PNG
-        else PluginsCMDWorker.setExportMode(2);//CSV
+    public void setExportMode(int mode){
+        if (mode == 1) worker.setExportMode(1);// PNG
+        else worker.setExportMode(2);//CSV
     }
-    public static void setPluginType(int type){
-        if (type == 1) PluginsCMDWorker.setPluginType("ResponseTimesOverTime");
-        else PluginsCMDWorker.setPluginType("AggregateReport");
+    public void setPluginType(int type){
+        if (type == 1) worker.setPluginType("ResponseTimesOverTime");
+        else worker.setPluginType("AggregateReport");
     }
-    public static void setCSVDelim(char delim){
+    public void setCSVDelim(char delim){
         org.apache.jmeter.save.CSVSaveService.setDelim(delim);
     }
-    public static void setRealTime(boolean chk){
-        if (chk) PluginsCMDWorker.setRealTime(true);
-        else PluginsCMDWorker.setRealTime(false);
+    public void setRealTime(boolean chk){
+        if (chk) worker.setRelativeTimes(0);
+        else worker.setRelativeTimes(1);
     }
-    public static void setGraphSize(int x, int y){
-        PluginsCMDWorker.setGraphWidth(x);
-        PluginsCMDWorker.setGraphHeight(y);
+    public void setGraphSize(int x, int y){
+        worker.setGraphWidth(x);
+        worker.setGraphHeight(y);
     }
-    public static void setLimitRows(boolean chk){
-        if (chk) PluginsCMDWorker.setRowsLimit(200);
-        else PluginsCMDWorker.setRowsLimit(0);
+    public void setLimitRows(boolean chk){
+        if (chk) worker.setRowsLimit(200);
+        else worker.setRowsLimit(0);
     }
-    public static void setForceY(int val){
-        PluginsCMDWorker.setForceY(val);
+    public void setForceY(int val){
+        worker.setForceY(val);
     }
 }
