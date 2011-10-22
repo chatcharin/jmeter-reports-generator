@@ -1,6 +1,5 @@
 package generateCsvReportsP;
 
-import java.awt.Color;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.SingleFrameApplication;
 import org.jdesktop.application.FrameView;
@@ -18,6 +17,8 @@ import java.io.OutputStreamWriter;
 import java.io.InputStreamReader;
 import java.io.FileInputStream;
 import java.util.ArrayList; 
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -100,15 +101,10 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jPanelJoin = new javax.swing.JPanel();
         buttonsPane_join = new javax.swing.JPanel();
         stopB_join = new javax.swing.JButton();
-        saveResB_join = new javax.swing.JButton();
         joinJTLsB = new javax.swing.JButton();
         browseB_join = new javax.swing.JButton();
-        jLabel19 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
-        resultField_join = new javax.swing.JTextField();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        selectedFilesArea = new javax.swing.JTextArea();
+        selectedField_join = new javax.swing.JTextField();
         jPanelTrimmed = new javax.swing.JPanel();
         buttonsPane_trimmed = new javax.swing.JPanel();
         genCsvB_trimmed = new javax.swing.JButton();
@@ -157,7 +153,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
         chooseJTL_RTOT = new javax.swing.JFileChooser();
         chooseSave_RTOT = new javax.swing.JFileChooser();
         chooseJTLs_join = new javax.swing.JFileChooser();
-        chooseSave_join = new javax.swing.JFileChooser();
 
         mainPanel.setFont(mainPanel.getFont());
         mainPanel.setName("mainPanel"); // NOI18N
@@ -390,17 +385,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 0);
         buttonsPane_join.add(stopB_join, gridBagConstraints);
 
-        saveResB_join.setAction(actionMap.get("SaveRes_joinAction")); // NOI18N
-        saveResB_join.setText(resourceMap.getString("saveResB_join.text")); // NOI18N
-        saveResB_join.setName("saveResB_join"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 3;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
-        buttonsPane_join.add(saveResB_join, gridBagConstraints);
-
         joinJTLsB.setAction(actionMap.get("Join_JTLsAction")); // NOI18N
         joinJTLsB.setText(resourceMap.getString("joinJTLsB.text")); // NOI18N
         joinJTLsB.setName("joinJTLsB"); // NOI18N
@@ -413,7 +397,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         buttonsPane_join.add(joinJTLsB, gridBagConstraints);
 
         browseB_join.setAction(actionMap.get("Browse_joinAction")); // NOI18N
-        browseB_join.setText(resourceMap.getString("selectFilesB.text")); // NOI18N
+        browseB_join.setText(resourceMap.getString("selectFolder.text")); // NOI18N
         browseB_join.setName("browseB_join"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
@@ -423,38 +407,12 @@ public final class GenerateCsvReportsWorker extends FrameView {
         gridBagConstraints.insets = new java.awt.Insets(5, 5, 5, 5);
         buttonsPane_join.add(browseB_join, gridBagConstraints);
 
-        jLabel19.setIcon(new javax.swing.ImageIcon(getClass().getResource("/generateCsvReportsP/resources/information.png"))); // NOI18N
-        jLabel19.setToolTipText(resourceMap.getString("selJTLs.toolTipText")); // NOI18N
-        jLabel19.setName("jLabel19"); // NOI18N
-        jLabel19.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel19infoLabelMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel19infoLabelMouseExited(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 2;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.BELOW_BASELINE;
-        buttonsPane_join.add(jLabel19, gridBagConstraints);
-
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 0;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(20, 10, 10, 0);
         jPanelJoin.add(buttonsPane_join, gridBagConstraints);
-
-        jLabel17.setText(resourceMap.getString("jLabel17.text")); // NOI18N
-        jLabel17.setName("jLabel17"); // NOI18N
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
-        jPanelJoin.add(jLabel17, gridBagConstraints);
 
         jLabel18.setText(resourceMap.getString("jLabel18.text")); // NOI18N
         jLabel18.setName("jLabel18"); // NOI18N
@@ -465,38 +423,18 @@ public final class GenerateCsvReportsWorker extends FrameView {
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         jPanelJoin.add(jLabel18, gridBagConstraints);
 
-        resultField_join.setColumns(20);
-        resultField_join.setEditable(false);
-        resultField_join.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
-        resultField_join.setText(resourceMap.getString("pleaseUseSaveB.Fieldtext")); // NOI18N
-        resultField_join.setName("resultField_join"); // NOI18N
+        selectedField_join.setColumns(20);
+        selectedField_join.setEditable(false);
+        selectedField_join.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
+        selectedField_join.setText(resourceMap.getString("selectFolderField.text")); // NOI18N
+        selectedField_join.setName("selectedField_join"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
         gridBagConstraints.gridy = 4;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.1;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 10);
-        jPanelJoin.add(resultField_join, gridBagConstraints);
-
-        jScrollPane2.setName("jScrollPane2"); // NOI18N
-
-        selectedFilesArea.setBackground(resourceMap.getColor("selectedFilesArea.background")); // NOI18N
-        selectedFilesArea.setColumns(20);
-        selectedFilesArea.setEditable(false);
-        selectedFilesArea.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
-        selectedFilesArea.setRows(5);
-        selectedFilesArea.setText(resourceMap.getString("selectFilesPlease.Areatext")); // NOI18N
-        selectedFilesArea.setName("selectedFilesArea"); // NOI18N
-        jScrollPane2.setViewportView(selectedFilesArea);
-
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.weightx = 0.1;
-        gridBagConstraints.weighty = 0.1;
-        gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 10);
-        jPanelJoin.add(jScrollPane2, gridBagConstraints);
+        jPanelJoin.add(selectedField_join, gridBagConstraints);
 
         jTabbedPane1.addTab(resourceMap.getString("jPanelJoin.TabConstraints.tabTitle"), jPanelJoin); // NOI18N
 
@@ -557,7 +495,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
         resultF_trimmed.setColumns(20);
         resultF_trimmed.setEditable(false);
         resultF_trimmed.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
-        resultF_trimmed.setText(resourceMap.getString("selectFileField.text")); // NOI18N
         resultF_trimmed.setName("resultF_trimmed"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -571,7 +508,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
         inputF_trimmed.setColumns(20);
         inputF_trimmed.setEditable(false);
         inputF_trimmed.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
-        inputF_trimmed.setText(resourceMap.getString("selectFileField.text")); // NOI18N
         inputF_trimmed.setName("inputF_trimmed"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -632,7 +568,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
         trimmedJTLF.setColumns(20);
         trimmedJTLF.setEditable(false);
         trimmedJTLF.setFont(resourceMap.getFont("TextFields.font")); // NOI18N
-        trimmedJTLF.setText(resourceMap.getString("selectFileField.text")); // NOI18N
         trimmedJTLF.setName("trimmedJTLF"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
@@ -962,7 +897,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         chooseJTL_multi.setApproveButtonText(resourceMap.getString("chooseJTL.approveButtonText")); // NOI18N
         chooseJTL_multi.setCurrentDirectory(new java.io.File("C:\\results"));
-        chooseJTL_multi.setDialogTitle(resourceMap.getString("chooseFolder.dialogTitle")); // NOI18N
         chooseJTL_multi.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         chooseJTL_multi.setName("chooseJTL_multi"); // NOI18N
 
@@ -978,7 +912,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         chooseJTL_RTOT.setApproveButtonText(resourceMap.getString("chooseJTL.approveButtonText")); // NOI18N
         chooseJTL_RTOT.setCurrentDirectory(new java.io.File("C:\\results"));
-        chooseJTL_RTOT.setDialogTitle(resourceMap.getString("chooseFolder.dialogTitle")); // NOI18N
         chooseJTL_RTOT.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         chooseJTL_RTOT.setName("chooseJTL_RTOT"); // NOI18N
 
@@ -989,15 +922,8 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         chooseJTLs_join.setCurrentDirectory(new java.io.File("C:\\results"));
         chooseJTLs_join.setDialogTitle(resourceMap.getString("chooseJTLs_join.dialogTitle")); // NOI18N
-        chooseJTLs_join.setFileFilter(filter);
-        chooseJTLs_join.setMultiSelectionEnabled(true);
+        chooseJTLs_join.setFileSelectionMode(javax.swing.JFileChooser.DIRECTORIES_ONLY);
         chooseJTLs_join.setName("chooseJTLs_join"); // NOI18N
-
-        chooseSave_join.setCurrentDirectory(new java.io.File("C:\\results"));
-        chooseSave_join.setDialogTitle(resourceMap.getString("saveResB_join.text")); // NOI18N
-        chooseSave_join.setDialogType(javax.swing.JFileChooser.SAVE_DIALOG);
-        chooseSave_join.setFileFilter(filter);
-        chooseSave_join.setName("chooseSave_join"); // NOI18N
 
         setComponent(mainPanel);
         setStatusBar(statusPanel);
@@ -1010,14 +936,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private void infoLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_infoLabelMouseExited
         ToolTipManager.sharedInstance().setDismissDelay(0);
     }//GEN-LAST:event_infoLabelMouseExited
-
-    private void jLabel19infoLabelMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19infoLabelMouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel19infoLabelMouseEntered
-
-    private void jLabel19infoLabelMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel19infoLabelMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel19infoLabelMouseExited
   
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton browseB_RTOT;
@@ -1033,7 +951,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JFileChooser chooseJTL_trimmed;
     private javax.swing.JFileChooser chooseJTLs_join;
     private javax.swing.JFileChooser chooseSave_RTOT;
-    private javax.swing.JFileChooser chooseSave_join;
     private javax.swing.JFileChooser chooseSave_multi;
     private static javax.swing.JList colsList;
     private javax.swing.JPanel commonPane;
@@ -1056,9 +973,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1077,7 +992,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JPanel jPanelSettings;
     private javax.swing.JPanel jPanelTrimmed;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JButton joinJTLsB;
     private static javax.swing.JCheckBox limitRowsChk;
@@ -1088,11 +1002,9 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JTextField resultF_RTOT;
     private javax.swing.JTextField resultF_multi;
     private javax.swing.JTextField resultF_trimmed;
-    private javax.swing.JTextField resultField_join;
     private javax.swing.JButton saveResB_RTOT;
-    private javax.swing.JButton saveResB_join;
     private javax.swing.JButton saveResB_multi;
-    private javax.swing.JTextArea selectedFilesArea;
+    private javax.swing.JTextField selectedField_join;
     private static javax.swing.JLabel statusMessageLabel;
     private javax.swing.JPanel statusPanel;
     private javax.swing.JButton stopB_RTOT;
@@ -1113,7 +1025,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private File inputJTL_trimmed;
     private File trimmedJTL;
     private File resultCSV_trimmed;
-    private String resultJTL_join;
+    private File resultFolder_join;
     private int firstValLine;
     private int lastValLine;  
     
@@ -1121,11 +1033,13 @@ public final class GenerateCsvReportsWorker extends FrameView {
     public List<String> extensionsToSearchFor;    
     private ArrayList<File> aListOfJTLFiles = new ArrayList<File>();    
     private boolean doCont = true;
-    private File[] selectedFilesArray;
     private final GenSettingsWorker ow = new GenSettingsWorker();
     private final int[] filledArray10 = {0,1,2,4,5,6,7};
     private final FileFilter filter = new FileNameExtensionFilter("jtl", "JTL");
-    private final String newLine = System.getProperty("line.separator"); 
+    private final String newLine = System.getProperty("line.separator");
+    private String[][] matrixArr;
+    private ArrayList<String> fixedArr = new ArrayList<String>();
+    private ArrayList<String> fewResultArray = new ArrayList<String>();
     private final String HeadLine1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
     private final String HeadLine2 = "<testResults version=\"1.2\">";
     private final String FooterLine = "</testResults>";
@@ -1494,19 +1408,66 @@ public final class GenerateCsvReportsWorker extends FrameView {
             super(app);
             browseB_join.setEnabled(false);
             joinJTLsB.setEnabled(false);
-            saveResB_join.setEnabled(false);
             stopB_join.setEnabled(true);
         }
         @Override protected Object doInBackground() {
-            try{                
-                doHeader_join();
-                for (int i=0; i<selectedFilesArray.length && doCont; i++){                
-                    statusMessageLabel.setText("Working with: "+selectedFilesArray[i]);
-                    doAppendJTL_join(selectedFilesArray[i]);                
+            try{
+                setExtensionsToSearchFor("jtl");        
+                processF(resultFolder_join); //get JTL's
+                if (aListOfJTLFiles.isEmpty()) return 0;
+                matrixArr = new String[aListOfJTLFiles.size()][2];
+                statusMessageLabel.setText("Reading start times of each file...");
+                for (int bl=0;bl<aListOfJTLFiles.size();bl++){//fill array with starting times            
+                    getStartTimes(aListOfJTLFiles.get(bl),bl);            
                 }
-                doFooter_join();
+                statusMessageLabel.setText("Sorting files by start times...");
+                sortArr(matrixArr);
+                //TODO: change used resultfileNames getting from filename to inside read.
+                String st1 = "_P1_";
+                String st2 = "_P2_";
+                String en = "_users";
+                String script;
+                String result;
+                int iSt;
+                statusMessageLabel.setText("Calculating target JTL's.");
+                for (int i=0; i<fixedArr.size() && doCont;i++){ //get main scripts
+                    script = fixedArr.get(i);         
+                    if(script.contains(st1))
+                        iSt = script.indexOf(st1) + st1.length();
+                    else
+                        iSt = script.indexOf(st2) + st2.length();
+                    script = script.substring(iSt,script.indexOf(en, iSt));
+
+                    result = resultFolder_join+File.separator+script+".jtl";
+                    if (!fewResultArray.contains(result))
+                        fewResultArray.add(result);
+                }
+                statusMessageLabel.setText("Printing headers...");
+                for (int f=0;f<fewResultArray.size() && doCont;f++) //doHeader
+                    doHeader_join(fewResultArray.get(f));
+
+                
+                for (int i=0; i<fixedArr.size() && doCont;i++){ //doMiddle
+                    script = fixedArr.get(i);         
+                    if(script.contains(st1))
+                        iSt = script.indexOf(st1) + st1.length();
+                    else
+                        iSt = script.indexOf(st2) + st2.length();
+                    script = script.substring(iSt,script.indexOf(en, iSt));
+
+                    result = resultFolder_join+File.separator+script+".jtl";
+//                    System.err.println(result);
+                    statusMessageLabel.setText("Working with: "+result);
+                    doAppendJTL_join(fixedArr.get(i),result);
+                }
+                statusMessageLabel.setText("Printing footers...");
+                for (int f=0;f<fewResultArray.size() && doCont;f++) //doFooter
+                    doFooter_join(fewResultArray.get(f));
+
+                System.out.println("Done.");
+
             }
-            catch (Exception hm){return 0;}
+            catch (Exception hm){return 3;}
             if (!doCont) return 1;
             return 2;
         }
@@ -1516,15 +1477,15 @@ public final class GenerateCsvReportsWorker extends FrameView {
         @Override protected void succeeded(Object result) {
             String message;
             switch (((Integer)result).intValue()){
-                case 0: message = "Error occured."; break;
+                case 0: message = "Selected folder did not contain any JTL files. Aborted."; break;                
                 case 1: message = "Aborted by user."; break;
                 case 2: message = "Done. Operation took "+this.getExecutionDuration(TimeUnit.SECONDS)+" seconds."; break;
+                case 3: message = "Error occured."; break;
                 default: message = "Error."; break;    
             }
             statusMessageLabel.setText(message);
             browseB_join.setEnabled(true);
             joinJTLsB.setEnabled(true);
-            saveResB_join.setEnabled(true);
             stopB_join.setEnabled(false);
             doCont = true;
             System.out.println("DONE.");  
@@ -1532,81 +1493,79 @@ public final class GenerateCsvReportsWorker extends FrameView {
     }
     @Action
     public void Browse_joinAction() {
-        selectedFilesArea.setText("");
         int rr = chooseJTLs_join.showOpenDialog(null);
         if(rr == JFileChooser.APPROVE_OPTION){
 
-            selectedFilesArray = chooseJTLs_join.getSelectedFiles();
-            for (int k=0;k<selectedFilesArray.length;k++){
-                selectedFilesArea.append(selectedFilesArray[k].getPath()+newLine);
-            }
-            
-            if(chooseSave_join.getSelectedFile()!=null) joinJTLsB.setEnabled(true);
-            statusMessageLabel.setText(selectedFilesArea.getLineCount()-1+" files to be joined.");
-            Color whiteCol = new Color(255,255,255);
-            selectedFilesArea.setBackground(whiteCol);
+            resultFolder_join = chooseJTLs_join.getSelectedFile();
+            selectedField_join.setText(resultFolder_join.toString());
+            joinJTLsB.setEnabled(true);
         }
         else if (rr == JFileChooser.CANCEL_OPTION);
-    }
-    
-    @Action
-    public void SaveRes_joinAction() {
-        chooseSave_join.setCurrentDirectory(chooseJTLs_join.getCurrentDirectory());
-        int tt = chooseSave_join.showSaveDialog(null);
-        if(tt == JFileChooser.APPROVE_OPTION){
-            String tmpFS = chooseSave_join.getSelectedFile().toString();
-            
-            if (tmpFS.endsWith("jtl") || tmpFS.endsWith("JTL"))
-                resultJTL_join = tmpFS;
-            else 
-                resultJTL_join = tmpFS + ".jtl";
-            resultField_join.setText(resultJTL_join);
-            resultField_join.setCaretPosition(0);
-            if(chooseJTLs_join.getSelectedFiles().length!=0) joinJTLsB.setEnabled(true);
-        }
-        else if (tt == JFileChooser.CANCEL_OPTION);
     }
     @Action
     public void Stop_joinction() {
         Join_JTLsAction().cancel(true);
     }
-    // </editor-fold>
     
-    private void doHeader_join() throws Exception{
-//        try{
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(resultJTL_join,false),"UTF8"));
+    
+    private void getStartTimes(File jtl, int bl){
+       try{
+           FileInputStream fs= new FileInputStream(jtl);
+           BufferedReader br = new BufferedReader(new InputStreamReader(fs));
+           for(int i = 0; i < 2; ++i){
+               br.readLine();
+           }
+           String exStr = br.readLine();
+           //TODO: extract tn (for use of naming)
+//           System.out.println(exStr);
+//           int iTn = exStr.indexOf(tnSt)+tnSt.length();
+//           String threadStr = exStr.substring(iTn,exStr.indexOf("-", iTn));
+//           if (threadStr.endsWith(" ")) threadStr = threadStr.substring(0, threadStr.indexOf(" "));
+//           System.out.println(threadStr);
+           int iSt = exStr.indexOf(TStart)+TStart.length();
+           exStr = exStr.substring(iSt, iSt+13);
+           
+           matrixArr[bl][0] = exStr;
+           matrixArr[bl][1] = jtl.toString();
+       }
+       catch (Exception fm){fm.printStackTrace();}
+    }
+    
+    private void doHeader_join(String result){
+        try{
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(result,false),"UTF8"));
             bw.write(HeadLine1);
             bw.newLine();
             bw.write(HeadLine2);
 
             bw.flush();
             bw.close();
-//        }
-//        catch(Exception erp){
-//    //      erp.printStackTrace();        
-//        }
+        }
+        catch(Exception erp){
+    //      erp.printStackTrace();        
+        }
     }
 
-    private void doFooter_join() throws Exception{
-//        try{
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(resultJTL_join,true),"UTF8"));
+    private void doFooter_join(String result){
+        try{
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(result,true),"UTF8"));
             bw.newLine();
             bw.write(FooterLine);
             bw.flush();
             bw.close();
-//        }
-//        catch(Exception erp){
-//    //      erp.printStackTrace();  
-//        }
+        }
+        catch(Exception erp){
+    //      erp.printStackTrace();  
+        }
     }
-
-    private void doAppendJTL_join(File fileToAppend) throws Exception{
-//        try{             
-            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(resultJTL_join,true),"UTF8"));  
+    
+    private void doAppendJTL_join(String fileToAppend, String resultJTL){
+        try{             
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(resultJTL,true),"UTF8"));  
             BufferedReader bf = new BufferedReader(new InputStreamReader(new FileInputStream(fileToAppend),"UTF8"));
             String line;
 
-            while (( line = bf.readLine()) != null && doCont)
+            while (( line = bf.readLine()) != null) //&&do Cont
                 {
                 if (!line.startsWith("<?xml") && !line.startsWith("<test") && !line.startsWith("</test")){     
 
@@ -1617,11 +1576,28 @@ public final class GenerateCsvReportsWorker extends FrameView {
             bw.close();
             bf.close();
 
-//        }
-//        catch (Exception erp){
-//            erp.printStackTrace();
-//        }
+        }
+        catch (Exception erp){
+            erp.printStackTrace();
+        }
     }
+    
+    public void sortArr(String[][] data){
+        Arrays.sort(data, new Comparator<String[]>() {
+            @Override
+            public int compare(String[] entry1,String[] entry2) {
+                String time1 = entry1[0];
+                String time2 = entry2[0];
+                return time1.compareTo(time2);
+            }
+        });
+
+        for (String[] s : data) {
+//            System.out.println(s[0] + " " + s[1]);
+            fixedArr.add(s[1]);
+        }
+    }
+    // </editor-fold>
     
     private int getTimeline(File inputJTL){
        
