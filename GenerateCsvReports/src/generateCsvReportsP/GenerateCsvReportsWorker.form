@@ -29,6 +29,127 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout"/>
           <SubComponents>
+            <Container class="javax.swing.JPanel" name="jPanel4All">
+              <Properties>
+                <Property name="enabled" type="boolean" value="false"/>
+                <Property name="name" type="java.lang.String" value="jPanel4All" noResource="true"/>
+              </Properties>
+              <Constraints>
+                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
+                  <JTabbedPaneConstraints tabName="Whole report">
+                    <Property name="tabTitle" type="java.lang.String" resourceKey="jPanel4All.TabConstraints.tabTitle"/>
+                  </JTabbedPaneConstraints>
+                </Constraint>
+              </Constraints>
+
+              <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+              <SubComponents>
+                <Container class="javax.swing.JPanel" name="buttonsPane_4All">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="buttonsPane_4All" noResource="true"/>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                      <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="10" insetsBottom="10" insetsRight="0" anchor="21" weightX="0.0" weightY="0.0"/>
+                    </Constraint>
+                  </Constraints>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JButton" name="stopB_4All">
+                      <Properties>
+                        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                          <action class="generateCsvReportsP.GenerateCsvReportsWorker" id="Stop" methodName="Stop"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" resourceKey="stopB.text"/>
+                        <Property name="name" type="java.lang.String" value="stopB_4All" noResource="true"/>
+                      </Properties>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                          <GridBagConstraints gridX="3" gridY="0" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="5" insetsLeft="5" insetsBottom="5" insetsRight="0" anchor="18" weightX="0.0" weightY="0.0"/>
+                        </Constraint>
+                      </Constraints>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="genB_4All">
+                      <Properties>
+                        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                          <action class="generateCsvReportsP.GenerateCsvReportsWorker" id="initReportsGen4All" methodName="initReportsGen4All"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" resourceKey="genB_4All.text"/>
+                        <Property name="name" type="java.lang.String" value="genB_4All" noResource="true"/>
+                      </Properties>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                          <GridBagConstraints gridX="0" gridY="0" gridWidth="1" gridHeight="1" fill="1" ipadX="0" ipadY="0" insetsTop="5" insetsLeft="0" insetsBottom="5" insetsRight="5" anchor="18" weightX="0.0" weightY="0.0"/>
+                        </Constraint>
+                      </Constraints>
+                    </Component>
+                    <Component class="javax.swing.JButton" name="browseB_4All">
+                      <Properties>
+                        <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                          <action class="generateCsvReportsP.GenerateCsvReportsWorker" id="Browse_4All" methodName="Browse_4All"/>
+                        </Property>
+                        <Property name="text" type="java.lang.String" resourceKey="selectFolder.text"/>
+                        <Property name="name" type="java.lang.String" value="browseB_4All" noResource="true"/>
+                      </Properties>
+                      <Constraints>
+                        <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                          <GridBagConstraints gridX="1" gridY="0" gridWidth="1" gridHeight="1" fill="1" ipadX="0" ipadY="0" insetsTop="5" insetsLeft="5" insetsBottom="5" insetsRight="5" anchor="18" weightX="0.0" weightY="0.0"/>
+                        </Constraint>
+                      </Constraints>
+                    </Component>
+                  </SubComponents>
+                </Container>
+                <Component class="javax.swing.JLabel" name="jLabel17">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="selectedFolder.label"/>
+                    <Property name="name" type="java.lang.String" value="jLabel17" noResource="true"/>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                      <GridBagConstraints gridX="0" gridY="1" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="10" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.0" weightY="0.0"/>
+                    </Constraint>
+                  </Constraints>
+                </Component>
+                <Component class="javax.swing.JLabel" name="jLabel19">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="jLabel19.text"/>
+                    <Property name="name" type="java.lang.String" value="jLabel19" noResource="true"/>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                      <GridBagConstraints gridX="0" gridY="3" gridWidth="1" gridHeight="1" fill="0" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="10" insetsBottom="0" insetsRight="0" anchor="21" weightX="0.0" weightY="0.0"/>
+                    </Constraint>
+                  </Constraints>
+                </Component>
+                <Component class="javax.swing.JTextField" name="resultF_4All">
+                  <Properties>
+                    <Property name="columns" type="int" value="20"/>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="text" type="java.lang.String" resourceKey="selectFolderField.text"/>
+                    <Property name="name" type="java.lang.String" value="resultF_4All" noResource="true"/>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                      <GridBagConstraints gridX="0" gridY="4" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="10" insetsBottom="10" insetsRight="10" anchor="10" weightX="0.1" weightY="0.0"/>
+                    </Constraint>
+                  </Constraints>
+                </Component>
+                <Component class="javax.swing.JTextField" name="inputF_4All">
+                  <Properties>
+                    <Property name="columns" type="int" value="20"/>
+                    <Property name="editable" type="boolean" value="false"/>
+                    <Property name="text" type="java.lang.String" resourceKey="selectFolderField.text"/>
+                    <Property name="name" type="java.lang.String" value="inputF_4All" noResource="true"/>
+                  </Properties>
+                  <Constraints>
+                    <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout" value="org.netbeans.modules.form.compat2.layouts.DesignGridBagLayout$GridBagConstraintsDescription">
+                      <GridBagConstraints gridX="0" gridY="2" gridWidth="1" gridHeight="1" fill="2" ipadX="0" ipadY="0" insetsTop="0" insetsLeft="10" insetsBottom="10" insetsRight="10" anchor="10" weightX="0.1" weightY="0.0"/>
+                    </Constraint>
+                  </Constraints>
+                </Component>
+              </SubComponents>
+            </Container>
             <Container class="javax.swing.JPanel" name="jPanelMulti">
               <Properties>
                 <Property name="name" type="java.lang.String" value="jPanelMulti" noResource="true"/>
@@ -58,7 +179,7 @@
                     <Component class="javax.swing.JButton" name="stopB_multi">
                       <Properties>
                         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                          <action class="generateCsvReportsP.GenerateCsvReportsWorker" id="Stop_multiAction" methodName="Stop_multiAction"/>
+                          <action class="generateCsvReportsP.GenerateCsvReportsWorker" id="Stop" methodName="Stop"/>
                         </Property>
                         <Property name="text" type="java.lang.String" resourceKey="stopB.text"/>
                         <Property name="name" type="java.lang.String" value="stopB_multi" noResource="true"/>
@@ -115,7 +236,7 @@
                 </Container>
                 <Component class="javax.swing.JLabel" name="jLabel3">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="jLabel3.text"/>
+                    <Property name="text" type="java.lang.String" resourceKey="selectedFolder.label"/>
                     <Property name="name" type="java.lang.String" value="jLabel3" noResource="true"/>
                   </Properties>
                   <Constraints>
@@ -194,7 +315,7 @@
                     <Component class="javax.swing.JButton" name="stopB_RTOT">
                       <Properties>
                         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                          <action class="generateCsvReportsP.GenerateCsvReportsWorker" id="Stop_RTOTAction" methodName="Stop_RTOTAction"/>
+                          <action class="generateCsvReportsP.GenerateCsvReportsWorker" id="Stop" methodName="Stop"/>
                         </Property>
                         <Property name="text" type="java.lang.String" resourceKey="stopB.text"/>
                         <Property name="name" type="java.lang.String" value="stopB_RTOT" noResource="true"/>
@@ -251,7 +372,7 @@
                 </Container>
                 <Component class="javax.swing.JLabel" name="jLabel11">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="jLabel11.text"/>
+                    <Property name="text" type="java.lang.String" resourceKey="selectedFolder.label"/>
                     <Property name="name" type="java.lang.String" value="jLabel11" noResource="true"/>
                   </Properties>
                   <Constraints>
@@ -330,7 +451,7 @@
                     <Component class="javax.swing.JButton" name="stopB_join">
                       <Properties>
                         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                          <action class="generateCsvReportsP.GenerateCsvReportsWorker" id="Stop_joinction" methodName="Stop_joinction"/>
+                          <action class="generateCsvReportsP.GenerateCsvReportsWorker" id="Stop" methodName="Stop"/>
                         </Property>
                         <Property name="text" type="java.lang.String" resourceKey="stopB.text"/>
                         <Property name="name" type="java.lang.String" value="stopB_join" noResource="true"/>
@@ -443,7 +564,7 @@
                         <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                           <action class="generateCsvReportsP.GenerateCsvReportsWorker" id="Browse_trimmedAction" methodName="Browse_trimmedAction"/>
                         </Property>
-                        <Property name="text" type="java.lang.String" resourceKey="browseB_trimmed.text"/>
+                        <Property name="text" type="java.lang.String" resourceKey="selectFile.text"/>
                         <Property name="name" type="java.lang.String" value="browseB_trimmed" noResource="true"/>
                       </Properties>
                       <Constraints>
@@ -481,6 +602,7 @@
                     <Property name="columns" type="int" value="20"/>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" resourceKey="TextFields.font"/>
+                    <Property name="text" type="java.lang.String" resourceKey="selectFile.text"/>
                     <Property name="name" type="java.lang.String" value="resultF_trimmed" noResource="true"/>
                   </Properties>
                   <Constraints>
@@ -494,6 +616,7 @@
                     <Property name="columns" type="int" value="20"/>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" resourceKey="TextFields.font"/>
+                    <Property name="text" type="java.lang.String" resourceKey="selectFile.text"/>
                     <Property name="name" type="java.lang.String" value="inputF_trimmed" noResource="true"/>
                   </Properties>
                   <Constraints>
@@ -564,6 +687,7 @@
                     <Property name="columns" type="int" value="20"/>
                     <Property name="editable" type="boolean" value="false"/>
                     <Property name="font" type="java.awt.Font" resourceKey="TextFields.font"/>
+                    <Property name="text" type="java.lang.String" resourceKey="selectFile.text"/>
                     <Property name="name" type="java.lang.String" value="trimmedJTLF" noResource="true"/>
                   </Properties>
                   <Constraints>
@@ -1075,6 +1199,7 @@
         <Property name="currentDirectory" type="java.io.File" editor="org.netbeans.beaninfo.editors.FileEditor">
           <SerializedValue value="-84,-19,0,5,115,114,0,12,106,97,118,97,46,105,111,46,70,105,108,101,4,45,-92,69,14,13,-28,-1,3,0,1,76,0,4,112,97,116,104,116,0,18,76,106,97,118,97,47,108,97,110,103,47,83,116,114,105,110,103,59,120,112,116,0,10,67,58,92,114,101,115,117,108,116,115,119,2,0,92,120"/>
         </Property>
+        <Property name="dialogTitle" type="java.lang.String" resourceKey="selectFolderContJTLs"/>
         <Property name="fileSelectionMode" type="int" value="1"/>
         <Property name="name" type="java.lang.String" value="chooseJTL_multi" noResource="true"/>
       </Properties>
@@ -1105,6 +1230,7 @@
         <Property name="currentDirectory" type="java.io.File" editor="org.netbeans.beaninfo.editors.FileEditor">
           <SerializedValue value="-84,-19,0,5,115,114,0,12,106,97,118,97,46,105,111,46,70,105,108,101,4,45,-92,69,14,13,-28,-1,3,0,1,76,0,4,112,97,116,104,116,0,18,76,106,97,118,97,47,108,97,110,103,47,83,116,114,105,110,103,59,120,112,116,0,10,67,58,92,114,101,115,117,108,116,115,119,2,0,92,120"/>
         </Property>
+        <Property name="dialogTitle" type="java.lang.String" resourceKey="selectFolderContJTLs"/>
         <Property name="fileSelectionMode" type="int" value="1"/>
         <Property name="name" type="java.lang.String" value="chooseJTL_RTOT" noResource="true"/>
       </Properties>
@@ -1117,14 +1243,24 @@
         <Property name="name" type="java.lang.String" value="chooseSave_RTOT" noResource="true"/>
       </Properties>
     </Component>
-    <Component class="javax.swing.JFileChooser" name="chooseJTLs_join">
+    <Component class="javax.swing.JFileChooser" name="chooseJTL_join">
       <Properties>
         <Property name="currentDirectory" type="java.io.File" editor="org.netbeans.beaninfo.editors.FileEditor">
           <SerializedValue value="-84,-19,0,5,115,114,0,12,106,97,118,97,46,105,111,46,70,105,108,101,4,45,-92,69,14,13,-28,-1,3,0,1,76,0,4,112,97,116,104,116,0,18,76,106,97,118,97,47,108,97,110,103,47,83,116,114,105,110,103,59,120,112,116,0,10,67,58,92,114,101,115,117,108,116,115,119,2,0,92,120"/>
         </Property>
-        <Property name="dialogTitle" type="java.lang.String" resourceKey="chooseJTLs_join.dialogTitle"/>
+        <Property name="dialogTitle" type="java.lang.String" resourceKey="selectFolderContJTLs"/>
         <Property name="fileSelectionMode" type="int" value="1"/>
-        <Property name="name" type="java.lang.String" value="chooseJTLs_join" noResource="true"/>
+        <Property name="name" type="java.lang.String" value="chooseJTL_join" noResource="true"/>
+      </Properties>
+    </Component>
+    <Component class="javax.swing.JFileChooser" name="chooseJTL_4All">
+      <Properties>
+        <Property name="currentDirectory" type="java.io.File" editor="org.netbeans.beaninfo.editors.FileEditor">
+          <SerializedValue value="-84,-19,0,5,115,114,0,12,106,97,118,97,46,105,111,46,70,105,108,101,4,45,-92,69,14,13,-28,-1,3,0,1,76,0,4,112,97,116,104,116,0,18,76,106,97,118,97,47,108,97,110,103,47,83,116,114,105,110,103,59,120,112,116,0,10,67,58,92,114,101,115,117,108,116,115,119,2,0,92,120"/>
+        </Property>
+        <Property name="dialogTitle" type="java.lang.String" resourceKey="selectFolderContJTLs"/>
+        <Property name="fileSelectionMode" type="int" value="1"/>
+        <Property name="name" type="java.lang.String" value="chooseJTL_4All" noResource="true"/>
       </Properties>
     </Component>
   </NonVisualComponents>
