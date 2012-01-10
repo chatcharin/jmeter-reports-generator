@@ -24,24 +24,14 @@ import java.util.concurrent.TimeUnit;
 
 public final class GenerateCsvReportsWorker extends FrameView {
 
-    //TODO: one big project: connect all jmeter tools into one
-    //TODO: ~big feature: print all multi reports on one xlsx file
-    //TODO: ~~try bars once again    
+    //TODO: ~big feature: print all multi reports on one xlsx file   
     //TODO: ~settings.ini
     //TODO: 46 46 46 46 <-- only last value is starting of trimm
     //TODO: in trimmed report number order is bad 8 9 10 1    
     //TODO: TAB sep in csv's
-    //TODO: @2012 make plugins version with option(checkBox) 'main comms only' [on by default]
-    //TODO: read LT java manuals
-    //TODO: jtl's visible even if setting a folder~
-    //TODO: AggregateReportGui :: in there form model, then inside JMeter core chechking lines is not needed therefore more perf gained
     //TODO: ~connect plugins with this, gensettignsworker having role of pluginsCMDWorker
-    //TODO: find out kas buna be  private prieraso priekyje on globalVARS
     //TODO: global vars in capital letters
     //TODO: ~good way of attaching extension for savingResultFileAs
-    //TODO: joinJTL's - label read inside (bet pinasi su pagrindiniu nustatymu kur numest jtl)
-    //TODO: check as setKrC(bbs>0)
-    //TODO: joinJTLS does not work with single script files in folder
     //TODO: only 1 processF for 4All
     //TODO: why theF I use background tasks?
     public GenerateCsvReportsWorker(SingleFrameApplication app) {
@@ -130,6 +120,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         trimmedJTLF = new javax.swing.JTextField();
         timelineStartFF = new javax.swing.JFormattedTextField();
         timelineEndFF = new javax.swing.JFormattedTextField();
+        jLabel20 = new javax.swing.JLabel();
         jPanelSettings = new javax.swing.JPanel();
         graphsPane = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -569,7 +560,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
 
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridy = 1;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 0);
@@ -579,7 +570,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jLabel5.setName("jLabel5"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 1;
+        gridBagConstraints.gridy = 2;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         jPanelTrimmed.add(jLabel5, gridBagConstraints);
@@ -588,7 +579,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jLabel6.setName("jLabel6"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 8;
+        gridBagConstraints.gridy = 9;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         jPanelTrimmed.add(jLabel6, gridBagConstraints);
@@ -600,7 +591,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         resultF_trimmed.setName("resultF_trimmed"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 9;
+        gridBagConstraints.gridy = 10;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.1;
@@ -614,7 +605,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         inputF_trimmed.setName("inputF_trimmed"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridy = 3;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.1;
@@ -625,7 +616,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jLabel7.setName("jLabel7"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 5, 0);
         jPanelTrimmed.add(jLabel7, gridBagConstraints);
@@ -636,7 +627,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         timelineF.setName("timelineF"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 3;
+        gridBagConstraints.gridy = 4;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanelTrimmed.add(timelineF, gridBagConstraints);
@@ -645,7 +636,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jLabel8.setName("jLabel8"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 10, 0);
         jPanelTrimmed.add(jLabel8, gridBagConstraints);
@@ -654,7 +645,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jLabel9.setName("jLabel9"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 5, 0);
         jPanelTrimmed.add(jLabel9, gridBagConstraints);
@@ -663,7 +654,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jLabel10.setName("jLabel10"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 6;
+        gridBagConstraints.gridy = 7;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 10, 0, 0);
         jPanelTrimmed.add(jLabel10, gridBagConstraints);
@@ -675,7 +666,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         trimmedJTLF.setName("trimmedJTLF"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 7;
+        gridBagConstraints.gridy = 8;
         gridBagConstraints.gridwidth = 2;
         gridBagConstraints.fill = java.awt.GridBagConstraints.HORIZONTAL;
         gridBagConstraints.weightx = 0.1;
@@ -689,7 +680,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         timelineStartFF.setName("timelineStartFF"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 4;
+        gridBagConstraints.gridy = 5;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanelTrimmed.add(timelineStartFF, gridBagConstraints);
@@ -701,10 +692,19 @@ public final class GenerateCsvReportsWorker extends FrameView {
         timelineEndFF.setName("timelineEndFF"); // NOI18N
         gridBagConstraints = new java.awt.GridBagConstraints();
         gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 5;
+        gridBagConstraints.gridy = 6;
         gridBagConstraints.anchor = java.awt.GridBagConstraints.LINE_START;
         gridBagConstraints.insets = new java.awt.Insets(0, 0, 5, 0);
         jPanelTrimmed.add(timelineEndFF, gridBagConstraints);
+
+        jLabel20.setFont(resourceMap.getFont("jLabel20.font")); // NOI18N
+        jLabel20.setText(resourceMap.getString("jLabel20.text")); // NOI18N
+        jLabel20.setName("jLabel20"); // NOI18N
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridwidth = 2;
+        jPanelTrimmed.add(jLabel20, gridBagConstraints);
 
         jTabbedPane1.addTab(resourceMap.getString("jPanelTrimmed.TabConstraints.tabTitle"), jPanelTrimmed); // NOI18N
 
@@ -913,7 +913,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
         jPanel5.setName("jPanel5"); // NOI18N
         jPanel5.setLayout(new java.awt.GridBagLayout());
 
-        mainCommOnlyC.setSelected(true);
         mainCommOnlyC.setText(resourceMap.getString("mainCommOnlyC.text")); // NOI18N
         mainCommOnlyC.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
         mainCommOnlyC.setName("mainCommOnlyC"); // NOI18N
@@ -1093,6 +1092,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private javax.swing.JLabel jLabel18;
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -1147,7 +1147,6 @@ public final class GenerateCsvReportsWorker extends FrameView {
     private Boolean gen4AllUsed = false;
     private Boolean doAgg = false;
     private Boolean doRTOT = false;
-//    private Long totalElapsedTime= (long) 0;
     private Integer totalElapsedTime = 0;
     private File inputJTL_trimmed;
     private File trimmedJTL;
@@ -1158,17 +1157,19 @@ public final class GenerateCsvReportsWorker extends FrameView {
     
     public List<String> extensionsToIgnore;
     public List<String> extensionsToSearchFor;    
-    private ArrayList<File> aListOfJTLFiles = new ArrayList<File>();    
+    private ArrayList<File> aListOfJTLFiles = new ArrayList<File>(); 
+    private ArrayList<String> aListOfScripts = new ArrayList<String>();
     private boolean doCont = true;
     private final GenSettingsWorker ow = new GenSettingsWorker();
     private final int[] filledArray10 = {0,1,2,4,5,6,7};
     private final FileFilter filter = new FileNameExtensionFilter("jtl", "JTL");
     private final String newLine = System.getProperty("line.separator");
     private String[][] matrixArr;
+    private String[][] sortedArray;
     private final String HeadLine1 = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
     private final String HeadLine2 = "<testResults version=\"1.2\">";
     private final String FooterLine = "</testResults>";
-    private final String attachStringTrimmed = "TRIMMED_"; //TODO: ~print used timeline(or in csv?)
+    private final String attachStringTrimmed = "TRIMMED_";
     private final String attachStringError = "ERRORS_";
     private final String attach4AllReports = "_reports";
     private final String attachReports = "_AggregatedReports";
@@ -1669,64 +1670,35 @@ public final class GenerateCsvReportsWorker extends FrameView {
         }
         @Override protected Object doInBackground() {
             try{
-                ArrayList<String> fixedArr = new ArrayList<String>();
-                ArrayList<String> fewResultArray = new ArrayList<String>();
                 setExtensionsToSearchFor("jtl");        
                 processF(resultFolder_join); //get JTL's
                 if (aListOfJTLFiles.isEmpty()) return 0;
-                matrixArr = new String[aListOfJTLFiles.size()][2];
-                statusMessageLabel.setText("Reading start times of each file...");
-                File currF;
-                for (int bl=0;bl<aListOfJTLFiles.size();bl++){//fill array with starting times   
-                    currF = aListOfJTLFiles.get(bl);
-                    if (!currF.getName().contains("1st_Login") && currF.getName().length()>10) //TODO: test
-                        getStartTimes(aListOfJTLFiles.get(bl),bl);            
-                }
-                statusMessageLabel.setText("Sorting files by start times...");
-                fixedArr = sortArr(matrixArr); //sort array of files by starting times
-                //TODO: change used resultfileNames getting from filename to inside read.
-                String st1 = "_P1_";
-                String st2 = "_P2_";
-                String en = "_users";
-                String script;
-                String result;
-                int iSt;
-                statusMessageLabel.setText("Calculating target JTL's.");
-                for (int i=0; i<fixedArr.size() && doCont;i++){ //get main scripts
-                    script = fixedArr.get(i);         
-                    if(script.contains(st1))
-                        iSt = script.indexOf(st1) + st1.length();
-                    else
-                        iSt = script.indexOf(st2) + st2.length();
-                    script = script.substring(iSt,script.indexOf(en, iSt));
-
-                    result = resultFolder_join+File.separator+script+".jtl";
-                    if (!fewResultArray.contains(result))
-                        fewResultArray.add(result);
-                }
-                statusMessageLabel.setText("Printing headers...");
-                for (int f=0;f<fewResultArray.size() && doCont;f++) //doHeader
-                    doHeader_join(fewResultArray.get(f));
-
+                matrixArr = new String[aListOfJTLFiles.size()][3];
+                sortedArray = new String[aListOfJTLFiles.size()][2];
                 
-                for (int i=0; i<fixedArr.size() && doCont;i++){ //doMiddle
-                    script = fixedArr.get(i);         
-                    if(script.contains(st1))
-                        iSt = script.indexOf(st1) + st1.length();
-                    else
-                        iSt = script.indexOf(st2) + st2.length();
-                    script = script.substring(iSt,script.indexOf(en, iSt));
-
-                    result = resultFolder_join+File.separator+script+".jtl";
-//                    System.err.println(result);
-                    statusMessageLabel.setText("Joining JTL's for: "+script);
-                    doAppendJTL_join(fixedArr.get(i),result);
+                statusMessageLabel.setText("Reading start times of each file...");                
+                for (int bl=0;bl<aListOfJTLFiles.size();bl++)
+                    getStartTimes(aListOfJTLFiles.get(bl),bl); //fills matrixArr with starting times & forms aListOfScripts      
+                
+                statusMessageLabel.setText("Sorting files by start times...");
+                sortArr(matrixArr); //sorts array to sortedArray by starting times               
+                
+                statusMessageLabel.setText("Printing headers...");
+                for (int f=0;f<aListOfScripts.size() && doCont;f++)
+                    doHeader_join(resultFolder_join+File.separator+aListOfScripts.get(f)+".jtl");
+                
+                for (int i=0; i <sortedArray.length;i++){
+                    statusMessageLabel.setText("Joining JTL's for: "+sortedArray[i][1]);
+                    doAppendJTL_join(sortedArray[i][0],resultFolder_join+File.separator+sortedArray[i][1]+".jtl");
                 }
+                
                 statusMessageLabel.setText("Printing footers...");
-                for (int f=0;f<fewResultArray.size() && doCont;f++) //doFooter
-                    doFooter_join(fewResultArray.get(f));                
+                for (int f=0;f<aListOfScripts.size() && doCont;f++)
+                    doFooter_join(resultFolder_join+File.separator+aListOfScripts.get(f)+".jtl");                            
             }
-            catch (Exception hm){return 3;}
+            catch (Exception hm){
+                hm.printStackTrace();
+                return 3;}
             if (!doCont) return 1;
             return 2;
         }
@@ -1782,17 +1754,23 @@ public final class GenerateCsvReportsWorker extends FrameView {
                br.readLine();
            }
            String exStr = br.readLine();
-           //TODO: extract tn (for use of naming)
-//           System.out.println(exStr);
-//           int iTn = exStr.indexOf(tnSt)+tnSt.length();
-//           String threadStr = exStr.substring(iTn,exStr.indexOf("-", iTn));
-//           if (threadStr.endsWith(" ")) threadStr = threadStr.substring(0, threadStr.indexOf(" "));
-//           System.out.println(threadStr);
+           //get threadName
+           String tnStr = "\" tn=\"";
+           int iTn = exStr.indexOf(tnStr)+tnStr.length();
+           String threadName = exStr.substring(iTn,exStr.indexOf("-", iTn));
+           if (threadName.contains(" ")) threadName = threadName.substring(0, threadName.indexOf(" ")); //why?
+           //get timestamp
            int iSt = exStr.indexOf(TStart)+TStart.length();
-           exStr = exStr.substring(iSt, iSt+13);
+           String timeStamp = exStr.substring(iSt, iSt+13);
            
-           matrixArr[bl][0] = exStr;
+           br.close();
+           fs.close();
+           matrixArr[bl][0] = timeStamp;
            matrixArr[bl][1] = jtl.toString();
+           matrixArr[bl][2] = threadName;
+          
+           if (!aListOfScripts.contains(threadName))
+               aListOfScripts.add(threadName);
        }
        catch (Exception fm){fm.printStackTrace();}
     }
@@ -1848,8 +1826,7 @@ public final class GenerateCsvReportsWorker extends FrameView {
         }
     }
     
-    private ArrayList<String> sortArr(String[][] data){
-        ArrayList<String> arrL = new ArrayList<String>();
+    private void sortArr(String[][] data){
         Arrays.sort(data, new Comparator<String[]>() {
             @Override
             public int compare(String[] entry1,String[] entry2) {
@@ -1859,11 +1836,14 @@ public final class GenerateCsvReportsWorker extends FrameView {
             }
         });
 
-        for (String[] s : data) {
-//            System.out.println(s[0] + " " + s[1]);
-            arrL.add(s[1]);
+        int ite = 0;
+        for (String[] s : data) {            
+//            System.out.println(s[0] + " " + s[1] + " " + s[2]);
+            sortedArray[ite][0] = s[1]; //path+file
+            sortedArray[ite][1] = s[2]; //scriptsName
+            ite++;
         }
-        return arrL;
+        
     }
     // </editor-fold>
     
